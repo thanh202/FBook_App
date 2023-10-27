@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/rl_btn_back_signUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="11dp"
+        android:src="@drawable/icon_back" />
+
+    <ImageView
+        android:id="@+id/logo_fbook_signUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_btn_back_signUp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo_fbook" />
+
+    <LinearLayout
+        android:id="@+id/ll_input_signUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo_fbook_signUp"
+        android:layout_marginTop="17dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="25dp">
+
+        <EditText
+            android:id="@+id/edt_email_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_edit_text"
+            android:drawableStart="@drawable/icon_gmail"
+            android:drawablePadding="10dp"
+            android:hint="Email"
+            android:fontFamily="@font/roboto_regular"
+            android:paddingVertical="16dp"
+            android:paddingStart="20dp"
+            tools:ignore="RtlSymmetry" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/background_edit_text"
+            android:drawableStart="@drawable/icon_username"
+            android:drawablePadding="10dp"
+            android:hint="Họ và tên"
+            android:fontFamily="@font/roboto_regular"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="20dp"
+            tools:ignore="RtlSymmetry" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/background_edit_text"
+            android:drawableStart="@drawable/icon_phone"
+            android:drawablePadding="10dp"
+            android:hint="Số điện thoại"
+            android:fontFamily="@font/roboto_regular"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="20dp"
+            tools:ignore="RtlSymmetry" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/background_edit_text"
+            android:drawableStart="@drawable/icon_password"
+            android:drawablePadding="10dp"
+            android:hint="Tuổi"
+            android:fontFamily="@font/roboto_regular"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="20dp"
+            tools:ignore="RtlSymmetry" />
+        <EditText
+            android:id="@+id/edt_password_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/background_edit_text"
+            android:drawableStart="@drawable/icon_password"
+            android:drawableEnd="@drawable/icon_show_password"
+            android:drawablePadding="10dp"
+            android:hint="Mật khẩu"
+            android:fontFamily="@font/roboto_regular"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="20dp"
+            android:inputType="textPassword"
+            tools:ignore="RtlSymmetry" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_signUp"
+        android:background="@drawable/bg_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="34dp"
+        android:layout_marginBottom="38dp"
+        android:paddingVertical="14dp"
+        android:text="Sign Up"
+        android:textAlignment="center"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        />
+</RelativeLayout>
