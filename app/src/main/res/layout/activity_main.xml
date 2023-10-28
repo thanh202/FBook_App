@@ -1,19 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".Activity.MainActivity">
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/logo_fbook_splash" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="WELLCOME TO "
+            android:textSize="28sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="FBOOK"
+            android:textColor="#F7941D"
+            android:textSize="28sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:paddingHorizontal="24dp"
+        android:text="@string/the_number_one_best_fbook_store_reader_application_in_this_century"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/btn_login_with_google"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_button_login_with_google"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/roboto_bold"
+        android:paddingHorizontal="100dp"
+        android:paddingVertical="12dp"
+        android:text="Login with Google"
+        android:textSize="14sp"
+        app:drawableStartCompat="@drawable/icon_google" />
+
+    <TextView
+        android:id="@+id/btn_to_sign_up_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_button"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/roboto_bold"
+        android:paddingVertical="12dp"
+        android:text="@string/get_started"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/btn_to_login_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_button_login"
+        android:fontFamily="@font/roboto_bold"
+        android:paddingVertical="12dp"
+        android:text="@string/i_already_have_an_acount"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textColor="#F7941D"/>
+</LinearLayout>
