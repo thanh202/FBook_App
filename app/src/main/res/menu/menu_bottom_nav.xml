@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_home"
+        android:icon="@drawable/icon_home"
+        android:title="Trang Chủ" />
+    <item
+        android:id="@+id/action_fav"
+        android:icon="@drawable/icon_fav"
+        android:title="Yêu Thích" />
+    <item
+        android:id="@+id/action_cart"
+        android:icon="@drawable/icon_shopping_cart"
+        android:title="Giỏ Hàng" />
+    <item
+        android:id="@+id/action_info"
+        android:icon="@drawable/icon_user"
+        android:title="Thông Tin" />
+</menu>
