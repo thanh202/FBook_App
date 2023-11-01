@@ -1,63 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
+    android:layout_height="match_parent"
     tools:context=".HomeActivity.HomeActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_weight="1.5"
             android:src="@drawable/logo_fbook" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="8"
-            app:cardCornerRadius="20dp">
-
-            <com.mancj.materialsearchbar.MaterialSearchBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:mt_hint="Tìm Kiếm ..."
-                app:mt_placeholder="Tìm Kiếm ..."
-                app:mt_searchBarColor="#D8D8D8" />
-        </androidx.cardview.widget.CardView>
-
+            android:layout_marginLeft="270dp"
+            android:src="@drawable/icon_cart" />
     </LinearLayout>
 
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
+    <androidx.cardview.widget.CardView
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:layout_above="@+id/bottom_nav"
-        android:layout_below="@+id/linearLayout"
-    ></androidx.viewpager.widget.ViewPager>
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <com.mancj.materialsearchbar.MaterialSearchBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mt_hint="Tìm Kiếm ..."
+            app:mt_placeholder="Tìm Kiếm ..."
+            app:mt_searchBarColor="#D8D8D8" />
+    </androidx.cardview.widget.CardView>
+
+
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         app:itemBackground="@color/white"
         app:itemIconTint="@color/custom_color_bottom_nav"
         app:itemTextColor="@color/custom_color_bottom_nav"
-        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_bottom_nav" />
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

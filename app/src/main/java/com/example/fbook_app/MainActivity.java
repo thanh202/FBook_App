@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.fbook_app.dangNhap.DangKyActivity;
-import com.example.fbook_app.dangNhap.DangNhapActivity;
+import com.example.fbook_app.DangNhap.DangKyActivity;
+import com.example.fbook_app.DangNhap.DangNhapActivity;
 
 public class MainActivity extends AppCompatActivity {
     private TextView btnLoginWithGoogle;

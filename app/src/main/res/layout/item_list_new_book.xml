@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_item_list_new_book"
+    android:padding="10dp"
+    android:layout_margin="20dp">
+    <ImageView
+        android:id="@+id/imgView_item_imgNewBook"
+        android:layout_width="138dp"
+        android:layout_height="136dp"
+        android:src="@drawable/img_book"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imgView_item_imgNewBook"
+        android:layout_marginStart="5dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_item_nameNewBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đấu phá thương khung 5"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto_bold"
+            />
+        <TextView
+            android:id="@+id/tv_item_descriptionNewBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bộ kể về quá trình Tiêu Viêm thôn phệ.."
+            android:textSize="10sp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đánh giá:"
+                android:textSize="12sp"
+                android:textColor="#9A9A9A"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/frame_danh_gia"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_item_priceNewBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="#E50000"
+            android:text="50.000 vnđ"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xem Thêm:"
+            android:textSize="12sp"
+            android:textColor="#9A9A9A"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|end">
+            <ImageView
+                android:id="@+id/btn_item_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_like"
+                />
+            <ImageView
+                android:id="@+id/btn_item_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_cart1"
+                android:layout_marginStart="10dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
