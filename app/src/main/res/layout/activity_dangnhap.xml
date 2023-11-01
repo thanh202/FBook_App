@@ -130,6 +130,7 @@
             android:layout_marginStart="16dp"/>
     </LinearLayout>
     <TextView
+        android:id="@+id/btn_login_home"
         android:background="@drawable/bg_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -3,4 +3,8 @@
     <string name="the_number_one_best_fbook_store_reader_application_in_this_century">The Number One Best Fbook Store and Reader Application In This Century</string>
     <string name="i_already_have_an_acount">I Already Have an Acount</string>
     <string name="get_started">Get Started</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
