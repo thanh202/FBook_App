@@ -1,4 +1,4 @@
-package com.example.fbook_app.Adpater;
+package com.example.fbook_app.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,10 +17,10 @@ import com.example.fbook_app.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHolder> {
+public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     private final Context context;
     private List<Book> bookList = new ArrayList<>();
-    public NewBookAdapter(Context mContext){
+    public BookAdapter(Context mContext){
         context = mContext;
     }
     public void setListBook(List<Book> list){
@@ -30,7 +30,7 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_list_new_book,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_list_book,parent,false);
         return new ViewHolder(view);
     }
 
@@ -45,32 +45,27 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView imgViewItemImgNewBook;
-        private TextView tvItemNameNewBook;
-        private TextView tvItemDescriptionNewBook;
-        private TextView tvItemPriceNewBook;
-        private ImageView btnItemLike;
-        private ImageView btnItemBuy;
-
+        private ImageView imgViewItemImgBook;
+        private TextView tvItemNameBook;
+        private TextView tvItemDescription;
+        private TextView tvItemPriceBook;
 
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            imgViewItemImgNewBook = (ImageView) itemView.findViewById(R.id.imgView_item_imgNewBook);
-            tvItemNameNewBook = (TextView) itemView.findViewById(R.id.tv_item_nameNewBook);
-            tvItemDescriptionNewBook = (TextView) itemView.findViewById(R.id.tv_item_descriptionNewBook);
-            tvItemPriceNewBook = (TextView) itemView.findViewById(R.id.tv_item_priceNewBook);
-//            btnItemLike = (ImageView) itemView.findViewById(R.id.btn_item_like);
-//            btnItemBuy = (ImageView) itemView.findViewById(R.id.btn_item_buy);
+            imgViewItemImgBook = (ImageView) itemView.findViewById(R.id.imgView_item_imgBook);
+            tvItemNameBook = (TextView) itemView.findViewById(R.id.tv_item_nameBook);
+            tvItemDescription = (TextView) itemView.findViewById(R.id.tv_item_description);
+            tvItemPriceBook = (TextView) itemView.findViewById(R.id.tv_item_priceBook);
         }
         public void onBind(int position){
                 Book book = bookList.get(position);
-                tvItemNameNewBook.setText(book.getBookName());
-                tvItemDescriptionNewBook.setText(book.getDescription());
-                tvItemPriceNewBook.setText(book.getPriceBook());
+                tvItemNameBook.setText(book.getBookName());
+                tvItemDescription.setText(book.getDescription());
+                tvItemPriceBook.setText(book.getPriceBook());
             Glide.with(context).load(book.getImageBook())
-                    .into(imgViewItemImgNewBook);
+                    .into(imgViewItemImgBook);
         }
     }
 }

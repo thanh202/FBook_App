@@ -1,4 +1,4 @@
-package com.example.fbook_app.Adpater;
+package com.example.fbook_app.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

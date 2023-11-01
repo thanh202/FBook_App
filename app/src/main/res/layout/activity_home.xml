@@ -6,100 +6,48 @@
     android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".HomeActivity.HomeActivity">
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="80dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:src="@drawable/logo_fbook" />
-
-            <ImageView
+            <androidx.cardview.widget.CardView
+                android:layout_weight="8"
+                android:id="@+id/cv_searchBar"
+                android:layout_margin="10dp"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/icon_cart" />
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp">
+
+                <com.mancj.materialsearchbar.MaterialSearchBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:mt_hint="Tìm Kiếm ..."
+                    app:mt_placeholder="Tìm Kiếm ..."
+                    app:mt_searchBarColor="#D8D8D8" />
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_searchBar"
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="20dp"
-            android:layout_below="@+id/linearLayout"
-            >
 
-            <com.mancj.materialsearchbar.MaterialSearchBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:mt_hint="Tìm Kiếm ..."
-                app:mt_placeholder="Tìm Kiếm ..."
-                app:mt_searchBarColor="#D8D8D8" />
-        </androidx.cardview.widget.CardView>
+    <androidx.viewpager.widget.ViewPager
+        android:layout_below="@+id/linearLayout"
+        android:layout_above="@id/bottom_nav"
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"/>
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/cv_searchBar"
-            android:layout_above="@+id/bottom_nav"
-            >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcl_book"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:text="Top book"
-                    android:textColor="#F7941D"
-                    android:textSize="24sp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcl_topBook"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:text="Book New"
-                    android:textColor="#F7941D"
-                    android:textSize="24sp" />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcl_newBook"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp" />
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         app:itemBackground="@color/white"
         app:itemIconTint="@color/custom_color_bottom_nav"
         app:itemTextColor="@color/custom_color_bottom_nav"
