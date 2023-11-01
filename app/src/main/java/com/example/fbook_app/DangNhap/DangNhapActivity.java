@@ -1,4 +1,4 @@
-package com.example.fbook_app.dangNhap;
+package com.example.fbook_app.DangNhap;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
