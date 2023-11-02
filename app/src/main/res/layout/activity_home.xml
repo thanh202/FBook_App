@@ -8,14 +8,16 @@
     tools:context=".HomeActivity.HomeActivity">
 
         <LinearLayout
+            android:background="@color/white"
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_gravity="center"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="50dp"
                 android:layout_weight="1.5"
                 android:src="@drawable/logo_fbook" />
             <androidx.cardview.widget.CardView
