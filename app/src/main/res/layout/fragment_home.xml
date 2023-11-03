@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,11 +16,40 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:background="@color/white"
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1.5"
+                        android:src="@drawable/logo_fbook" />
+                    <androidx.cardview.widget.CardView
+                        android:layout_weight="8"
+                        android:id="@+id/cv_searchBar"
+                        android:layout_margin="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="20dp">
+
+                        <com.mancj.materialsearchbar.MaterialSearchBar
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:mt_hint="Tìm Kiếm ..."
+                            app:mt_placeholder="Tìm Kiếm ..."
+                            app:mt_searchBarColor="#D8D8D8" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcl_book"
@@ -60,4 +91,4 @@
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>
