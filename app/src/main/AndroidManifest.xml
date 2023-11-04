@@ -13,6 +13,9 @@
         android:theme="@style/Theme.FBook_App"
         tools:targetApi="31">
         <activity
+            android:name=".HomeActivity.InfomationFragment.ChinhSuaThongTinActivity.ChinhSuaThongTinActivity"
+            android:exported="false" />
+        <activity
             android:name=".FavoriteActivity.FavoriteActivity"
             android:exported="false" />
         <activity

@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:text="Tài Khoản Cá Nhân"
-            android:textColor="@color/black"
+            android:textColor="@color/Cam"
             android:textSize="30dp"
             android:textStyle="bold" />
 
@@ -147,6 +147,7 @@
                                 app:cardCornerRadius="50dp">
 
                                 <LinearLayout
+                                    android:id="@+id/btn_chinhsuathongtin"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="10dp"
