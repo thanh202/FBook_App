@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".HomeActivity.InfomationFragment.ChinhSuaThongTinActivity.ChinhSuaThongTinActivity">
@@ -91,6 +92,7 @@
                             android:textStyle="bold" />
 
                         <EditText
+                            android:textColor="@color/black"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
@@ -114,6 +116,7 @@
                             android:textStyle="bold" />
 
                         <EditText
+                            android:textColor="@color/black"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
@@ -137,6 +140,7 @@
                             android:textStyle="bold" />
 
                         <EditText
+                            android:textColor="@color/black"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
@@ -160,6 +164,7 @@
                             android:textStyle="bold" />
 
                         <EditText
+                            android:textColor="@color/black"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
@@ -178,6 +183,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <androidx.cardview.widget.CardView
+                            android:backgroundTint="@color/white"
                             app:cardCornerRadius="50dp"
                             android:layout_margin="1dp"
                             android:layout_width="match_parent"
@@ -207,10 +213,10 @@
             app:cardCornerRadius="50dp">
 
             <androidx.cardview.widget.CardView
+                android:backgroundTint="@color/white"
                 android:layout_gravity="center"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_margin="1dp"
                 app:cardCornerRadius="50dp">
                 <ImageView
                     android:layout_gravity="center"

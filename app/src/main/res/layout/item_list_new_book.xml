@@ -28,6 +28,7 @@
         android:layout_marginStart="5dp"
         android:orientation="vertical">
         <TextView
+            android:textColor="@color/black"
             android:id="@+id/tv_item_nameNewBook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,6 +39,7 @@
         <TextView
             android:id="@+id/tv_item_descriptionNewBook"
             android:layout_width="match_parent"
+            android:textColor="#4C4C4C"
             android:layout_height="wrap_content"
             android:text="Bộ kể về quá trình Tiêu Viêm thôn phệ.."
             android:textSize="10sp"

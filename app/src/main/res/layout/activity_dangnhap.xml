@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <ImageView
@@ -32,6 +33,9 @@
         android:paddingHorizontal="25dp">
 
         <EditText
+            android:textColorHint="@color/black"
+
+            android:textColor="@color/black"
             android:id="@+id/edt_email_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,6 +48,9 @@
             android:paddingStart="20dp"
             tools:ignore="RtlSymmetry" />
         <EditText
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+
             android:id="@+id/edt_password_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

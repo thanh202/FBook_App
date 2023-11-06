@@ -2,9 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <ImageView
+
         android:id="@+id/rl_btn_back_signUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,6 +34,8 @@
         android:paddingHorizontal="25dp">
 
         <EditText
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
             android:id="@+id/edt_email_signUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,6 +48,10 @@
             android:paddingStart="20dp"
             tools:ignore="RtlSymmetry" />
         <EditText
+            android:textColorHint="@color/black"
+
+            android:textColor="@color/black"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -56,6 +64,10 @@
             android:paddingHorizontal="20dp"
             tools:ignore="RtlSymmetry" />
         <EditText
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -68,6 +80,8 @@
             android:paddingHorizontal="20dp"
             tools:ignore="RtlSymmetry" />
         <EditText
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -80,6 +94,10 @@
             android:paddingHorizontal="20dp"
             tools:ignore="RtlSymmetry" />
         <EditText
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+
+
             android:id="@+id/edt_password_signUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
