@@ -5,10 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,28 +18,24 @@ import com.example.fbook_app.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TopBookAdapter extends RecyclerView.Adapter<TopBookAdapter.ViewHolder> {
+public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapter.ViewHolder> {
     private final Context context;
     private OnItemClickListener onItemClickListener;
     private List<Book> bookList = new ArrayList<>();
-
-    public TopBookAdapter(Context mContext) {
+    public FavoriteBookAdapter(Context mContext){
         context = mContext;
     }
-
-    public void setListBook(List<Book> list) {
+    public void setListBook(List<Book> list){
         this.bookList = list;
         notifyDataSetChanged();
     }
-
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.onItemClickListener = itemClickListener;
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_list_top_book, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_list_favorite_book,parent,false);
         return new ViewHolder(view);
     }
 
@@ -53,29 +49,34 @@ public class TopBookAdapter extends RecyclerView.Adapter<TopBookAdapter.ViewHold
         return bookList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imgViewItemImgTopBook;
-        private TextView tvItemNameTopBook;
-        private CardView cvSelectItem;
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        private ImageView imgViewItemImgBook;
+        private TextView tvItemNameBook;
+        private TextView tvItemDescription;
+        private TextView tvItemPriceBook;
+
+        private LinearLayout llSelectItem;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            imgViewItemImgTopBook = (ImageView) itemView.findViewById(R.id.imgView_item_imgTopBook);
-            tvItemNameTopBook = (TextView) itemView.findViewById(R.id.tv_item_nameTopBook);
-            cvSelectItem = itemView.findViewById(R.id.cv_select_item_top_book);
+            imgViewItemImgBook = (ImageView) itemView.findViewById(R.id.imgView_item_imgBook);
+            tvItemNameBook = (TextView) itemView.findViewById(R.id.tv_item_nameBook);
+            tvItemDescription = (TextView) itemView.findViewById(R.id.tv_item_description);
+            tvItemPriceBook = (TextView) itemView.findViewById(R.id.tv_item_priceBook);
+            llSelectItem = itemView.findViewById(R.id.ll_select_item_favorite_book);
         }
-
-        public void onBind(int position) {
-            Book book = bookList.get(position);
-            tvItemNameTopBook.setText(book.getBookName());
+        public void onBind(int position){
+                Book book = bookList.get(position);
+                tvItemNameBook.setText(book.getBookName());
+                tvItemDescription.setText(book.getDescription());
+                tvItemPriceBook.setText(book.getPriceBook());
             Glide.with(context).load(book.getImageBook())
-                    .into(imgViewItemImgTopBook);
-            cvSelectItem.setOnClickListener(v -> {
+                    .into(imgViewItemImgBook);
+            llSelectItem.setOnClickListener(v -> {
                 onItemClickListener.onItemClick(book);
             });
         }
     }
-
     public interface OnItemClickListener {
         void onItemClick(Book book);
     }

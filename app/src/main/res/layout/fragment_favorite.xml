@@ -1,22 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".HomeActivity.FavoriteFragment.FavoriteFragment">
-
     <LinearLayout
-        android:background="#83F71D"
+        android:background="@color/white"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1.5"
+            android:src="@drawable/logo_fbook" />
+        <androidx.cardview.widget.CardView
+            android:layout_weight="8"
+            android:id="@+id/cv_searchBar"
+            android:layout_margin="10dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="40dp">
+
+            <com.mancj.materialsearchbar.MaterialSearchBar
+                app:mt_hintColor="@color/Cam"
+                app:mt_placeholderColor="@color/Cam"
+                app:mt_searchIconTint="@color/Cam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mt_hint="Tìm Kiếm ..."
+                app:mt_placeholder="Tìm Kiếm ..."
+                app:mt_searchBarColor="#EDEDED" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginRight="5dp"
+            android:backgroundTint="@color/Cam"
+            android:layout_gravity="center"
+            app:cardCornerRadius="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <androidx.cardview.widget.CardView
+                android:backgroundTint="@color/white"
+                android:layout_margin="1dp"
+                app:cardCornerRadius="50dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_margin="5dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/img_icon_notification"/>
+            </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcl_list_favorite_book"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:textSize="30dp"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Favorite Fragment" />
-    </LinearLayout>
+        />
 
-</FrameLayout>
+</LinearLayout>
