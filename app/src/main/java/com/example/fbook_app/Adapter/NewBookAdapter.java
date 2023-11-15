@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,26 +19,18 @@ import java.util.List;
 
 public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHolder> {
     private final Context context;
-    private BookAdapter.OnItemClickListener onItemClickListener;
     private List<Book> bookList = new ArrayList<>();
-
-    public NewBookAdapter(Context mContext) {
+    public NewBookAdapter(Context mContext){
         context = mContext;
     }
-
-    public void setListBook(List<Book> list) {
+    public void setListBook(List<Book> list){
         this.bookList = list;
         notifyDataSetChanged();
     }
-
-    public void setOnItemClickListener(BookAdapter.OnItemClickListener itemClickListener) {
-        this.onItemClickListener = itemClickListener;
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_list_new_book, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_list_new_book,parent,false);
         return new ViewHolder(view);
     }
 
@@ -53,14 +44,15 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
         return bookList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder{
         private ImageView imgViewItemImgNewBook;
         private TextView tvItemNameNewBook;
         private TextView tvItemDescriptionNewBook;
         private TextView tvItemPriceNewBook;
-        private RelativeLayout rlItemSelect;
         private ImageView btnItemLike;
         private ImageView btnItemBuy;
+
+
 
 
         public ViewHolder(View itemView) {
@@ -69,25 +61,16 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
             tvItemNameNewBook = (TextView) itemView.findViewById(R.id.tv_item_nameNewBook);
             tvItemDescriptionNewBook = (TextView) itemView.findViewById(R.id.tv_item_descriptionNewBook);
             tvItemPriceNewBook = (TextView) itemView.findViewById(R.id.tv_item_priceNewBook);
-            rlItemSelect = itemView.findViewById(R.id.rl_item_select);
 //            btnItemLike = (ImageView) itemView.findViewById(R.id.btn_item_like);
 //            btnItemBuy = (ImageView) itemView.findViewById(R.id.btn_item_buy);
         }
-
-        public void onBind(int position) {
-            Book book = bookList.get(position);
-            tvItemNameNewBook.setText(book.getBookName());
-            tvItemDescriptionNewBook.setText(book.getDescription());
-            tvItemPriceNewBook.setText(book.getPriceBook());
+        public void onBind(int position){
+                Book book = bookList.get(position);
+                tvItemNameNewBook.setText(book.getBookName());
+                tvItemDescriptionNewBook.setText(book.getDescription());
+                tvItemPriceNewBook.setText(book.getPriceBook());
             Glide.with(context).load(book.getImageBook())
                     .into(imgViewItemImgNewBook);
-            rlItemSelect.setOnClickListener(v -> {
-                onItemClickListener.onItemClick(book);
-            });
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(Book book);
     }
 }

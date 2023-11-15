@@ -1,8 +1,6 @@
 package com.example.fbook_app.Model;
 
-import java.io.Serializable;
-
-public class Book implements Serializable {
+public class Book {
     private int idBook;
     private String bookName;
     private String author;
@@ -10,10 +8,8 @@ public class Book implements Serializable {
     private String priceBook;
     private String description;
     private int imageBook;
-    private int chapter;
-    private String typeBook;
 
-    public Book(int idBook, String bookName, String author, String publishYear, String priceBook, String description, int imageBook, int chapter, String typeBook) {
+    public Book(int idBook, String bookName, String author, String publishYear, String priceBook, String description, int imageBook) {
         this.idBook = idBook;
         this.bookName = bookName;
         this.author = author;
@@ -21,24 +17,6 @@ public class Book implements Serializable {
         this.priceBook = priceBook;
         this.description = description;
         this.imageBook = imageBook;
-        this.chapter = chapter;
-        this.typeBook = typeBook;
-    }
-
-    public int getChapter() {
-        return chapter;
-    }
-
-    public void setChapter(int chapter) {
-        this.chapter = chapter;
-    }
-
-    public String getTypeBook() {
-        return typeBook;
-    }
-
-    public void setTypeBook(String typeBook) {
-        this.typeBook = typeBook;
     }
 
     public int getIdBook() {

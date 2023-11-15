@@ -17,13 +17,11 @@
         android:textColor="@color/Cam"
         android:textSize="30dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
-        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="44dp"
@@ -43,10 +41,10 @@
             app:cardCornerRadius="15dp">
 
             <androidx.cardview.widget.CardView
+                android:backgroundTint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-                android:backgroundTint="@color/white"
                 app:cardCornerRadius="15dp">
 
                 <LinearLayout
@@ -82,10 +80,10 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:backgroundTint="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
-            android:backgroundTint="@color/white"
             app:cardCornerRadius="50dp">
 
             <com.makeramen.roundedimageview.RoundedImageView

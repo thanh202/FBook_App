@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -20,26 +19,18 @@ import java.util.List;
 
 public class TopBookAdapter extends RecyclerView.Adapter<TopBookAdapter.ViewHolder> {
     private final Context context;
-    private OnItemClickListener onItemClickListener;
     private List<Book> bookList = new ArrayList<>();
-
-    public TopBookAdapter(Context mContext) {
+    public TopBookAdapter(Context mContext){
         context = mContext;
     }
-
-    public void setListBook(List<Book> list) {
+    public void setListBook(List<Book> list){
         this.bookList = list;
         notifyDataSetChanged();
     }
-
-    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
-        this.onItemClickListener = itemClickListener;
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_list_top_book, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_list_top_book,parent,false);
         return new ViewHolder(view);
     }
 
@@ -53,30 +44,21 @@ public class TopBookAdapter extends RecyclerView.Adapter<TopBookAdapter.ViewHold
         return bookList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder{
         private ImageView imgViewItemImgTopBook;
         private TextView tvItemNameTopBook;
-        private CardView cvSelectItem;
 
         public ViewHolder(View itemView) {
             super(itemView);
             imgViewItemImgTopBook = (ImageView) itemView.findViewById(R.id.imgView_item_imgTopBook);
             tvItemNameTopBook = (TextView) itemView.findViewById(R.id.tv_item_nameTopBook);
-            cvSelectItem = itemView.findViewById(R.id.cv_select_item_top_book);
-        }
 
-        public void onBind(int position) {
-            Book book = bookList.get(position);
-            tvItemNameTopBook.setText(book.getBookName());
+        }
+        public void onBind(int position){
+                Book book = bookList.get(position);
+                tvItemNameTopBook.setText(book.getBookName());
             Glide.with(context).load(book.getImageBook())
                     .into(imgViewItemImgTopBook);
-            cvSelectItem.setOnClickListener(v -> {
-                onItemClickListener.onItemClick(book);
-            });
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(Book book);
     }
 }
