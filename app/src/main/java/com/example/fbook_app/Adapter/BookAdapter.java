@@ -18,7 +18,7 @@ import com.example.fbook_app.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
+public abstract class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     private OnItemClickListener onItemClickListener;
     private final Context context;
     private List<Book> bookList = new ArrayList<>();
@@ -48,6 +48,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     public int getItemCount() {
         return bookList.size();
     }
+
+    public abstract void onItemClick(Book book);
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private ImageView imgViewItemImgBook;
