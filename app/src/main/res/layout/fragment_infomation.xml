@@ -12,23 +12,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
+        android:layout_marginTop="50dp"
         android:text="Tài Khoản Cá Nhân"
         android:textColor="@color/Cam"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.365">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -38,14 +40,14 @@
             android:layout_marginRight="10dp"
             android:background="@color/black"
             android:backgroundTint="@color/Cam"
-            app:cardCornerRadius="15dp">
+            app:cardCornerRadius="10dp">
 
             <androidx.cardview.widget.CardView
-                android:backgroundTint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-                app:cardCornerRadius="15dp">
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -80,10 +82,10 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:backgroundTint="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
+            android:backgroundTint="@color/white"
             app:cardCornerRadius="50dp">
 
             <com.makeramen.roundedimageview.RoundedImageView
@@ -102,7 +104,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="50dp"
         android:backgroundTint="@color/Cam"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -112,7 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
-            app:cardCornerRadius="15dp">
+            app:cardCornerRadius="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -235,7 +237,7 @@
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="5dp"
                                     android:layout_weight="8"
-                                    android:text="Sách Đã Mua"
+                                    android:text="Lịch Sử Mua Sách"
                                     android:textColor="@color/black"
                                     android:textSize="15dp" />
 

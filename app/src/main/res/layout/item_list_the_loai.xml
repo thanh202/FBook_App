@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="5dp"
+    android:background="@drawable/shadow">
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/background_item_list_new_book"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp">
+
+            <ImageView
+                android:id="@+id/imgView_item_imgTheLoai"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_book" />
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/tv_item_nameTheLoai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Hành Động"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+</LinearLayout>

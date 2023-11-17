@@ -129,12 +129,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/btn_google"
             android:layout_marginStart="16dp"/>
-        <ImageView
-            android:id="@+id/btn_login_apple"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/btn_apple"
-            android:layout_marginStart="16dp"/>
     </LinearLayout>
     <TextView
         android:id="@+id/btn_login_home"
