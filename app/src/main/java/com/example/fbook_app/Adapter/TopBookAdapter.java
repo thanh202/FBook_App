@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -56,7 +57,7 @@ public class TopBookAdapter extends RecyclerView.Adapter<TopBookAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgViewItemImgTopBook;
         private TextView tvItemNameTopBook;
-        private CardView cvSelectItem;
+        private LinearLayout cvSelectItem;
 
         public ViewHolder(View itemView) {
             super(itemView);
