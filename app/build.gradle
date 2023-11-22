@@ -43,12 +43,18 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // refresh
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     // thư viện gif
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
     //circle imageview
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     // search view
     implementation('com.github.mancj:MaterialSearchBar:0.8.5')
+    //retrofit 2
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     //glide
     implementation 'com.github.bumptech.glide:glide:4.15.1'
     //round Image
