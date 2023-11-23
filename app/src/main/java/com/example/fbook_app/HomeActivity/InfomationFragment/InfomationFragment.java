@@ -1,7 +1,9 @@
 package com.example.fbook_app.HomeActivity.InfomationFragment;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -57,12 +59,44 @@ public class InfomationFragment extends Fragment {
         btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Coming Soon ...", Toast.LENGTH_SHORT).show();
+                showDialog();
             }
         });
 
 
         return view;
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+        builder.setTitle("Thông Báo");
+        builder.setMessage("Vui Lòng Xác Nhận Đăng Xuất !");
+        builder.setIcon(R.drawable.icon_warning);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ProgressDialog dialog=new ProgressDialog(getContext());
+                dialog.setMessage("Vui Lòng Đợi ...");
+                dialog.show();
+                Handler handler=new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        dialog.dismiss();
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                },2000);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
     }
 
 
