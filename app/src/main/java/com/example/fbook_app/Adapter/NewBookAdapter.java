@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
 
@@ -80,7 +81,8 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
             tvItemDescriptionNewBook.setText(book.getDiscription());
             String price = book.getPriceBook()+" vnđ";
             tvItemPriceNewBook.setText(price);
-            Glide.with(context).load(book.getImageBook())
+            String imgBook = RetrofitClient.BASE_URL+book.getImageBook();
+            Glide.with(context).load(imgBook)
                     .into(imgViewItemImgNewBook);
             rlItemSelect.setOnClickListener(v -> {
                 onItemClickListener.onItemClick(book);

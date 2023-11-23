@@ -4,10 +4,9 @@
     android:id="@+id/cv_select_item_top_book"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="20dp"
     android:layout_marginHorizontal="10dp"
     android:background="@drawable/background_item_list_top_book"
-    >
+    app:cardCornerRadius="20dp">
 
     <ImageView
         android:id="@+id/imgView_item_imgTopBook"
@@ -18,16 +17,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_item_nameTopBook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
         android:layout_gravity="bottom|center"
-        android:textSize="11sp"
+        android:textAlignment="center"
+        android:paddingHorizontal="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/Cam"
+        android:fontFamily="@font/roboto_bold"
         android:text="Đấu phá thương khung 3"
-        android:layout_marginBottom="5dp"/>
+        android:textColor="#FFFFFF"
+        android:textSize="11sp" />
 </androidx.cardview.widget.CardView>
