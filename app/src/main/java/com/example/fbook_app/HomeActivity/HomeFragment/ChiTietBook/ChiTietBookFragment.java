@@ -1,31 +1,28 @@
 package com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fbook_app.Adapter.ChapterBookAdapter;
 import com.example.fbook_app.Model.Book;
+import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
 
 public class ChiTietBookFragment extends Fragment {
     private View mView;
 
-    public static ChiTietBookFragment getInstance(Book book) {
+    public static ChiTietBookFragment getInstance(BookResponse.Result book) {
         ChiTietBookFragment chiTietBookFragment = new ChiTietBookFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("object_book", book);

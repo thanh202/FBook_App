@@ -12,7 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.fbook_app.Model.Book;
+import com.example.fbook_app.ApiNetwork.RetrofitClient;
+import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
 
 import java.util.ArrayList;
@@ -20,19 +21,19 @@ import java.util.List;
 
 public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHolder> {
     private final Context context;
-    private BookAdapter.OnItemClickListener onItemClickListener;
-    private List<Book> bookList = new ArrayList<>();
+    private OnItemClickListener onItemClickListener;
+    private List<BookResponse.Result> bookList = new ArrayList<>();
 
     public NewBookAdapter(Context mContext) {
         context = mContext;
     }
 
-    public void setListBook(List<Book> list) {
+    public void setListBook(List<BookResponse.Result> list) {
         this.bookList = list;
         notifyDataSetChanged();
     }
 
-    public void setOnItemClickListener(BookAdapter.OnItemClickListener itemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.onItemClickListener = itemClickListener;
     }
 
@@ -75,11 +76,13 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
         }
 
         public void onBind(int position) {
-            Book book = bookList.get(position);
+            BookResponse.Result book = bookList.get(position);
             tvItemNameNewBook.setText(book.getBookName());
-            tvItemDescriptionNewBook.setText(book.getDescription());
-            tvItemPriceNewBook.setText(book.getPriceBook());
-            Glide.with(context).load(book.getImageBook())
+            tvItemDescriptionNewBook.setText(book.getDiscription());
+            String price = book.getPriceBook()+" vnđ";
+            tvItemPriceNewBook.setText(price);
+            String imgBook = RetrofitClient.BASE_URL+book.getImageBook();
+            Glide.with(context).load(imgBook)
                     .into(imgViewItemImgNewBook);
             rlItemSelect.setOnClickListener(v -> {
                 onItemClickListener.onItemClick(book);
@@ -88,6 +91,6 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Book book);
+        void onItemClick(BookResponse.Result book);
     }
 }

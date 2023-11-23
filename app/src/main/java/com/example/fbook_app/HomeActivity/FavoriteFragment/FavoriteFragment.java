@@ -60,13 +60,13 @@ public class FavoriteFragment extends Fragment {
         adapter.setListBook(list);
         rclListFavorite.setLayoutManager(new GridLayoutManager(getContext(),2));
         rclListFavorite.setAdapter(adapter);
-        adapter.setOnItemClickListener(new FavoriteBookAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Book book) {
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-            }
-        });
+//        adapter.setOnItemClickListener(new FavoriteBookAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(Book book) {
+//                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+//                fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+//            }
+//        });
 
         return mView;
     }

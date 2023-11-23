@@ -13,7 +13,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.fbook_app.Model.Book;
+import com.example.fbook_app.ApiNetwork.RetrofitClient;
+import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
 
 import java.util.ArrayList;
@@ -22,13 +23,13 @@ import java.util.List;
 public class TopBookAdapter extends RecyclerView.Adapter<TopBookAdapter.ViewHolder> {
     private final Context context;
     private OnItemClickListener onItemClickListener;
-    private List<Book> bookList = new ArrayList<>();
+    private List<BookResponse.Result> bookList = new ArrayList<>();
 
     public TopBookAdapter(Context mContext) {
         context = mContext;
     }
 
-    public void setListBook(List<Book> list) {
+    public void setListBook(List<BookResponse.Result> list) {
         this.bookList = list;
         notifyDataSetChanged();
     }
@@ -67,9 +68,10 @@ public class TopBookAdapter extends RecyclerView.Adapter<TopBookAdapter.ViewHold
         }
 
         public void onBind(int position) {
-            Book book = bookList.get(position);
+            BookResponse.Result book = bookList.get(position);
             tvItemNameTopBook.setText(book.getBookName());
-            Glide.with(context).load(book.getImageBook())
+            String imgBook = RetrofitClient.BASE_URL+book.getImageBook();
+            Glide.with(context).load(imgBook)
                     .into(imgViewItemImgTopBook);
             cvSelectItem.setOnClickListener(v -> {
                 onItemClickListener.onItemClick(book);
@@ -78,6 +80,6 @@ public class TopBookAdapter extends RecyclerView.Adapter<TopBookAdapter.ViewHold
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Book book);
+        void onItemClick(BookResponse.Result book);
     }
 }

@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/rl_btn_back_login"
@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="18dp"
         android:layout_marginTop="11dp"
-        android:src="@drawable/icon_back" />
+        android:src="@drawable/icon_back_login" />
 
     <ImageView
         android:id="@+id/logo_fbook_login"
@@ -33,24 +33,21 @@
         android:paddingHorizontal="25dp">
 
         <EditText
-            android:textColorHint="@color/black"
-
-            android:textColor="@color/black"
             android:id="@+id/edt_email_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/background_edit_text"
             android:drawableStart="@drawable/icon_gmail"
             android:drawablePadding="10dp"
-            android:hint="Email"
             android:fontFamily="@font/roboto_regular"
+            android:hint="Email"
             android:paddingVertical="16dp"
             android:paddingStart="20dp"
-            tools:ignore="RtlSymmetry" />
-        <EditText
             android:textColor="@color/black"
             android:textColorHint="@color/black"
+            tools:ignore="RtlSymmetry" />
 
+        <EditText
             android:id="@+id/edt_password_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,90 +56,57 @@
             android:drawableStart="@drawable/icon_password"
             android:drawableEnd="@drawable/icon_show_password"
             android:drawablePadding="10dp"
-            android:hint="Mật khẩu"
             android:fontFamily="@font/roboto_regular"
-            android:paddingVertical="16dp"
-            android:paddingHorizontal="20dp"
+            android:hint="Mật khẩu"
             android:inputType="textPassword"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             tools:ignore="RtlSymmetry" />
+
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nhớ mật khẩu"
-            android:textColor="#9A9A9A"
-            />
-        <TextView
-            android:id="@+id/btn_forgotPassword_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Quên mật khẩu ?"
-            android:textColor="#9A9A9A"
-            android:gravity="end"
-            />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="33dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
-            <View
-                android:layout_width="140dp"
-                android:layout_height="2dp"
-                android:background="#9A9A9A"
-                android:layout_gravity="start|center_vertical"/>
-            <TextView
+
+            <CheckBox
+                android:id="@+id/cb_remember_pass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|center_horizontal"
-                android:text="Hoặc"
-                android:textColor="#9A9A9A"
-                android:paddingHorizontal="22dp"/>
-            <View
+                android:text="Nhớ mật khẩu"
+                android:textColor="#9A9A9A" />
+
+            <TextView
+                android:id="@+id/btn_forgotPassword_login"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#9A9A9A"
-                android:layout_gravity="start|center_vertical"/>
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="Quên mật khẩu ?"
+                android:textColor="#9A9A9A" />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="7dp"
+    <ProgressBar
+        android:id="@+id/pg_load_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/ll_input_login"
-        android:layout_centerInParent="true"
-        >
-        <ImageView
-            android:id="@+id/btn_login_facebook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/btn_facebook"/>
-        <ImageView
-            android:id="@+id/btn_login_google"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/btn_google"
-            android:layout_marginStart="16dp"/>
-    </LinearLayout>
+        android:layout_above="@id/btn_login_home"
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true"/>
     <TextView
         android:id="@+id/btn_login_home"
-        android:background="@drawable/bg_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="34dp"
         android:layout_marginBottom="38dp"
+        android:background="@drawable/bg_button"
+        android:fontFamily="@font/roboto_bold"
         android:paddingVertical="14dp"
         android:text="Login"
         android:textAlignment="center"
-        android:fontFamily="@font/roboto_bold"
-        android:textSize="18sp"
         android:textColor="#FFFFFF"
-        />
+        android:textSize="18sp" />
 </RelativeLayout>

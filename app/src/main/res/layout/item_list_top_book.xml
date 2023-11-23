@@ -1,42 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cv_select_item_top_book"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
-    android:background="@drawable/shadow">
+    android:background="@drawable/background_item_list_top_book"
+    app:cardCornerRadius="20dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_marginBottom="1dp"
-        android:layout_marginRight="1dp"
+    <ImageView
+        android:id="@+id/imgView_item_imgTopBook"
+        android:layout_width="141dp"
+        android:layout_height="97dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_top_book"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_item_nameTopBook"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background_item_list_top_book"
-        app:cardCornerRadius="10dp">
-
-        <ImageView
-            android:id="@+id/imgView_item_imgTopBook"
-            android:layout_width="141dp"
-            android:layout_height="97dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_top_book"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_item_nameTopBook"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="5dp"
-            android:text="Đấu phá thương khung 3"
-            android:textColor="#FFFFFF"
-            android:textSize="11sp" />
-    </androidx.cardview.widget.CardView>
-
-
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:textAlignment="center"
+        android:paddingHorizontal="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/Cam"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Đấu phá thương khung 3"
+        android:textColor="#FFFFFF"
+        android:textSize="11sp" />
+</androidx.cardview.widget.CardView>
