@@ -58,7 +58,7 @@ public class TopBookAdapter extends RecyclerView.Adapter<TopBookAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgViewItemImgTopBook;
         private TextView tvItemNameTopBook;
-        private LinearLayout cvSelectItem;
+        private CardView cvSelectItem;
 
         public ViewHolder(View itemView) {
             super(itemView);
