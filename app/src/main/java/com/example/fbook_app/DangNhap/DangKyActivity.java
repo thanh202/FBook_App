@@ -18,7 +18,7 @@ public class DangKyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dangky);
         btnBack = findViewById(R.id.rl_btn_back_signUp);
         btnBack.setOnClickListener(v -> {
-            startActivity(new Intent(this, MainActivity.class));
+            finish();
         });
     }
 }
