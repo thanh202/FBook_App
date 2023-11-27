@@ -52,6 +52,8 @@
                 android:layout_height="wrap_content"
                 android:text="Bộ kể về quá trình Tiêu Viêm thôn phệ.."
                 android:textColor="#4C4C4C"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textSize="10sp" />
 
             <LinearLayout

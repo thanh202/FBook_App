@@ -55,6 +55,14 @@ public class DangNhapActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
 
+        Intent intentDangKy = getIntent();
+        if (intentDangKy.hasExtra("email_signup") && intentDangKy.hasExtra("password_signup")){
+            String emailSignup = intentDangKy.getStringExtra("email_signup");
+            String passwordSignup = intentDangKy.getStringExtra("password");   // Điền thông tin vào EditText
+            edtEmailLogin.setText(emailSignup);
+            edtPassWordLogin.setText(passwordSignup);
+        }
+
         // Load saved login information if available
         if (sharedPreferences.contains("email")) {
             String savedEmail = sharedPreferences.getString("email", "");
@@ -105,6 +113,9 @@ public class DangNhapActivity extends AppCompatActivity {
                     pgLoadLogin.setVisibility(View.INVISIBLE);
                     LoginResponse loginResponse = response.body();
                     if (loginResponse.getStatus()) {
+                        SharedPreferences.Editor editor = getSharedPreferences("MyToken", MODE_PRIVATE).edit();
+                        editor.putString("token", loginResponse.getResult());
+                        editor.apply();
                         Intent intent = new Intent(DangNhapActivity.this, HomeActivity.class);
                         startActivity(intent);
                         finishAffinity();

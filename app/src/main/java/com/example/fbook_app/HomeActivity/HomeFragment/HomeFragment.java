@@ -1,5 +1,7 @@
 package com.example.fbook_app.HomeActivity.HomeFragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -101,49 +103,56 @@ public class HomeFragment extends Fragment {
     
 
     private void getData() {
+        SharedPreferences myToken= requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String token = myToken.getString("token", null);
         refresh.setRefreshing(true);
-        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        //Get Book
-        Call<BookResponse> callBook = apiService.getListBook();
-        callBook.enqueue(new Callback<BookResponse>() {
-            @Override
-            public void onResponse(Call<BookResponse> call, Response<BookResponse> response) {
-                refresh.setRefreshing(false);
-                if (response.isSuccessful()) {
-                    BookResponse bookResponse = response.body();
-                    if (bookResponse != null) {
-                        adapterNewBook.setListBook(bookResponse.getResult());
-                        adapterTopBook.setListBook(bookResponse.getResult());
+        if (token != null){
+            ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+            //Get Book
+            Call<BookResponse> callBook = apiService.getListBook(token);
+            callBook.enqueue(new Callback<BookResponse>() {
+                @Override
+                public void onResponse(Call<BookResponse> call, Response<BookResponse> response) {
+                    refresh.setRefreshing(false);
+                    if (response.isSuccessful()) {
+                        BookResponse bookResponse = response.body();
+                        if (bookResponse != null) {
+                            adapterNewBook.setListBook(bookResponse.getResult());
+                            adapterTopBook.setListBook(bookResponse.getResult());
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<BookResponse> call, Throwable t) {
-                refresh.setRefreshing(false);
-                Toast.makeText(requireActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        //Get Cat
-        Call<CategoryResponse> callCat = apiService.getListCat();
-        callCat.enqueue(new Callback<CategoryResponse>() {
-            @Override
-            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
-                refresh.setRefreshing(false);
-                if (response.isSuccessful()) {
-                    CategoryResponse catResponse = response.body();
-                    if (catResponse != null) {
-                        adapter.setCategoryList(catResponse.getResult());
+                @Override
+                public void onFailure(Call<BookResponse> call, Throwable t) {
+                    refresh.setRefreshing(false);
+                    Toast.makeText(requireActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            //Get Cat
+            Call<CategoryResponse> callCat = apiService.getListCat(token);
+            callCat.enqueue(new Callback<CategoryResponse>() {
+                @Override
+                public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
+                    refresh.setRefreshing(false);
+                    if (response.isSuccessful()) {
+                        CategoryResponse catResponse = response.body();
+                        if (catResponse != null) {
+                            adapter.setCategoryList(catResponse.getResult());
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<CategoryResponse> call, Throwable t) {
-                refresh.setRefreshing(false);
-                Toast.makeText(requireActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<CategoryResponse> call, Throwable t) {
+                    refresh.setRefreshing(false);
+                    Toast.makeText(requireActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+
 
     }
 }
