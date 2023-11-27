@@ -69,7 +69,7 @@ public class DangKyActivity extends AppCompatActivity {
             signUp(email, userName, phone, birthDay, passWord);
         });
         btnBack.setOnClickListener(v -> {
-            startActivity(new Intent(this, MainActivity.class));
+            finish();
         });
     }
 

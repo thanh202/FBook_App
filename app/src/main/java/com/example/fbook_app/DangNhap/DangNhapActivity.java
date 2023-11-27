@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
+import com.example.fbook_app.Common.Common;
 import com.example.fbook_app.Doi_Mat_khau.ForgotPassword_Activity;
 import com.example.fbook_app.HomeActivity.HomeActivity;
 import com.example.fbook_app.MainActivity;
@@ -28,6 +29,7 @@ import com.example.fbook_app.Model.Request.LoginRequest;
 import com.example.fbook_app.Model.Response.LoginResponse;
 import com.example.fbook_app.R;
 
+import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,10 +57,12 @@ public class DangNhapActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
 
+        Paper.init(this);
+
         Intent intentDangKy = getIntent();
         if (intentDangKy.hasExtra("email_signup") && intentDangKy.hasExtra("password_signup")){
             String emailSignup = intentDangKy.getStringExtra("email_signup");
-            String passwordSignup = intentDangKy.getStringExtra("password");   // Điền thông tin vào EditText
+            String passwordSignup = intentDangKy.getStringExtra("password");
             edtEmailLogin.setText(emailSignup);
             edtPassWordLogin.setText(passwordSignup);
         }
@@ -73,7 +77,7 @@ public class DangNhapActivity extends AppCompatActivity {
             cbRemember.setChecked(true);
         }
         btnBack.setOnClickListener(v -> {
-            startActivity(new Intent(this, MainActivity.class));
+            finish();
         });
         btnForgotPass.setOnClickListener(v -> {
             startActivity(new Intent(this, ForgotPassword_Activity.class));
@@ -87,11 +91,14 @@ public class DangNhapActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("email", email);
                     editor.putString("password", passWord);
+                    Paper.book().write(Common.USER_KEY, email);
+                    Paper.book().write(Common.PWD_KEY, passWord);
                     editor.apply();
                 }else{
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.remove("email");
                     editor.remove("password");
+                    Paper.book().destroy();
                     editor.apply();
                 }
 
