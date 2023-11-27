@@ -39,6 +39,7 @@
             android:background="@drawable/background_edit_text"
             android:drawableStart="@drawable/icon_gmail"
             android:drawablePadding="10dp"
+            android:inputType="textEmailAddress"
             android:fontFamily="@font/roboto_regular"
             android:hint="Email"
             android:paddingVertical="16dp"
@@ -51,6 +52,7 @@
             android:id="@+id/edt_userName_signUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPersonName"
             android:layout_marginTop="15dp"
             android:background="@drawable/background_edit_text"
             android:drawableStart="@drawable/icon_username"
@@ -71,6 +73,7 @@
             android:background="@drawable/background_edit_text"
             android:drawableStart="@drawable/icon_phone"
             android:drawablePadding="10dp"
+            android:inputType="phone"
             android:fontFamily="@font/roboto_regular"
             android:hint="Số điện thoại"
             android:paddingHorizontal="20dp"
@@ -79,20 +82,20 @@
             android:textColorHint="@color/black"
             tools:ignore="RtlSymmetry" />
 
-        <EditText
+        <TextView
             android:id="@+id/edt_birthDay_signUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/background_edit_text"
             android:drawableStart="@drawable/icon_birthday"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:fontFamily="@font/roboto_regular"
-            android:hint="Ngày sinh"
-            android:paddingHorizontal="20dp"
+            android:text="Ngày sinh"
+            android:textSize="17dp"
+            android:paddingHorizontal="18dp"
             android:paddingVertical="16dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/black"
             tools:ignore="RtlSymmetry" />
 
         <EditText

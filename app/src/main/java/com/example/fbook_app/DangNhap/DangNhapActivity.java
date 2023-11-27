@@ -5,14 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +21,6 @@ import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
 import com.example.fbook_app.Doi_Mat_khau.ForgotPassword_Activity;
 import com.example.fbook_app.HomeActivity.HomeActivity;
-import com.example.fbook_app.MainActivity;
 import com.example.fbook_app.Model.Request.LoginRequest;
 import com.example.fbook_app.Model.Response.LoginResponse;
 import com.example.fbook_app.R;
@@ -58,6 +54,14 @@ public class DangNhapActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
 
         Paper.init(this);
+
+        Intent intentDangKy = getIntent();
+        if (intentDangKy.hasExtra("email_signup") && intentDangKy.hasExtra("password_signup")){
+            String emailSignup = intentDangKy.getStringExtra("email_signup");
+            String passwordSignup = intentDangKy.getStringExtra("password");
+            edtEmailLogin.setText(emailSignup);
+            edtPassWordLogin.setText(passwordSignup);
+        }
 
         // Load saved login information if available
         if (sharedPreferences.contains("email")) {
@@ -112,6 +116,9 @@ public class DangNhapActivity extends AppCompatActivity {
                     pgLoadLogin.setVisibility(View.INVISIBLE);
                     LoginResponse loginResponse = response.body();
                     if (loginResponse.getStatus()) {
+                        SharedPreferences.Editor editor = getSharedPreferences("MyToken", MODE_PRIVATE).edit();
+                        editor.putString("token", loginResponse.getResult());
+                        editor.apply();
                         Intent intent = new Intent(DangNhapActivity.this, HomeActivity.class);
                         startActivity(intent);
                         finishAffinity();

@@ -41,6 +41,7 @@
             android:drawablePadding="10dp"
             android:fontFamily="@font/roboto_regular"
             android:hint="Email"
+            android:inputType="textEmailAddress"
             android:paddingVertical="16dp"
             android:paddingStart="20dp"
             android:textColor="@color/black"
@@ -88,13 +89,15 @@
                 android:textColor="#9A9A9A" />
         </LinearLayout>
     </LinearLayout>
+
     <ProgressBar
         android:id="@+id/pg_load_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/btn_login_home"
-        android:visibility="invisible"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
+
     <TextView
         android:id="@+id/btn_login_home"
         android:layout_width="match_parent"
