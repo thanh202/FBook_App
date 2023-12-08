@@ -12,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Model.Book;
+import com.example.fbook_app.Model.Response.ListFavouriteResponse;
 import com.example.fbook_app.R;
 
 import java.util.ArrayList;
@@ -21,11 +23,11 @@ import java.util.List;
 public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapter.ViewHolder> {
     private final Context context;
     private OnItemClickListener onItemClickListener;
-    private List<Book> bookList = new ArrayList<>();
+    private List<ListFavouriteResponse.Result> bookList = new ArrayList<>();
     public FavoriteBookAdapter(Context mContext){
         context = mContext;
     }
-    public void setListBook(List<Book> list){
+    public void setListBook(List<ListFavouriteResponse.Result> list){
         this.bookList = list;
         notifyDataSetChanged();
     }
@@ -66,11 +68,13 @@ public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapte
             llSelectItem = itemView.findViewById(R.id.ll_select_item_favorite_book);
         }
         public void onBind(int position){
-                Book book = bookList.get(position);
+                ListFavouriteResponse.Result book = bookList.get(position);
                 tvItemNameBook.setText(book.getBookName());
-                tvItemDescription.setText(book.getDescription());
-                tvItemPriceBook.setText(book.getPriceBook());
-            Glide.with(context).load(book.getImageBook())
+                tvItemDescription.setText(book.getDiscription());
+                String price = book.getPriceBook()+" vnđ";
+                tvItemPriceBook.setText(price);
+                String imgBook = RetrofitClient.BASE_URL+book.getImageBook();
+            Glide.with(context).load(imgBook)
                     .into(imgViewItemImgBook);
             llSelectItem.setOnClickListener(v -> {
                 onItemClickListener.onItemClick(book);
@@ -78,6 +82,6 @@ public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapte
         }
     }
     public interface OnItemClickListener {
-        void onItemClick(Book book);
+        void onItemClick(ListFavouriteResponse.Result book);
     }
 }

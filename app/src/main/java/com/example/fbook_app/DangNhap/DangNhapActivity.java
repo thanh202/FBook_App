@@ -116,9 +116,12 @@ public class DangNhapActivity extends AppCompatActivity {
                     pgLoadLogin.setVisibility(View.INVISIBLE);
                     LoginResponse loginResponse = response.body();
                     if (loginResponse.getStatus()) {
-                        SharedPreferences.Editor editor = getSharedPreferences("MyToken", MODE_PRIVATE).edit();
-                        editor.putString("token", loginResponse.getResult());
-                        editor.apply();
+                        SharedPreferences.Editor tokenUser = getSharedPreferences("MyToken", MODE_PRIVATE).edit();
+                        tokenUser.putString("token", loginResponse.getResult().getToken());
+                        tokenUser.apply();
+                        SharedPreferences.Editor idUser = getSharedPreferences("MyIdUser", MODE_PRIVATE).edit();
+                        idUser.putInt("idUser", loginResponse.getResult().getUser().getIDUser());
+                        idUser.apply();
                         Intent intent = new Intent(DangNhapActivity.this, HomeActivity.class);
                         startActivity(intent);
                         finishAffinity();

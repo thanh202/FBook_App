@@ -1,25 +1,31 @@
 package com.example.fbook_app.HomeActivity.FavoriteFragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.example.fbook_app.Adapter.BookAdapter;
 import com.example.fbook_app.Adapter.FavoriteBookAdapter;
-import com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook.ChiTietBookFragment;
+import com.example.fbook_app.ApiNetwork.ApiService;
+import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Model.Book;
+import com.example.fbook_app.Model.Response.ListFavouriteResponse;
 import com.example.fbook_app.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class FavoriteFragment extends Fragment {
@@ -44,20 +50,8 @@ public class FavoriteFragment extends Fragment {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_favorite, container, false);
         rclListFavorite = mView.findViewById(R.id.rcl_list_favorite_book);
-        List<Book> list = new ArrayList<>();
-        Book book1 = new Book(1, "Đấu phá thương khung P5", "DuckZang", "23-11-2003", "50.000 vnđ", "Già nam học viện nơi......", R.drawable.img_top_book,10,"Tiểu Thuyết");
-        Book book2 = new Book(1, "Đấu phá thương khung P5", "DuckZang", "23-11-2003", "50.000 vnđ", "Già nam học viện nơi......", R.drawable.img_top_book,10,"Tiểu Thuyết");
-        Book book3 = new Book(1, "Đấu phá thương khung P5", "DuckZang", "23-11-2003", "50.000 vnđ", "Già nam học viện nơi......", R.drawable.img_book,10,"Tiểu Thuyết");
-        Book book4 = new Book(1, "Đấu phá thương khung P5", "DuckZang", "23-11-2003", "50.000 vnđ", "Già nam học viện nơi......", R.drawable.img_book,10,"Tiểu Thuyết");
-        Book book5 = new Book(1, "Đấu phá thương khung P5", "DuckZang", "23-11-2003", "50.000 vnđ", "Già nam học viện nơi......", R.drawable.img_book,10,"Tiểu Thuyết");
-        list.add(book1);
-        list.add(book1);
-        list.add(book2);
-        list.add(book3);
-        list.add(book4);
-        list.add(book5);
         adapter = new FavoriteBookAdapter(getContext());
-        adapter.setListBook(list);
+        getDataFavouriteBook();
         rclListFavorite.setLayoutManager(new GridLayoutManager(getContext(),2));
         rclListFavorite.setAdapter(adapter);
 //        adapter.setOnItemClickListener(new FavoriteBookAdapter.OnItemClickListener() {
@@ -70,4 +64,32 @@ public class FavoriteFragment extends Fragment {
 
         return mView;
     }
+    private void getDataFavouriteBook(){
+        SharedPreferences myToken= requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String token = myToken.getString("token", null);
+        SharedPreferences myIdUser= requireActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
+        int idUser = myIdUser.getInt("idUser", 0);
+
+        if (token != null && idUser > 0){
+            ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+            Call<ListFavouriteResponse> call = apiService.getListFavourite(token,idUser);
+            call.enqueue(new Callback<ListFavouriteResponse>() {
+                @Override
+                public void onResponse(Call<ListFavouriteResponse> call, Response<ListFavouriteResponse> response) {
+                    if (response.isSuccessful()){
+                        ListFavouriteResponse favouriteResponse = response.body();
+                        if (favouriteResponse != null){
+                            adapter.setListBook(favouriteResponse.getResult());
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ListFavouriteResponse> call, Throwable t) {
+                    Toast.makeText(requireActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
 }
