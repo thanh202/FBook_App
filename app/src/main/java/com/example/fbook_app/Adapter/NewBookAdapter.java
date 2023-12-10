@@ -22,6 +22,7 @@ import java.util.List;
 public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHolder> {
     private final Context context;
     private OnItemClickListener onItemClickListener;
+    private OnLikeClickListener onLikeClickListener;
     private List<BookResponse.Result> bookList = new ArrayList<>();
 
     public NewBookAdapter(Context mContext) {
@@ -36,7 +37,9 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.onItemClickListener = itemClickListener;
     }
-
+    public void setOnLikeClickListener(OnLikeClickListener likeClickListener) {
+        this.onLikeClickListener = likeClickListener;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -71,7 +74,7 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
             tvItemDescriptionNewBook = (TextView) itemView.findViewById(R.id.tv_item_descriptionNewBook);
             tvItemPriceNewBook = (TextView) itemView.findViewById(R.id.tv_item_priceNewBook);
             rlItemSelect = itemView.findViewById(R.id.rl_item_select);
-//            btnItemLike = (ImageView) itemView.findViewById(R.id.btn_item_like);
+            btnItemLike = (ImageView) itemView.findViewById(R.id.btn_item_like);
 //            btnItemBuy = (ImageView) itemView.findViewById(R.id.btn_item_buy);
         }
 
@@ -87,10 +90,16 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
             rlItemSelect.setOnClickListener(v -> {
                 onItemClickListener.onItemClick(book);
             });
+            btnItemLike.setOnClickListener(v -> {
+                onLikeClickListener.onLikeClick(book.getIDBook());
+            });
         }
     }
 
     public interface OnItemClickListener {
         void onItemClick(BookResponse.Result book);
+    }
+    public interface OnLikeClickListener{
+        void onLikeClick(int idBook);
     }
 }
