@@ -1,7 +1,9 @@
 package com.example.fbook_app.ApiNetwork;
 
+import com.example.fbook_app.Model.Request.AddFavouriteRequest;
 import com.example.fbook_app.Model.Request.LoginRequest;
 import com.example.fbook_app.Model.Request.RegisterRequest;
+import com.example.fbook_app.Model.Response.AddFavouriteResponse;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.Model.Response.CategoryResponse;
 import com.example.fbook_app.Model.Response.ListFavouriteResponse;
@@ -24,6 +26,8 @@ public interface ApiService {
     Call<LoginResponse> login(@Body LoginRequest loginRequest);
     @POST("acount/add")
     Call<RegisterResponse> register(@Body RegisterRequest registerRequest);
+    @POST("Favorite/add")
+    Call<AddFavouriteResponse> addFavourite(@Header("Authorization") String token, @Body AddFavouriteRequest request);
     @GET("Favorite/byiduser/{IDUser}")
     Call<ListFavouriteResponse> getListFavourite(@Header("Authorization") String token, @Path("IDUser") int idUser);
 }

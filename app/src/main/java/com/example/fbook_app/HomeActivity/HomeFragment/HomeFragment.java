@@ -23,6 +23,8 @@ import com.example.fbook_app.Adapter.TopBookAdapter;
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook.ChiTietBookFragment;
+import com.example.fbook_app.Model.Request.AddFavouriteRequest;
+import com.example.fbook_app.Model.Response.AddFavouriteResponse;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.Model.Response.CategoryResponse;
 import com.example.fbook_app.R;
@@ -78,11 +80,17 @@ public class HomeFragment extends Fragment {
 
         rclNewBook.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         rclNewBook.setAdapter(adapterNewBook);
-        adapterNewBook.setOnItemClickListener(new NewBookAdapter.OnItemClickListener() {
+//        adapterNewBook.setOnItemClickListener(new NewBookAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BookResponse.Result book) {
+//                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+//                fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+//            }
+//        });
+        adapterNewBook.setOnLikeClickListener(new NewBookAdapter.OnLikeClickListener() {
             @Override
-            public void onItemClick(BookResponse.Result book) {
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+            public void onLikeClick(int idBook) {
+                addFavouriteBook(idBook);
             }
         });
         rclTopBook.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
@@ -154,5 +162,31 @@ public class HomeFragment extends Fragment {
 
 
 
+    }
+
+    private void addFavouriteBook(int idBook){
+        SharedPreferences myToken= requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String token = myToken.getString("token", null);
+        SharedPreferences myIdUser= requireActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
+        int idUser = myIdUser.getInt("idUser", 0);
+
+        if (token!= null && idUser > 0){
+            ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+            AddFavouriteRequest request = new AddFavouriteRequest(idBook, idUser);
+            Call<AddFavouriteResponse> callAddFavourite = apiService.addFavourite(token, request);
+            callAddFavourite.enqueue(new Callback<AddFavouriteResponse>() {
+                @Override
+                public void onResponse(Call<AddFavouriteResponse> call, Response<AddFavouriteResponse> response) {
+                    if (response.isSuccessful()){
+                        Toast.makeText(requireActivity(), "Thêm sách vào Favourite thành công", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AddFavouriteResponse> call, Throwable t) {
+                    Toast.makeText(requireActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }
