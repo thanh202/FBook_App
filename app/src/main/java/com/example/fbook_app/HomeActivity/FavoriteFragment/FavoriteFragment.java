@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.fbook_app.Adapter.FavoriteBookAdapter;
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
+import com.example.fbook_app.Interface.FragmentReload;
 import com.example.fbook_app.Model.Book;
 import com.example.fbook_app.Model.Response.ListFavouriteResponse;
 import com.example.fbook_app.R;
@@ -29,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FavoriteFragment extends Fragment {
+public class FavoriteFragment extends Fragment implements FragmentReload {
     private RecyclerView rclListFavorite;
     private FavoriteBookAdapter adapter;
     private SwipeRefreshLayout refreshFavourite;
@@ -58,7 +59,7 @@ public class FavoriteFragment extends Fragment {
         refreshFavourite.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshData();
+                reloadFragmentData();
             }
         });
         rclListFavorite.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -74,11 +75,8 @@ public class FavoriteFragment extends Fragment {
         return mView;
     }
 
-    private void refreshData() {
-        getDataFavouriteBook();
-    }
 
-    private void getDataFavouriteBook(){
+    public void getDataFavouriteBook(){
         SharedPreferences myToken= requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
         String token = myToken.getString("token", null);
         SharedPreferences myIdUser= requireActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
@@ -108,4 +106,8 @@ public class FavoriteFragment extends Fragment {
         }
     }
 
+    @Override
+    public void reloadFragmentData() {
+        getDataFavouriteBook();
+    }
 }
