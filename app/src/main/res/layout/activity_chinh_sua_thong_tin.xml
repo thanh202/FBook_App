@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,11 +9,16 @@
     tools:context=".HomeActivity.InfomationFragment.ChinhSuaThongTinActivity.ChinhSuaThongTinActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/back_chinhsuathongtin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -38,10 +43,10 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:layout_marginLeft="10dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
             android:layout_weight="9"
             android:text="Chỉnh Sửa Thông Tin"
             android:textColor="@color/Cam"
@@ -50,9 +55,13 @@
     </LinearLayout>
 
     <FrameLayout
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -71,10 +80,10 @@
                 app:cardCornerRadius="20dp">
 
                 <LinearLayout
-                    android:layout_marginTop="100dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
+                    android:layout_marginTop="100dp"
                     android:layout_marginRight="30dp"
                     android:orientation="vertical">
 
@@ -92,19 +101,20 @@
                             android:textStyle="bold" />
 
                         <EditText
-                            android:textColor="@color/black"
+                            android:id="@+id/nameUser_chinhsuathongtin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:padding="10dp"
                             android:text="Linh Linh Tinh"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -116,19 +126,20 @@
                             android:textStyle="bold" />
 
                         <EditText
-                            android:textColor="@color/black"
+                            android:id="@+id/email_chinhsuathongtin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:padding="10dp"
                             android:text="linhlinhtinh203@gmail.com"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -140,19 +151,20 @@
                             android:textStyle="bold" />
 
                         <EditText
-                            android:textColor="@color/black"
+                            android:id="@+id/sdt_chinhsuathongtin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:padding="10dp"
                             android:text="033789999"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -164,39 +176,42 @@
                             android:textStyle="bold" />
 
                         <EditText
-                            android:textColor="@color/black"
+                            android:id="@+id/bthday_chinhsuathongtin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:inputType="date"
                             android:padding="10dp"
                             android:text="12-02-2000"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
 
                     </LinearLayout>
 
                     <androidx.cardview.widget.CardView
-                        android:layout_marginBottom="40dp"
-                        android:layout_marginTop="70dp"
-                        app:cardCornerRadius="50dp"
-                        android:backgroundTint="@color/Cam"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="70dp"
+                        android:layout_marginBottom="40dp"
+                        android:backgroundTint="@color/Cam"
+                        app:cardCornerRadius="50dp">
+
                         <androidx.cardview.widget.CardView
-                            android:backgroundTint="@color/white"
-                            app:cardCornerRadius="50dp"
-                            android:layout_margin="1dp"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_margin="1dp"
+                            android:backgroundTint="@color/white"
+                            app:cardCornerRadius="50dp">
+
                             <TextView
-                                android:layout_margin="5dp"
-                                android:textStyle="bold"
-                                android:textColor="@color/Cam"
-                                android:textSize="25dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="Lưu Thông Tin"/>
+                                android:layout_margin="5dp"
+                                android:text="Lưu Thông Tin"
+                                android:textColor="@color/Cam"
+                                android:textSize="25dp"
+                                android:textStyle="bold" />
                         </androidx.cardview.widget.CardView>
                     </androidx.cardview.widget.CardView>
 
@@ -213,18 +228,19 @@
             app:cardCornerRadius="50dp">
 
             <androidx.cardview.widget.CardView
-                android:backgroundTint="@color/white"
-                android:layout_gravity="center"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/white"
                 app:cardCornerRadius="50dp">
+
                 <ImageView
-                    android:layout_gravity="center"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/img_icon_user"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/img_icon_user" />
             </androidx.cardview.widget.CardView>
 
         </androidx.cardview.widget.CardView>
     </FrameLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
