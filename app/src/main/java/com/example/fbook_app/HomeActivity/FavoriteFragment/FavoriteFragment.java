@@ -12,6 +12,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.fbook_app.Adapter.FavoriteBookAdapter;
@@ -31,6 +32,7 @@ import retrofit2.Response;
 
 public class FavoriteFragment extends Fragment {
     private RecyclerView rclListFavorite;
+    private ImageView btnUnFavourite;
     private FavoriteBookAdapter adapter;
     private SwipeRefreshLayout refreshFavourite;
     private View mView;
@@ -52,9 +54,13 @@ public class FavoriteFragment extends Fragment {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_favorite, container, false);
         rclListFavorite = mView.findViewById(R.id.rcl_list_favorite_book);
+        btnUnFavourite = mView.findViewById(R.id.btn_un_favorite);
         adapter = new FavoriteBookAdapter(getContext());
         refreshFavourite = mView.findViewById(R.id.refresh_favourite);
         getDataFavouriteBook();
+        btnUnFavourite.setOnClickListener(v -> {
+            unFavourite();
+        });
         refreshFavourite.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -72,6 +78,10 @@ public class FavoriteFragment extends Fragment {
 //        });
 
         return mView;
+    }
+
+    private void unFavourite() {
+
     }
 
     private void refreshData() {
