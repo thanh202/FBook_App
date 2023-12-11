@@ -3,8 +3,10 @@ package com.example.fbook_app.HomeActivity.InfomationFragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -15,15 +17,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fbook_app.HomeActivity.InfomationFragment.ChinhSuaThongTinActivity.ChinhSuaThongTinActivity;
+import com.example.fbook_app.Interface.FragmentReload;
 import com.example.fbook_app.MainActivity;
 import com.example.fbook_app.R;
 
+import io.paperdb.Paper;
 
-public class InfomationFragment extends Fragment {
 
+public class InfomationFragment extends Fragment implements FragmentReload {
+private TextView nameUser,idUser;
 
     private LinearLayout btnChinhSuaThongTin, btnDangXuat;
     private View view;
@@ -47,7 +53,17 @@ public class InfomationFragment extends Fragment {
 
         btnChinhSuaThongTin = view.findViewById(R.id.btn_chinhsuathongtin);
         btnDangXuat = view.findViewById(R.id.btn_DangXuat);
+        idUser=view.findViewById(R.id.idUser);
+        nameUser=view.findViewById(R.id.nameUser);
 
+        SharedPreferences myIdUser= requireActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
+        int idUser1 = myIdUser.getInt("idUser", 0);
+        String idUser2=String.valueOf(idUser1);
+        idUser.setText(idUser2);
+
+        SharedPreferences myNameUser= requireActivity().getSharedPreferences("MyNameUser", Context.MODE_PRIVATE);
+        String nameUser1 = myNameUser.getString("nameUser", null);
+        nameUser.setText(nameUser1);
         btnChinhSuaThongTin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +78,7 @@ public class InfomationFragment extends Fragment {
                 showDialog();
             }
         });
+        Paper.init(getContext());
 
 
         return view;
@@ -85,6 +102,7 @@ public class InfomationFragment extends Fragment {
 
                         dialog.dismiss();
                         Intent intent = new Intent(getContext(), MainActivity.class);
+                        Paper.book().destroy();
                         startActivity(intent);
                     }
                 },2000);
@@ -100,4 +118,8 @@ public class InfomationFragment extends Fragment {
     }
 
 
+    @Override
+    public void reloadFragmentData() {
+
+    }
 }

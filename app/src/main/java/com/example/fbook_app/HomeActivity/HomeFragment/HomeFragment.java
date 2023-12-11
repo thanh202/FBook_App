@@ -23,6 +23,7 @@ import com.example.fbook_app.Adapter.TopBookAdapter;
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook.ChiTietBookFragment;
+import com.example.fbook_app.Interface.FragmentReload;
 import com.example.fbook_app.Model.Request.AddFavouriteRequest;
 import com.example.fbook_app.Model.Response.AddFavouriteResponse;
 import com.example.fbook_app.Model.Response.BookResponse;
@@ -33,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements FragmentReload {
     private TheLoaiAdapter adapter;
     private TopBookAdapter adapterTopBook;
     private NewBookAdapter adapterNewBook;
@@ -64,7 +65,7 @@ public class HomeFragment extends Fragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshData();
+                reloadFragmentData();
             }
         });
 
@@ -188,5 +189,10 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
+    }
+
+    @Override
+    public void reloadFragmentData() {
+        getData();
     }
 }

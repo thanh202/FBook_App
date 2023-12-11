@@ -122,6 +122,9 @@ public class DangNhapActivity extends AppCompatActivity {
                         SharedPreferences.Editor idUser = getSharedPreferences("MyIdUser", MODE_PRIVATE).edit();
                         idUser.putInt("idUser", loginResponse.getResult().getUser().getIDUser());
                         idUser.apply();
+                        SharedPreferences.Editor myNameUser = getSharedPreferences("MyNameUser", MODE_PRIVATE).edit();
+                        myNameUser.putString("nameUser", loginResponse.getResult().getUser().getUserName());
+                        myNameUser.apply();
                         Intent intent = new Intent(DangNhapActivity.this, HomeActivity.class);
                         startActivity(intent);
                         finishAffinity();
