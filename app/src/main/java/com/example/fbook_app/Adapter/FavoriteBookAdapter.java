@@ -22,7 +22,8 @@ import java.util.List;
 
 public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapter.ViewHolder> {
     private final Context context;
-    private OnItemClickListener onItemClickListener;
+//    private OnItemClickListener onItemClickListener;
+    private OnUnFavouriteClickListener onUnFavouriteClickListener;
     private List<ListFavouriteResponse.Result> bookList = new ArrayList<>();
     public FavoriteBookAdapter(Context mContext){
         context = mContext;
@@ -31,8 +32,11 @@ public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapte
         this.bookList = list;
         notifyDataSetChanged();
     }
-    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
-        this.onItemClickListener = itemClickListener;
+//    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+//        this.onItemClickListener = itemClickListener;
+//    }
+    public void setOnUnFavouriteClickListener(OnUnFavouriteClickListener unFavouriteClickListener) {
+        this.onUnFavouriteClickListener = unFavouriteClickListener;
     }
     @NonNull
     @Override
@@ -54,6 +58,7 @@ public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapte
     public class ViewHolder extends RecyclerView.ViewHolder{
         private ImageView imgViewItemImgBook;
         private TextView tvItemNameBook;
+        private ImageView btnUnFavourite;
         private TextView tvItemDescription;
         private TextView tvItemPriceBook;
 
@@ -66,6 +71,7 @@ public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapte
             tvItemDescription = (TextView) itemView.findViewById(R.id.tv_item_description);
             tvItemPriceBook = (TextView) itemView.findViewById(R.id.tv_item_priceBook);
             llSelectItem = itemView.findViewById(R.id.ll_select_item_favorite_book);
+            btnUnFavourite = itemView.findViewById(R.id.btn_un_favorite);
         }
         public void onBind(int position){
                 ListFavouriteResponse.Result book = bookList.get(position);
@@ -76,12 +82,18 @@ public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapte
                 String imgBook = RetrofitClient.BASE_URL+book.getImageBook();
             Glide.with(context).load(imgBook)
                     .into(imgViewItemImgBook);
-            llSelectItem.setOnClickListener(v -> {
-                onItemClickListener.onItemClick(book);
+//            llSelectItem.setOnClickListener(v -> {
+//                onItemClickListener.onItemClick(book);
+//            });
+            btnUnFavourite.setOnClickListener(v -> {
+                onUnFavouriteClickListener.onUnFavouriteClick(book.getIDFavorite());
             });
         }
     }
-    public interface OnItemClickListener {
-        void onItemClick(ListFavouriteResponse.Result book);
+//    public interface OnItemClickListener {
+//        void onItemClick(ListFavouriteResponse.Result book);
+//    }
+    public interface OnUnFavouriteClickListener {
+        void onUnFavouriteClick(int idFavourite);
     }
 }

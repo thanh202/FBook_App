@@ -6,6 +6,7 @@ import com.example.fbook_app.Model.Request.RegisterRequest;
 import com.example.fbook_app.Model.Response.AddFavouriteResponse;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.Model.Response.CategoryResponse;
+import com.example.fbook_app.Model.Response.DeleteResponse;
 import com.example.fbook_app.Model.Response.ListFavouriteResponse;
 import com.example.fbook_app.Model.Response.LoginResponse;
 import com.example.fbook_app.Model.Response.RegisterResponse;
@@ -31,6 +32,6 @@ public interface ApiService {
     Call<AddFavouriteResponse> addFavourite(@Header("Authorization") String token, @Body AddFavouriteRequest request);
     @GET("Favorite/byiduser/{IDUser}")
     Call<ListFavouriteResponse> getListFavourite(@Header("Authorization") String token, @Path("IDUser") int idUser);
-//    @DELETE("Favorite/delete/{IDFavorite}")
-//    Call<ListFavouriteResponse> getListFavourite(@Header("Authorization") String token, @Path("IDUser") int idUser);
+    @DELETE("Favorite/delete/{IDFavorite}/{IDUser}")
+    Call<DeleteResponse> deleteFavourite(@Header("Authorization") String token, @Path("IDFavorite") int idFavourite, @Path("IDUser") int idUser);
 }
