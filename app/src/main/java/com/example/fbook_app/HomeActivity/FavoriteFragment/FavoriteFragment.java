@@ -39,6 +39,7 @@ public class FavoriteFragment extends Fragment implements FragmentReload {
     private RecyclerView rclListFavorite;
     private FavoriteBookAdapter adapter;
     private SwipeRefreshLayout refreshFavourite;
+    private TextView tvListFavouriteNotFound;
     private View mView;
 
     public FavoriteFragment() {
