@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fbook_app.Adapter.FavoriteBookAdapter;
@@ -37,6 +38,7 @@ public class FavoriteFragment extends Fragment {
     private RecyclerView rclListFavorite;
     private FavoriteBookAdapter adapter;
     private SwipeRefreshLayout refreshFavourite;
+    private TextView tvListFavouriteNotFound;
     private View mView;
 
     public FavoriteFragment() {
@@ -58,6 +60,7 @@ public class FavoriteFragment extends Fragment {
         rclListFavorite = mView.findViewById(R.id.rcl_list_favorite_book);
         adapter = new FavoriteBookAdapter(getContext());
         refreshFavourite = mView.findViewById(R.id.refresh_favourite);
+        tvListFavouriteNotFound = mView.findViewById(R.id.tvListFavouriteNotFound);
         getDataFavouriteBook();
         adapter.setOnUnFavouriteClickListener(new FavoriteBookAdapter.OnUnFavouriteClickListener() {
             @Override
@@ -133,7 +136,7 @@ public class FavoriteFragment extends Fragment {
                     if (response.isSuccessful()){
                         ListFavouriteResponse favouriteResponse = response.body();
                         if (favouriteResponse != null){
-                            adapter.setListBook(favouriteResponse.getResult());
+                            showRecycle(favouriteResponse);
                         }
                     }
                 }
@@ -144,6 +147,14 @@ public class FavoriteFragment extends Fragment {
                     Toast.makeText(requireActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+    }
+    public void showRecycle(ListFavouriteResponse listFavouriteResponse) {
+        adapter.setListBook(listFavouriteResponse.getResult());
+        if (listFavouriteResponse.getResult().size() <= 0) {
+            tvListFavouriteNotFound.setVisibility(View.VISIBLE);
+        } else {
+            tvListFavouriteNotFound.setVisibility(View.GONE);
         }
     }
 }
