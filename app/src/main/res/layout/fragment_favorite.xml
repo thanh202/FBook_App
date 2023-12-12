@@ -64,11 +64,25 @@
         android:id="@+id/refresh_favourite"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcl_list_favorite_book"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvListFavouriteNotFound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bạn chưa thêm sách nào vào phần yêu thích."
+                android:textAlignment="center"
+                android:textSize="40sp"
+                android:visibility="gone"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcl_list_favorite_book"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </LinearLayout>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>
