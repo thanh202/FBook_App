@@ -81,13 +81,12 @@ public class HomeFragment extends Fragment implements FragmentReload {
 
         rclNewBook.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         rclNewBook.setAdapter(adapterNewBook);
-//        adapterNewBook.setOnItemClickListener(new NewBookAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(BookResponse.Result book) {
-//                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-//                fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-//            }
-//        });
+        adapterNewBook.setOnItemClickListener(new NewBookAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BookResponse.Result book) {
+
+            }
+        });
         adapterNewBook.setOnLikeClickListener(new NewBookAdapter.OnLikeClickListener() {
             @Override
             public void onLikeClick(int idBook) {
@@ -96,20 +95,13 @@ public class HomeFragment extends Fragment implements FragmentReload {
         });
         rclTopBook.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         rclTopBook.setAdapter(adapterTopBook);
-        adapterTopBook.setOnItemClickListener(new TopBookAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BookResponse.Result book) {
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-            }
-        });
         return mView;
     }
 
     private void refreshData() {
         getData();
     }
-    
+
 
     private void getData() {
         SharedPreferences myToken= requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
@@ -128,6 +120,21 @@ public class HomeFragment extends Fragment implements FragmentReload {
                         if (bookResponse != null) {
                             adapterNewBook.setListBook(bookResponse.getResult());
                             adapterTopBook.setListBook(bookResponse.getResult());
+                            adapterNewBook.setOnItemClickListener(new NewBookAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(BookResponse.Result book) {
+                                    Toast.makeText(requireActivity(), "sach chi tiet", Toast.LENGTH_SHORT).show();
+                                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                    fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+                                }
+                            });
+                            adapterTopBook.setOnItemClickListener(new TopBookAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(BookResponse.Result book) {
+                                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                    fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+                                }
+                            });
                         }
                     }
                 }

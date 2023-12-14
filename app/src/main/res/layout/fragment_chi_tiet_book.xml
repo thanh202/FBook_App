@@ -75,6 +75,8 @@
                 android:layout_marginTop="5dp"
                 android:text="@string/description"
                 android:textColor="#000000"
+                android:maxLines="8"
+                android:ellipsize="end"
                 android:textSize="12sp" />
 
             <LinearLayout
@@ -177,7 +179,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcl_list_chapter"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_below="@id/chapter"
                 android:paddingHorizontal="5dp"
                 android:layout_marginTop="5dp"
@@ -207,11 +209,6 @@
                 android:orientation="horizontal"
                 android:layout_marginBottom="20dp"
                 android:layout_alignParentBottom="true">
-                <ImageView
-                    android:id="@+id/btn_cart_book_chi_tiet"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/icon_cart"/>
                 <TextView
                     android:id="@+id/btn_buy_book_chi_tiet"
                     android:layout_width="match_parent"
