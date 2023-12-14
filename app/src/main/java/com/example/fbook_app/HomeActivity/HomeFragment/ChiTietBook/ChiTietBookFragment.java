@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fbook_app.Adapter.ChapterBookAdapter;
+import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Model.Book;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
@@ -39,7 +40,6 @@ public class ChiTietBookFragment extends Fragment {
     private TextView tvChapterBookChiTiet;
     private RecyclerView rclListChapter;
     private TextView tvPriceBookBookChiTiet;
-    private ImageView btnCartBookChiTiet;
     private TextView btnBuyBookChiTiet;
     private ChapterBookAdapter chapterBookAdapter;
 
@@ -66,17 +66,18 @@ public class ChiTietBookFragment extends Fragment {
         tvChapterBookChiTiet = (TextView) mView.findViewById(R.id.tv_chapter_book_chi_tiet);
         rclListChapter = (RecyclerView) mView.findViewById(R.id.rcl_list_chapter);
         tvPriceBookBookChiTiet = (TextView) mView.findViewById(R.id.tv_priceBook_book_chi_tiet);
-        btnCartBookChiTiet = (ImageView) mView.findViewById(R.id.btn_cart_book_chi_tiet);
         btnBuyBookChiTiet = (TextView) mView.findViewById(R.id.btn_buy_book_chi_tiet);
 
-        Book mBook = (Book) getArguments().get("object_book");
-        Glide.with(requireActivity()).load(mBook.getImageBook()).into(imgViewBookChiTiet);
+        BookResponse.Result mBook = (BookResponse.Result) getArguments().get("object_book");
+        String imgBook = RetrofitClient.BASE_URL+mBook.getImageBook();
+        Glide.with(requireActivity()).load(imgBook).into(imgViewBookChiTiet);
         tvNameBookBookChiTiet.setText(mBook.getBookName());
         tvAuthorBookChiTiet.setText(mBook.getAuthor());
-        tvDescriptionBookChiTiet.setText(mBook.getDescription());
+        tvDescriptionBookChiTiet.setText(mBook.getDiscription());
         tvPublishYearBookChiTiet.setText(mBook.getPublishYear());
-        tvPriceBookBookChiTiet.setText(mBook.getPriceBook());
-        tvTypeBookBookChiTiet.setText(mBook.getTypeBook());
+        String price = mBook.getPriceBook()+" vnđ";
+        tvPriceBookBookChiTiet.setText(price);
+        tvTypeBookBookChiTiet.setText(mBook.getCatName());
         String chapterBook = String.valueOf(mBook.getChapter());
         tvChapterBookChiTiet.setText(chapterBook);
 

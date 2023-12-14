@@ -15,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fbook_app.Model.Book;
+import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
 
 import java.util.ArrayList;
@@ -31,8 +32,9 @@ public class ChapterBookAdapter extends RecyclerView.Adapter<ChapterBookAdapter.
     public void setOnItemClickListener(OnItemClickListener itemClickListener){
         this.onItemClickListener = itemClickListener;
     }
-    public void setListChapterBook(Book book){
-        for (int i = 1;i <= book.getChapter();i++){
+    public void setListChapterBook(BookResponse.Result book){
+        int chapter = Integer.parseInt(book.getChapter());
+        for (int i = 1;i <= chapter;i++){
             this.bookList.add(i);
         }
         notifyDataSetChanged();
