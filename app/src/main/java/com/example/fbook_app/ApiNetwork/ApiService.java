@@ -1,15 +1,18 @@
 package com.example.fbook_app.ApiNetwork;
 
 import com.example.fbook_app.Model.Request.AddFavouriteRequest;
+import com.example.fbook_app.Model.Request.BillRequest;
 import com.example.fbook_app.Model.Request.LoginRequest;
 import com.example.fbook_app.Model.Request.RegisterRequest;
 import com.example.fbook_app.Model.Response.AddFavouriteResponse;
+import com.example.fbook_app.Model.Response.BillResponse;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.Model.Response.CategoryResponse;
 import com.example.fbook_app.Model.Response.DeleteResponse;
 import com.example.fbook_app.Model.Response.ListFavouriteResponse;
 import com.example.fbook_app.Model.Response.LoginResponse;
 import com.example.fbook_app.Model.Response.RegisterResponse;
+import com.example.fbook_app.Model.Response.UserRespose;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -30,6 +33,10 @@ public interface ApiService {
     Call<RegisterResponse> register(@Body RegisterRequest registerRequest);
     @POST("Favorite/add")
     Call<AddFavouriteResponse> addFavourite(@Header("Authorization") String token, @Body AddFavouriteRequest request);
+    @POST("bill/add")
+    Call<BillResponse> addBill(@Header("Authorization") String token, @Body BillRequest request);
+    @GET("users/update/{IDUser}")
+    Call<UserRespose> updateUser(@Header("Authorization") String token, @Path("IDUser") int idUser);
     @GET("Favorite/byiduser/{IDUser}")
     Call<ListFavouriteResponse> getListFavourite(@Header("Authorization") String token, @Path("IDUser") int idUser);
     @DELETE("Favorite/delete/{IDFavorite}/{IDUser}")

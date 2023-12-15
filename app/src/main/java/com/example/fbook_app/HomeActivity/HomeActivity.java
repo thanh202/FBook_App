@@ -68,7 +68,6 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-        FavoriteFragment favoriteFragment = new FavoriteFragment();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
             @Override

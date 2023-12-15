@@ -67,8 +67,18 @@ private TextView nameUser,idUser;
         btnChinhSuaThongTin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ChinhSuaThongTinActivity.class);
-                startActivity(intent);
+                Handler handler =new Handler();
+                ProgressDialog dialog=new ProgressDialog(getContext());
+                dialog.setMessage("Vui Lòng Đợi ...");
+                dialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getContext(), ChinhSuaThongTinActivity.class);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    }
+                },2000);
             }
         });
 
