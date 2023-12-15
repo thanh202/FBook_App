@@ -1,5 +1,6 @@
 package com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fbook_app.Adapter.ChapterBookAdapter;
+import com.example.fbook_app.Adapter.NewBookAdapter;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
+import com.example.fbook_app.HomeActivity.OrderFragment;
 import com.example.fbook_app.Model.Book;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
@@ -30,6 +34,7 @@ public class ChiTietBookFragment extends Fragment {
         chiTietBookFragment.setArguments(bundle);
         return chiTietBookFragment;
     }
+
     private ImageView btnBackChiTietBook;
     private ImageView imgViewBookChiTiet;
     private TextView tvNameBookBookChiTiet;
@@ -43,6 +48,8 @@ public class ChiTietBookFragment extends Fragment {
     private TextView btnBuyBookChiTiet;
     private ChapterBookAdapter chapterBookAdapter;
 
+    private NewBookAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,7 +62,7 @@ public class ChiTietBookFragment extends Fragment {
         return mView;
     }
 
-    private void setData( View mView) {
+    private void setData(View mView) {
         btnBackChiTietBook = (ImageView) mView.findViewById(R.id.btn_back_chi_tiet_book);
         imgViewBookChiTiet = (ImageView) mView.findViewById(R.id.imgView_book_chi_tiet);
         tvNameBookBookChiTiet = (TextView) mView.findViewById(R.id.tv_nameBook_book_chi_tiet);
@@ -69,13 +76,13 @@ public class ChiTietBookFragment extends Fragment {
         btnBuyBookChiTiet = (TextView) mView.findViewById(R.id.btn_buy_book_chi_tiet);
 
         BookResponse.Result mBook = (BookResponse.Result) getArguments().get("object_book");
-        String imgBook = RetrofitClient.BASE_URL+mBook.getImageBook();
+        String imgBook = RetrofitClient.BASE_URL + mBook.getImageBook();
         Glide.with(requireActivity()).load(imgBook).into(imgViewBookChiTiet);
         tvNameBookBookChiTiet.setText(mBook.getBookName());
         tvAuthorBookChiTiet.setText(mBook.getAuthor());
         tvDescriptionBookChiTiet.setText(mBook.getDiscription());
         tvPublishYearBookChiTiet.setText(mBook.getPublishYear());
-        String price = mBook.getPriceBook()+" vnđ";
+        String price = mBook.getPriceBook() + " vnđ";
         tvPriceBookBookChiTiet.setText(price);
         tvTypeBookBookChiTiet.setText(mBook.getCatName());
         String chapterBook = String.valueOf(mBook.getChapter());
@@ -84,7 +91,15 @@ public class ChiTietBookFragment extends Fragment {
         chapterBookAdapter = new ChapterBookAdapter(requireActivity());
         chapterBookAdapter.setListChapterBook(mBook);
         rclListChapter.setAdapter(chapterBookAdapter);
-        rclListChapter.setLayoutManager(new GridLayoutManager(getContext(),8));
+        rclListChapter.setLayoutManager(new GridLayoutManager(getContext(), 8));
+
+        btnBuyBookChiTiet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(android.R.id.content, OrderFragment.newInstance(mBook)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+            }
+        });
 
         chapterBookAdapter.setOnItemClickListener(new ChapterBookAdapter.OnItemClickListener() {
             @Override

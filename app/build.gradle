@@ -61,6 +61,9 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
     //paper
     implementation 'io.github.pilgr:paperdb:2.7.2'
+    //Spiner
+    implementation('com.jaredrummler:material-spinner:1.1.0')
+
 
 
 }
