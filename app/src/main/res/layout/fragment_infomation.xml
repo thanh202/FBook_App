@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,29 +8,22 @@
 
 
     <TextView
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:text="Tài Khoản Cá Nhân"
         android:textColor="@color/Cam"
         android:textSize="30dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold" />
 
     <FrameLayout
+        android:layout_below="@+id/textView"
+        android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.365">
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -105,18 +98,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/Cam"
             app:cardCornerRadius="50dp">
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/img_icon_user" />
+            <androidx.cardview.widget.CardView
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="50dp"
+                android:layout_margin="1dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:scaleType="centerCrop"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/img_icon_user" />
+            </androidx.cardview.widget.CardView>
+
+
         </androidx.cardview.widget.CardView>
 
     </FrameLayout>
 
     <androidx.cardview.widget.CardView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/frame"
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -124,10 +129,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="50dp"
         android:backgroundTint="@color/Cam"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:cardCornerRadius="10dp">
 
         <androidx.cardview.widget.CardView
             android:backgroundTint="@color/white"
@@ -272,70 +274,6 @@
                 </LinearLayout>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="5dp"
-                        android:backgroundTint="@color/Cam"
-                        app:cardCornerRadius="50dp">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/img_message" />
-
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="5dp"
-                        android:backgroundTint="#B3B3B3"
-                        app:cardCornerRadius="50dp">
-
-                        <androidx.cardview.widget.CardView
-                            android:backgroundTint="@color/white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="1dp"
-                            app:cardCornerRadius="50dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_weight="8"
-                                    android:text="Nhắn Tin Trực Tiếp"
-                                    android:textColor="@color/black"
-                                    android:textSize="15dp" />
-
-                                <ImageView
-                                    android:layout_width="0dp"
-                                    android:layout_height="30dp"
-                                    android:layout_weight="1"
-                                    android:src="@drawable/img_icon_next" />
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -413,4 +351,4 @@
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

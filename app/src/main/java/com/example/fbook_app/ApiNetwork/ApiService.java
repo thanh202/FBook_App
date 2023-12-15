@@ -10,6 +10,7 @@ import com.example.fbook_app.Model.Response.DeleteResponse;
 import com.example.fbook_app.Model.Response.ListFavouriteResponse;
 import com.example.fbook_app.Model.Response.LoginResponse;
 import com.example.fbook_app.Model.Response.RegisterResponse;
+import com.example.fbook_app.Model.Response.UserRespose;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -30,6 +31,8 @@ public interface ApiService {
     Call<RegisterResponse> register(@Body RegisterRequest registerRequest);
     @POST("Favorite/add")
     Call<AddFavouriteResponse> addFavourite(@Header("Authorization") String token, @Body AddFavouriteRequest request);
+    @GET("users/update/{IDUser}")
+    Call<UserRespose> updateUser(@Header("Authorization") String token, @Path("IDUser") int idUser);
     @GET("Favorite/byiduser/{IDUser}")
     Call<ListFavouriteResponse> getListFavourite(@Header("Authorization") String token, @Path("IDUser") int idUser);
     @DELETE("Favorite/delete/{IDFavorite}/{IDUser}")
