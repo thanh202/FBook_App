@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import com.example.fbook_app.HomeActivity.FavoriteFragment.FavoriteFragment;
 import com.example.fbook_app.HomeActivity.HomeFragment.HomeFragment;
 import com.example.fbook_app.HomeActivity.InfomationFragment.InfomationFragment;
+import com.example.fbook_app.HomeActivity.LibraryFragment.LibraryFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -23,13 +24,12 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         switch (position) {
             case 0:
                 return new HomeFragment();
-
             case 1:
                 return new FavoriteFragment();
-
             case 2:
+                return new LibraryFragment();
+            case 3:
                 return new InfomationFragment();
-
             default:
                 return new HomeFragment();
 
@@ -38,6 +38,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 }

@@ -1,6 +1,9 @@
 package com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +20,8 @@ import com.bumptech.glide.Glide;
 import com.example.fbook_app.Adapter.ChapterBookAdapter;
 import com.example.fbook_app.Adapter.NewBookAdapter;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
-import com.example.fbook_app.HomeActivity.OrderFragment;
+import com.example.fbook_app.Common.Common;
+import com.example.fbook_app.HomeActivity.ThanhToanActivity;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
 
@@ -94,9 +97,31 @@ public class ChiTietBookFragment extends Fragment {
         btnBuyBookChiTiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(android.R.id.content, OrderFragment.newInstance(mBook)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-            }
+                Handler handler =new Handler();
+                ProgressDialog dialog=new ProgressDialog(getContext());
+                dialog.setMessage("Vui Lòng Đợi ...");
+                dialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        Common.currentBook = mBook;
+
+                        Handler handler = new Handler();
+                        ProgressDialog dialog = new ProgressDialog(getContext());
+                        dialog.setMessage("Vui Lòng Đợi ...");
+                        dialog.show();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                                Intent intent = new Intent(getContext(), ThanhToanActivity.class);
+                                startActivity(intent);
+                            }
+                        }, 2000);
+                    }
+                },2000);
+                }
         });
 
         chapterBookAdapter.setOnItemClickListener(new ChapterBookAdapter.OnItemClickListener() {

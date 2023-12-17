@@ -12,7 +12,7 @@
         android:id="@+id/rl_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:orientation="horizontal"
         android:paddingVertical="10dp">
 
@@ -23,6 +23,7 @@
             android:src="@drawable/icon_back_1" />
 
         <TextView
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"

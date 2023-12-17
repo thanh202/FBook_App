@@ -1,5 +1,6 @@
 package com.example.fbook_app.HomeActivity.HomeFragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +23,9 @@ import com.example.fbook_app.Adapter.TheLoaiAdapter;
 import com.example.fbook_app.Adapter.TopBookAdapter;
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
+import com.example.fbook_app.Common.Common;
 import com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook.ChiTietBookFragment;
-import com.example.fbook_app.HomeActivity.OrderFragment;
+import com.example.fbook_app.HomeActivity.ThanhToanActivity;
 import com.example.fbook_app.Interface.FragmentReload;
 import com.example.fbook_app.Model.Request.AddFavouriteRequest;
 import com.example.fbook_app.Model.Response.AddFavouriteResponse;
@@ -30,6 +33,7 @@ import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.Model.Response.CategoryResponse;
 import com.example.fbook_app.R;
 
+import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,6 +66,9 @@ public class HomeFragment extends Fragment implements FragmentReload {
         adapter = new TheLoaiAdapter(getContext());
         adapterNewBook = new NewBookAdapter(getContext());
         getData();
+
+        Paper.init(getActivity());
+
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -84,13 +91,6 @@ public class HomeFragment extends Fragment implements FragmentReload {
         adapterNewBook.setOnItemClickListener(new NewBookAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BookResponse.Result book) {
-
-            }
-        });
-
-        adapterNewBook.setOnBuyClickListener(new NewBookAdapter.OnBuyClickListener() {
-            @Override
-            public void onBuyClick(BookResponse.Result book) {
 
             }
         });
@@ -142,8 +142,22 @@ public class HomeFragment extends Fragment implements FragmentReload {
                             adapterNewBook.setOnBuyClickListener(new NewBookAdapter.OnBuyClickListener() {
                                 @Override
                                 public void onBuyClick(BookResponse.Result book) {
-                                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                                    fragmentManager.beginTransaction().replace(android.R.id.content, OrderFragment.newInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+
+
+                                    Common.currentBook = book;
+
+                                    Handler handler = new Handler();
+                                    ProgressDialog dialog = new ProgressDialog(getContext());
+                                    dialog.setMessage("Vui Lòng Đợi ...");
+                                    dialog.show();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            dialog.dismiss();
+                                            Intent intent = new Intent(getContext(), ThanhToanActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    }, 2000);
                                 }
                             });
                         }
