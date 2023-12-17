@@ -17,15 +17,21 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".HomeActivity.InfomationFragment.LichSuMuaSach.LichSuMuaSach"
+            android:exported="false" />
+        <activity
             android:name=".HomeActivity.ThanhToanActivity"
             android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="demozpdk"
-                    android:host="app" />
+
+                <data
+                    android:host="app"
+                    android:scheme="demozpdk" />
             </intent-filter>
         </activity>
         <activity
@@ -35,10 +41,7 @@
             android:name=".HomeActivity.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".Doi_Mat_khau.ForgotPassword_Activity"
-            android:exported="false" />
-        <activity
-            android:name=".Doi_Mat_khau.Doimatkhau_Activity"
+            android:name=".HomeActivity.InfomationFragment.DoiMatKhau.DoiMatKhauActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

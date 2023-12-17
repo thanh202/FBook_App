@@ -64,7 +64,9 @@ dependencies {
     //Spiner
     implementation('com.jaredrummler:material-spinner:1.1.0')
     //Zalopay
-    implementation files('libs/zpdk-release-v3.1.aar')
+    implementation files('libs\\zpdk-release-v3.1.aar')
+
+
 
 
 }

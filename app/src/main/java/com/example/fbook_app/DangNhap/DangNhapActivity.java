@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
-import com.example.fbook_app.Doi_Mat_khau.ForgotPassword_Activity;
 import com.example.fbook_app.HomeActivity.HomeActivity;
 import com.example.fbook_app.Model.Request.LoginRequest;
 import com.example.fbook_app.Model.Response.LoginResponse;
@@ -76,7 +75,7 @@ public class DangNhapActivity extends AppCompatActivity {
             finish();
         });
         btnForgotPass.setOnClickListener(v -> {
-            startActivity(new Intent(this, ForgotPassword_Activity.class));
+
         });
         btnLoginHome.setOnClickListener(new View.OnClickListener() {
             @Override

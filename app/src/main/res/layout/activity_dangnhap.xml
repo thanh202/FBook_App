@@ -108,7 +108,7 @@
         android:background="@drawable/bg_button"
         android:fontFamily="@font/roboto_bold"
         android:paddingVertical="14dp"
-        android:text="Login"
+        android:text="Đăng Nhập"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
