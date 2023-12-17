@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity.OrderFragment">
+    tools:context=".HomeActivity.ThanhToanActivity">
 
     <ImageView
         android:layout_margin="10dp"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content">
         <LinearLayout
             android:background="@color/white"
-            android:padding="10dp"
+            android:padding="5dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -97,7 +97,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_gravity="bottom"
-                    android:layout_width="150dp"
+                    android:layout_width="140dp"
                     android:layout_height="1dp"
                     android:background="@color/xam"/>
                 <TextView
@@ -129,7 +129,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_gravity="bottom"
-                    android:layout_width="100dp"
+                    android:layout_width="70dp"
                     android:layout_height="1dp"
                     android:background="@color/xam"/>
                 <TextView
@@ -160,14 +160,14 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_gravity="bottom"
-                    android:layout_width="200dp"
+                    android:layout_width="170dp"
                     android:layout_height="1dp"
                     android:background="@color/xam"/>
                 <TextView
                     android:id="@+id/date_thanhtoan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="13/12/2023"
+                    android:text="13-12-2023"
                     android:textStyle="bold"
                     android:textSize="15dp"
                     android:textColor="@color/black"/>
@@ -191,7 +191,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_gravity="bottom"
-                    android:layout_width="200dp"
+                    android:layout_width="140dp"
                     android:layout_height="1dp"
                     android:background="@color/xam"/>
                 <TextView
@@ -230,7 +230,7 @@
                 android:textStyle="bold"
                 android:textSize="15dp"/>
             <com.jaredrummler.materialspinner.MaterialSpinner
-
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/spiner"/>

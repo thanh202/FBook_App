@@ -17,10 +17,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".HomeActivity.OrderActivity"
-            android:exported="false" />
-        <activity android:name=".HomeActivity.InfomationFragment.DoiMatKhau.DoiMatKhauActivity"
-            android:exported="false"/>
+            android:name=".HomeActivity.ThanhToanActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="demozpdk"
+                    android:host="app" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".HomeActivity.InfomationFragment.ChinhSuaThongTinActivity.ChinhSuaThongTinActivity"
             android:exported="false" />

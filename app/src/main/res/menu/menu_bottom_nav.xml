@@ -9,6 +9,10 @@
         android:icon="@drawable/icon_fav"
         android:title="Yêu Thích" />
     <item
+        android:id="@+id/action_lib"
+        android:icon="@drawable/icon_libs"
+        android:title="Thư Viện" />
+    <item
         android:id="@+id/action_info"
         android:icon="@drawable/icon_user"
         android:title="Thông Tin" />
