@@ -13,18 +13,17 @@
         android:layout_height="49dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_back" />
+        app:srcCompat="@drawable/icon_back_1" />
 
     <TextView
+        android:layout_marginLeft="50dp"
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
         android:layout_marginTop="4dp"
         android:text="Đổi Mật Khẩu"
         android:textColor="@color/black"
         android:textSize="30sp"
-
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/img_back"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,11 +45,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            app:errorTextColor="@color/black"
+            android:textColorHint="@color/xam"
             android:gravity="center"
+            android:textColor="@color/black"
+
             android:hint="Mật khẩu cũ"
             app:startIconDrawable="@drawable/icon_pass">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textColor="@color/black"
                 android:id="@+id/ed_current_password"
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
@@ -62,7 +66,12 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
+            android:textColor="@color/black"
+
             android:layout_height="wrap_content"
+            android:textColorHint="@color/xam"
+            app:errorTextColor="@color/black"
+
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:hint="Mật khẩu mới"
@@ -72,6 +81,10 @@
                 android:id="@+id/new_password"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                app:errorTextColor="@color/black"
+                android:textColor="@color/black"
+
+
                 android:layout_marginTop="35dp"
                 android:background="@drawable/background_edit_text"
                 android:textSize="20sp" />
@@ -80,7 +93,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="@color/xam"
             android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+
             android:gravity="center"
             android:hint="Nhập lại mật khẩu mới"
             app:startIconDrawable="@drawable/icon_pass">
@@ -88,8 +104,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/accept_new_password"
                 android:layout_width="match_parent"
+                android:textColor="@color/black"
+
                 android:layout_height="60dp"
                 android:layout_marginTop="35dp"
+
                 android:background="@drawable/background_edit_text"
                 android:textSize="20sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -107,7 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:background="@drawable/bg_button"
+            android:backgroundTint="@color/Cam"
             android:text="ĐỔI MẬT KHẨU"
             android:textSize="20sp"
             android:textStyle="bold"

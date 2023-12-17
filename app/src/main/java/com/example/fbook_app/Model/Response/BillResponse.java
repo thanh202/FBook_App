@@ -38,6 +38,17 @@ public class BillResponse {
         @SerializedName("Create_at")
         @Expose
         private String create_at;
+        @SerializedName("BookName")
+        @Expose
+        private String bookName;
+
+        public String getBookName() {
+            return bookName;
+        }
+
+        public void setBookName(String bookName) {
+            this.bookName = bookName;
+        }
 
         public int getiDBill() {
             return iDBill;

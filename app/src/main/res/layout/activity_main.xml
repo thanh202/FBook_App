@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:text="WELLCOME TO "
+            android:text="Chào Mừng Đến Với "
             android:textSize="28sp" />
 
         <TextView
@@ -60,7 +60,7 @@
         android:paddingHorizontal="100dp"
         android:textColor="@color/black"
         android:paddingVertical="12dp"
-        android:text="Login with Google"
+        android:text="Đăng Nhập Google"
         android:textSize="14sp"
         app:drawableStartCompat="@drawable/icon_google" />
 
@@ -74,7 +74,7 @@
         android:drawablePadding="10dp"
         android:fontFamily="@font/roboto_bold"
         android:paddingVertical="12dp"
-        android:text="@string/get_started"
+        android:text="Tạo Tài Khoản Mới"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="18sp"
@@ -89,7 +89,7 @@
         android:background="@drawable/bg_button_login"
         android:fontFamily="@font/roboto_bold"
         android:paddingVertical="12dp"
-        android:text="@string/i_already_have_an_acount"
+        android:text="Đăng Nhập"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textColor="#F7941D"/>

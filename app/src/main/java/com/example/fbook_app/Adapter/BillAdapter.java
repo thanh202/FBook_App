@@ -61,7 +61,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder>{
         }
         public void onBind(int position){
             BillResponse.Result bill = billList.get(position);
-            tv_Name.setText(bill.getiDBook());
+            tv_Name.setText(bill.getBookName());
             tv_CreateAt.setText(bill.getCreate_at());
             tv_Status.setText(bill.getStatus());
             String price = bill.getPriceTotal()+" vnđ";
