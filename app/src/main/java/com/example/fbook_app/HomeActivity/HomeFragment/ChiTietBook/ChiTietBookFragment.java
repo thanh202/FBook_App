@@ -1,7 +1,9 @@
 package com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,9 +98,20 @@ public class ChiTietBookFragment extends Fragment {
         btnBuyBookChiTiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(android.R.id.content, OrderFragment.newInstance(mBook)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-            }
+                Handler handler =new Handler();
+                ProgressDialog dialog=new ProgressDialog(getContext());
+                dialog.setMessage("Vui Lòng Đợi ...");
+                dialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        fragmentManager.beginTransaction().replace(android.R.id.content, OrderFragment.newInstance(mBook)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+
+                    }
+                },2000);
+                }
         });
 
         chapterBookAdapter.setOnItemClickListener(new ChapterBookAdapter.OnItemClickListener() {

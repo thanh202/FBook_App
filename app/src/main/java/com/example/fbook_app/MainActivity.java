@@ -51,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
         String email = Paper.book().read(Common.USER_KEY);
         String passWord = Paper.book().read(Common.PWD_KEY);
 
-        if (email != null && passWord != null) {
-            if (!email.isEmpty() && !passWord.isEmpty()) {
-                login(email, passWord);
-            }
-        }
+//        if (email != null && passWord != null) {
+//            if (!email.isEmpty() && !passWord.isEmpty()) {
+//                login(email, passWord);
+//            }
+//        }
     }
 
     private void login(String email, String passWord) {
