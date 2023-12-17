@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.fbook_app.ApiNetwork.ApiService;
@@ -23,6 +24,7 @@ import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
 import com.example.fbook_app.HomeActivity.InfomationFragment.ChinhSuaThongTinActivity.ChinhSuaThongTinActivity;
 import com.example.fbook_app.HomeActivity.InfomationFragment.DoiMatKhau.DoiMatKhauActivity;
+import com.example.fbook_app.HomeActivity.InfomationFragment.LichSuMuaSach.LichSuMuaSach;
 import com.example.fbook_app.Interface.FragmentReload;
 import com.example.fbook_app.MainActivity;
 import com.example.fbook_app.Model.Response.UserResponse;
@@ -37,9 +39,11 @@ import retrofit2.Response;
 public class InfomationFragment extends Fragment implements FragmentReload {
     private TextView tvNameUser, tvIdUser;
 
-    private LinearLayout btnChinhSuaThongTin, btnDoiPassWord , btnDangXuat;
+    private LinearLayout btnChinhSuaThongTin, btnDoiPassWord, btnDangXuat;
 
-    String userName,birthDay;
+    private CardView btnLichSuMuaSach;
+
+    String userName, birthDay;
     private View view;
 
     public InfomationFragment() {
@@ -67,7 +71,16 @@ public class InfomationFragment extends Fragment implements FragmentReload {
         btnDoiPassWord = view.findViewById(R.id.btn_doiMatKhau);
         tvIdUser = view.findViewById(R.id.idUser);
         tvNameUser = view.findViewById(R.id.nameUser);
+        btnLichSuMuaSach = view.findViewById(R.id.btn_lichsumuasach);
         getInformation();
+
+        btnLichSuMuaSach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), LichSuMuaSach.class);
+                startActivity(intent);
+            }
+        });
         btnChinhSuaThongTin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,20 +126,20 @@ public class InfomationFragment extends Fragment implements FragmentReload {
         return view;
     }
 
-        private void getInformation() {
-        SharedPreferences myToken= requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+    private void getInformation() {
+        SharedPreferences myToken = requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
         String token = myToken.getString("token", null);
-        SharedPreferences myIdUser= requireActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
+        SharedPreferences myIdUser = requireActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
         int idUser = myIdUser.getInt("idUser", 0);
-        if (token != null && idUser > 0){
+        if (token != null && idUser > 0) {
             ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-            Call<UserResponse> call = apiService.getUser(token,idUser);
+            Call<UserResponse> call = apiService.getUser(token, idUser);
             call.enqueue(new Callback<UserResponse>() {
                 @Override
                 public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         UserResponse userResponse = response.body();
-                        tvIdUser.setText(userResponse.getIDUser()+"");
+                        tvIdUser.setText(userResponse.getIDUser() + "");
                         tvNameUser.setText(userResponse.getUserName());
                         Common.USER_NAME = userResponse.getUserName();
                         Common.BIRTH_DAY = userResponse.getBirthday();
