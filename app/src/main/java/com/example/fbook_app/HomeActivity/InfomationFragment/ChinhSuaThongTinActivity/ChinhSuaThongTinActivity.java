@@ -2,10 +2,8 @@ package com.example.fbook_app.HomeActivity.InfomationFragment.ChinhSuaThongTinAc
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,7 +14,6 @@ import androidx.cardview.widget.CardView;
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
-import com.example.fbook_app.HomeActivity.InfomationFragment.InfomationFragment;
 import com.example.fbook_app.Model.Request.UpdateInformationRequest;
 import com.example.fbook_app.Model.Response.UpdateInformationResponse;
 import com.example.fbook_app.R;

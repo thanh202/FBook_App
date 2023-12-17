@@ -11,6 +11,7 @@ import com.example.fbook_app.Model.Response.BillResponse;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.Model.Response.CategoryResponse;
 import com.example.fbook_app.Model.Response.DeleteResponse;
+import com.example.fbook_app.Model.Response.LibraryResponse;
 import com.example.fbook_app.Model.Response.ListFavouriteResponse;
 import com.example.fbook_app.Model.Response.LoginResponse;
 import com.example.fbook_app.Model.Response.RegisterResponse;
@@ -49,6 +50,8 @@ public interface ApiService {
     Call<ListFavouriteResponse> getListFavourite(@Header("Authorization") String token, @Path("IDUser") int idUser);
     @GET("user/get_list/{IDUser}")
     Call<UserResponse> getUser(@Header("Authorization") String token, @Path("IDUser") int idUser);
+    @GET("bill/getbookpaid/{IDUser}")
+    Call<LibraryResponse> getLibrary(@Header("Authorization") String token, @Path("IDUser") int idUser);
     @DELETE("Favorite/delete/{IDFavorite}/{IDUser}")
     Call<DeleteResponse> deleteFavourite(@Header("Authorization") String token, @Path("IDFavorite") int idFavourite, @Path("IDUser") int idUser);
 }
