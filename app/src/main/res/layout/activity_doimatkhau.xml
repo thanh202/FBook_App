@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
-    tools:context=".Activity.Doimatkhau.ForgotPassword_Activity">
+    >
 
     <ImageView
         android:id="@+id/img_back"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="4dp"
-        android:text="MẬT KHẨU MỚI"
+        android:text="Đổi Mật Khẩu"
         android:textColor="@color/black"
         android:textSize="30sp"
 
@@ -42,19 +42,18 @@
         app:layout_constraintVertical_bias="0.089">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_ed_username"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:hint="Tên đăng nhập"
+            android:hint="Mật khẩu cũ"
             app:startIconDrawable="@drawable/icon_pass">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_username"
+                android:id="@+id/ed_current_password"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="53dp"
                 android:layout_marginTop="35dp"
                 android:background="@drawable/background_edit_text"
                 android:textSize="20sp" />
@@ -66,27 +65,45 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:hint="Số điện thoại"
+            android:hint="Mật khẩu mới"
             app:startIconDrawable="@drawable/icon_pass">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/new_password"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="35dp"
                 android:background="@drawable/background_edit_text"
                 android:textSize="20sp" />
         </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:hint="Nhập lại mật khẩu mới"
+            app:startIconDrawable="@drawable/icon_pass">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/accept_new_password"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="35dp"
+                android:background="@drawable/background_edit_text"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
         <TextView
+            android:id="@+id/tv_warning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Nhập thông tin theo yêu cầu"
             android:textColor="@color/Cam"
             android:textSize="15sp"
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/btn_update_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"

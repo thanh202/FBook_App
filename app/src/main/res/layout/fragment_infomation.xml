@@ -55,7 +55,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
-                        android:text="Linh Linh Tinh"
                         android:textColor="@color/black"
                         android:textSize="25dp"
                         android:textStyle="bold" />
@@ -83,7 +82,6 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="30dp"
-                            android:text="12312"
                             android:textColor="@color/black"
                             android:textSize="20dp"
                             android:textStyle="bold" />
@@ -127,7 +125,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="50dp"
         android:backgroundTint="@color/Cam"
         app:cardCornerRadius="10dp">
 
@@ -196,6 +193,70 @@
                                     android:layout_marginLeft="5dp"
                                     android:layout_weight="8"
                                     android:text="Chỉnh Sửa Thông Tin"
+                                    android:textColor="@color/black"
+                                    android:textSize="15dp" />
+
+                                <ImageView
+                                    android:layout_width="0dp"
+                                    android:layout_height="30dp"
+                                    android:layout_weight="1"
+                                    android:src="@drawable/img_icon_next" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@color/Cam"
+                        app:cardCornerRadius="50dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/baseline_lock_24" />
+
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="#B3B3B3"
+                        app:cardCornerRadius="50dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:backgroundTint="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="1dp"
+                            app:cardCornerRadius="50dp">
+
+                            <LinearLayout
+                                android:id="@+id/btn_doiMatKhau"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_weight="8"
+                                    android:text="Đổi mật khẩu"
                                     android:textColor="@color/black"
                                     android:textSize="15dp" />
 
