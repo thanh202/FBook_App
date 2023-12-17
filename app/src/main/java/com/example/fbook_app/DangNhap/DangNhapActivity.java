@@ -129,17 +129,9 @@ public class DangNhapActivity extends AppCompatActivity {
                         myNameUser.putString("nameUser", loginResponse.getResult().getUser().getUserName());
                         myNameUser.apply();
 
-                        SharedPreferences.Editor myEmail = getSharedPreferences("MyEmail", MODE_PRIVATE).edit();
-                        myEmail.putString("email", loginResponse.getResult().getUser().getEmail());
-                        myEmail.apply();
-
                         SharedPreferences.Editor myBirthDay = getSharedPreferences("MyBirthDay", MODE_PRIVATE).edit();
                         myBirthDay.putString("birthday", loginResponse.getResult().getUser().getBirthday());
                         myBirthDay.apply();
-
-                        SharedPreferences.Editor mySDT = getSharedPreferences("MySDT", MODE_PRIVATE).edit();
-                        mySDT.putString("sdt", loginResponse.getResult().getUser().getPhone());
-                        mySDT.apply();
 
                         Intent intent = new Intent(DangNhapActivity.this, HomeActivity.class);
                         startActivity(intent);

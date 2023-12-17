@@ -19,6 +19,8 @@
         <activity
             android:name=".HomeActivity.OrderActivity"
             android:exported="false" />
+        <activity android:name=".HomeActivity.InfomationFragment.DoiMatKhau.DoiMatKhauActivity"
+            android:exported="false"/>
         <activity
             android:name=".HomeActivity.InfomationFragment.ChinhSuaThongTinActivity.ChinhSuaThongTinActivity"
             android:exported="false" />
