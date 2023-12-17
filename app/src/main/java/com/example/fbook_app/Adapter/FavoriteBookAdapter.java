@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
-import com.example.fbook_app.Model.Book;
 import com.example.fbook_app.Model.Response.ListFavouriteResponse;
 import com.example.fbook_app.R;
 

@@ -1,6 +1,5 @@
 package com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,6 @@ import com.example.fbook_app.Adapter.ChapterBookAdapter;
 import com.example.fbook_app.Adapter.NewBookAdapter;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.HomeActivity.OrderFragment;
-import com.example.fbook_app.Model.Book;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
 

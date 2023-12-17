@@ -1,18 +1,14 @@
 package com.example.fbook_app.HomeActivity.InfomationFragment;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,29 +16,45 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
+import com.example.fbook_app.ApiNetwork.ApiService;
+import com.example.fbook_app.ApiNetwork.RetrofitClient;
+import com.example.fbook_app.Common.Common;
 import com.example.fbook_app.HomeActivity.InfomationFragment.ChinhSuaThongTinActivity.ChinhSuaThongTinActivity;
+import com.example.fbook_app.HomeActivity.InfomationFragment.DoiMatKhau.DoiMatKhauActivity;
 import com.example.fbook_app.Interface.FragmentReload;
 import com.example.fbook_app.MainActivity;
+import com.example.fbook_app.Model.Response.UserResponse;
 import com.example.fbook_app.R;
 
 import io.paperdb.Paper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class InfomationFragment extends Fragment implements FragmentReload {
-private TextView nameUser,idUser;
+    private TextView tvNameUser, tvIdUser;
 
-    private LinearLayout btnChinhSuaThongTin, btnDangXuat;
+    private LinearLayout btnChinhSuaThongTin, btnDoiPassWord , btnDangXuat;
+
+    String userName,birthDay;
     private View view;
 
     public InfomationFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        reloadFragmentData();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -50,25 +62,17 @@ private TextView nameUser,idUser;
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_infomation, container, false);
-
         btnChinhSuaThongTin = view.findViewById(R.id.btn_chinhsuathongtin);
         btnDangXuat = view.findViewById(R.id.btn_DangXuat);
-        idUser=view.findViewById(R.id.idUser);
-        nameUser=view.findViewById(R.id.nameUser);
-
-        SharedPreferences myIdUser= requireActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
-        int idUser1 = myIdUser.getInt("idUser", 0);
-        String idUser2=String.valueOf(idUser1);
-        idUser.setText(idUser2);
-
-        SharedPreferences myNameUser= requireActivity().getSharedPreferences("MyNameUser", Context.MODE_PRIVATE);
-        String nameUser1 = myNameUser.getString("nameUser", null);
-        nameUser.setText(nameUser1);
+        btnDoiPassWord = view.findViewById(R.id.btn_doiMatKhau);
+        tvIdUser = view.findViewById(R.id.idUser);
+        tvNameUser = view.findViewById(R.id.nameUser);
+        getInformation();
         btnChinhSuaThongTin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Handler handler =new Handler();
-                ProgressDialog dialog=new ProgressDialog(getContext());
+                Handler handler = new Handler();
+                ProgressDialog dialog = new ProgressDialog(getContext());
                 dialog.setMessage("Vui Lòng Đợi ...");
                 dialog.show();
                 handler.postDelayed(new Runnable() {
@@ -78,7 +82,24 @@ private TextView nameUser,idUser;
                         startActivity(intent);
                         dialog.dismiss();
                     }
-                },2000);
+                }, 2000);
+            }
+        });
+        btnDoiPassWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Handler handler = new Handler();
+                ProgressDialog dialog = new ProgressDialog(getContext());
+                dialog.setMessage("Vui Lòng Đợi ...");
+                dialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getContext(), DoiMatKhauActivity.class);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    }
+                }, 2000);
             }
         });
 
@@ -89,33 +110,58 @@ private TextView nameUser,idUser;
             }
         });
         Paper.init(getContext());
-
-
         return view;
     }
 
+        private void getInformation() {
+        SharedPreferences myToken= requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String token = myToken.getString("token", null);
+        SharedPreferences myIdUser= requireActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
+        int idUser = myIdUser.getInt("idUser", 0);
+        if (token != null && idUser > 0){
+            ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+            Call<UserResponse> call = apiService.getUser(token,idUser);
+            call.enqueue(new Callback<UserResponse>() {
+                @Override
+                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                    if (response.isSuccessful()){
+                        UserResponse userResponse = response.body();
+                        tvIdUser.setText(userResponse.getIDUser()+"");
+                        tvNameUser.setText(userResponse.getUserName());
+                        Common.USER_NAME = userResponse.getUserName();
+                        Common.BIRTH_DAY = userResponse.getBirthday();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<UserResponse> call, Throwable t) {
+                    Toast.makeText(requireActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
     private void showDialog() {
-        AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Thông Báo");
         builder.setMessage("Vui Lòng Xác Nhận Đăng Xuất !");
         builder.setIcon(R.drawable.icon_warning);
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                ProgressDialog dialog=new ProgressDialog(getContext());
+                ProgressDialog dialog = new ProgressDialog(getContext());
                 dialog.setMessage("Vui Lòng Đợi ...");
                 dialog.show();
-                Handler handler=new Handler();
+                Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-
                         dialog.dismiss();
                         Intent intent = new Intent(getContext(), MainActivity.class);
                         Paper.book().destroy();
                         startActivity(intent);
                     }
-                },2000);
+                }, 2000);
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -130,6 +176,8 @@ private TextView nameUser,idUser;
 
     @Override
     public void reloadFragmentData() {
-
+        getInformation();
     }
+
+
 }
