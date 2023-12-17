@@ -16,8 +16,10 @@ import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHolder> {
     private final Context context;
@@ -86,11 +88,13 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
         }
 
         public void onBind(int position) {
+            Locale locale = new Locale("vi", "VN");
+            NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+
             BookResponse.Result book = bookList.get(position);
             tvItemNameNewBook.setText(book.getBookName());
             tvItemDescriptionNewBook.setText(book.getDiscription());
-            String price = book.getPriceBook()+" vnđ";
-            tvItemPriceNewBook.setText(price);
+            tvItemPriceNewBook.setText(format.format(book.getPriceBook()));
             String imgBook = RetrofitClient.BASE_URL+book.getImageBook();
             Glide.with(context).load(imgBook)
                     .into(imgViewItemImgNewBook);

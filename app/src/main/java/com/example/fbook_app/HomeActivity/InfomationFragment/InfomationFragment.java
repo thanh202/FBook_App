@@ -77,8 +77,18 @@ public class InfomationFragment extends Fragment implements FragmentReload {
         btnLichSuMuaSach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), LichSuMuaSach.class);
-                startActivity(intent);
+                Handler handler = new Handler();
+                ProgressDialog dialog = new ProgressDialog(getContext());
+                dialog.setMessage("Vui Lòng Đợi ...");
+                dialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getContext(), LichSuMuaSach.class);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    }
+                }, 2000);
             }
         });
         btnChinhSuaThongTin.setOnClickListener(new View.OnClickListener() {

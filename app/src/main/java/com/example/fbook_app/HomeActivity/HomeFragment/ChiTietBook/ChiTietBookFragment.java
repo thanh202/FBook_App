@@ -25,6 +25,9 @@ import com.example.fbook_app.HomeActivity.ThanhToanActivity;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class ChiTietBookFragment extends Fragment {
     private View mView;
 
@@ -76,6 +79,9 @@ public class ChiTietBookFragment extends Fragment {
         tvPriceBookBookChiTiet = (TextView) mView.findViewById(R.id.tv_priceBook_book_chi_tiet);
         btnBuyBookChiTiet = (TextView) mView.findViewById(R.id.btn_buy_book_chi_tiet);
 
+        Locale locale = new Locale("vi", "VN");
+        NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+
         BookResponse.Result mBook = (BookResponse.Result) getArguments().get("object_book");
         String imgBook = RetrofitClient.BASE_URL + mBook.getImageBook();
         Glide.with(requireActivity()).load(imgBook).into(imgViewBookChiTiet);
@@ -83,8 +89,7 @@ public class ChiTietBookFragment extends Fragment {
         tvAuthorBookChiTiet.setText(mBook.getAuthor());
         tvDescriptionBookChiTiet.setText(mBook.getDiscription());
         tvPublishYearBookChiTiet.setText(mBook.getPublishYear());
-        String price = mBook.getPriceBook() + " vnđ";
-        tvPriceBookBookChiTiet.setText(price);
+        tvPriceBookBookChiTiet.setText(format.format(mBook.getPriceBook()));
         tvTypeBookBookChiTiet.setText(mBook.getCatName());
         String chapterBook = String.valueOf(mBook.getChapter());
         tvChapterBookChiTiet.setText(chapterBook);
@@ -106,19 +111,8 @@ public class ChiTietBookFragment extends Fragment {
                     public void run() {
                         dialog.dismiss();
                         Common.currentBook = mBook;
-
-                        Handler handler = new Handler();
-                        ProgressDialog dialog = new ProgressDialog(getContext());
-                        dialog.setMessage("Vui Lòng Đợi ...");
-                        dialog.show();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialog.dismiss();
-                                Intent intent = new Intent(getContext(), ThanhToanActivity.class);
-                                startActivity(intent);
-                            }
-                        }, 2000);
+                        Intent intent = new Intent(getContext(), ThanhToanActivity.class);
+                        startActivity(intent);
                     }
                 },2000);
                 }

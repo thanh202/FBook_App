@@ -16,27 +16,33 @@ import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     private OnItemClickListener onItemClickListener;
     private final Context context;
     private List<BookResponse.Result> bookList = new ArrayList<>();
-    public BookAdapter(Context mContext){
+
+    public BookAdapter(Context mContext) {
         context = mContext;
     }
-    public void setOnItemClickListener(OnItemClickListener itemClickListener){
+
+    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.onItemClickListener = itemClickListener;
     }
-    public void setListBook(List<BookResponse.Result> list){
+
+    public void setListBook(List<BookResponse.Result> list) {
         this.bookList = list;
         notifyDataSetChanged();
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_list_book,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_list_book, parent, false);
         return new ViewHolder(view);
     }
 
@@ -50,13 +56,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         return bookList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgViewItemImgBook;
         private TextView tvItemNameBook;
         private LinearLayout llItemSelect;
         private TextView tvItemDescription;
         private TextView tvItemPriceBook;
-
 
 
         public ViewHolder(View itemView) {
@@ -67,13 +72,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             tvItemDescription = (TextView) itemView.findViewById(R.id.tv_item_description);
             tvItemPriceBook = (TextView) itemView.findViewById(R.id.tv_item_priceBook);
         }
-        public void onBind(int position){
-                BookResponse.Result book = bookList.get(position);
-                tvItemNameBook.setText(book.getBookName());
-                tvItemDescription.setText(book.getDiscription());
-                String price = book.getPriceBook()+" vnđ";
-                tvItemPriceBook.setText(price);
-                String imgBook = RetrofitClient.BASE_URL+book.getImageBook();
+
+        public void onBind(int position) {
+            Locale locale = new Locale("vi", "VN");
+            NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+            BookResponse.Result book = bookList.get(position);
+            tvItemNameBook.setText(book.getBookName());
+            tvItemDescription.setText(book.getDiscription());
+            String price = String.valueOf(book.getPriceBook());
+            tvItemPriceBook.setText(format.format(book.getPriceBook()));
+            String imgBook = RetrofitClient.BASE_URL + book.getImageBook();
             Glide.with(context).load(imgBook)
                     .into(imgViewItemImgBook);
             llItemSelect.setOnClickListener(v -> {
@@ -81,7 +89,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             });
         }
     }
-    public interface OnItemClickListener{
+
+    public interface OnItemClickListener {
         void onItemClick(BookResponse.Result book);
     }
 }

@@ -15,8 +15,10 @@ import com.example.fbook_app.Model.Response.BillResponse;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder>{
 
@@ -60,12 +62,15 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder>{
             tv_Status=itemView.findViewById(R.id.status_bill);
         }
         public void onBind(int position){
+            Locale locale = new Locale("vi", "VN");
+            NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+
             BillResponse.Result bill = billList.get(position);
             tv_Name.setText(bill.getBookName());
             tv_CreateAt.setText(bill.getCreate_at());
             tv_Status.setText(bill.getStatus());
-            String price = bill.getPriceTotal()+" vnđ";
-            tv_Price.setText(price);
+            String price = String.valueOf(bill.getPriceTotal());
+            tv_Price.setText(format.format(bill.getPriceTotal()));
         }
     }
 }

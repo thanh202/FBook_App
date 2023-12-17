@@ -77,7 +77,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
-                Fragment selectedFragment = null;
                 if (itemId == R.id.action_home) {
                     viewPager.setCurrentItem(0);
                 } else if (itemId == R.id.action_fav) {

@@ -41,10 +41,7 @@
             android:name=".HomeActivity.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".Doi_Mat_khau.ForgotPassword_Activity"
-            android:exported="false" />
-        <activity
-            android:name=".Doi_Mat_khau.Doimatkhau_Activity"
+            android:name=".HomeActivity.InfomationFragment.DoiMatKhau.DoiMatKhauActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
