@@ -56,8 +56,12 @@ public class HomeActivity extends AppCompatActivity {
                         bottomNavigationView.getMenu().findItem(R.id.action_fav).setChecked(true);
                         fragment.reloadFragmentData();
                         break;
-                    case 2:
+                    case 3:
                         bottomNavigationView.getMenu().findItem(R.id.action_info).setChecked(true);
+                        fragment.reloadFragmentData();
+                        break;
+                    case 2:
+                        bottomNavigationView.getMenu().findItem(R.id.action_lib).setChecked(true);
                         fragment.reloadFragmentData();
                         break;
                 }
@@ -78,8 +82,10 @@ public class HomeActivity extends AppCompatActivity {
                     viewPager.setCurrentItem(0);
                 } else if (itemId == R.id.action_fav) {
                     viewPager.setCurrentItem(1);
-                }else if (itemId == R.id.action_info) {
+                } else if (itemId == R.id.action_lib) {
                     viewPager.setCurrentItem(2);
+                } else if (itemId == R.id.action_info) {
+                    viewPager.setCurrentItem(3);
                 }
                 return true;
             }
