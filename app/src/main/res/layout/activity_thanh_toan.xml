@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity.OrderFragment">
+    tools:context=".HomeActivity.ThanhToanActivity">
 
     <ImageView
         android:layout_margin="10dp"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content">
         <LinearLayout
             android:background="@color/white"
-            android:padding="10dp"
+            android:padding="5dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -167,7 +167,7 @@
                     android:id="@+id/date_thanhtoan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="13/12/2023"
+                    android:text="13-12-2023"
                     android:textStyle="bold"
                     android:textSize="15dp"
                     android:textColor="@color/black"/>
@@ -230,7 +230,7 @@
                 android:textStyle="bold"
                 android:textSize="15dp"/>
             <com.jaredrummler.materialspinner.MaterialSpinner
-
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/spiner"/>
