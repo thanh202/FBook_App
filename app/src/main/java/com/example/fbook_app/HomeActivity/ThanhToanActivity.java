@@ -1,8 +1,5 @@
 package com.example.fbook_app.HomeActivity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,13 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
 import com.example.fbook_app.HomeActivity.zalopay.CreateOrder;
 import com.example.fbook_app.Model.Request.BillRequest;
 import com.example.fbook_app.Model.Response.BillResponse;
-import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.R;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
