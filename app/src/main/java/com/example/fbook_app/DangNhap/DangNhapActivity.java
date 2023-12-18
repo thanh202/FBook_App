@@ -82,6 +82,7 @@ public class DangNhapActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = edtEmailLogin.getText().toString();
                 String passWord = edtPassWordLogin.getText().toString();
+
                 if (cbRemember.isChecked()) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("email", email);
@@ -97,7 +98,14 @@ public class DangNhapActivity extends AppCompatActivity {
                     editor.apply();
                 }
 
-                login(email, passWord);
+                if (email.equals("")){
+                    Toast.makeText(DangNhapActivity.this, "Vui Lòng Nhập Email !", Toast.LENGTH_SHORT).show();
+                } else if (passWord.equals("")) {
+                    Toast.makeText(DangNhapActivity.this, "Vui Lòng Nhập PassWord !", Toast.LENGTH_SHORT).show();
+                }else {
+                    login(email, passWord);
+                }
+
             }
         });
     }

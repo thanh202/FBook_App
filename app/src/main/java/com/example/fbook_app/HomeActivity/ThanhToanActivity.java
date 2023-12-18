@@ -155,7 +155,9 @@ public class ThanhToanActivity extends AppCompatActivity {
 
                                 }
                             });
+                            Intent intent=new Intent(ThanhToanActivity.this,HomeActivity.class);
                             finish();
+                            startActivity(intent);
                             Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
                         }
 
@@ -191,7 +193,9 @@ public class ThanhToanActivity extends AppCompatActivity {
             call.enqueue(new Callback<BillResponse>() {
                 @Override
                 public void onResponse(Call<BillResponse> call, Response<BillResponse> response) {
+                    Intent intent=new Intent(ThanhToanActivity.this,HomeActivity.class);
                     finish();
+                    startActivity(intent);
                     if (response.isSuccessful()) {
                         Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
                     } else {

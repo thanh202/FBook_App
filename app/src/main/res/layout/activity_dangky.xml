@@ -116,6 +116,24 @@
             android:textColorHint="@color/black"
             tools:ignore="RtlSymmetry" />
 
+        <EditText
+            android:id="@+id/edt_repassword_signUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/background_edit_text"
+            android:drawableStart="@drawable/icon_password"
+            android:drawableEnd="@drawable/icon_show_password"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="Nhập Lại Mật khẩu"
+            android:inputType="textPassword"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            tools:ignore="RtlSymmetry" />
+
     </LinearLayout>
 
     <TextView
@@ -124,7 +142,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="34dp"
-        android:layout_marginBottom="38dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/bg_button"
         android:fontFamily="@font/roboto_bold"
         android:paddingVertical="14dp"

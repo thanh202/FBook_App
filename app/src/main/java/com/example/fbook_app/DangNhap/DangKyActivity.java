@@ -1,9 +1,12 @@
 package com.example.fbook_app.DangNhap;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
+import android.util.Patterns;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
@@ -36,10 +39,11 @@ public class DangKyActivity extends AppCompatActivity {
     private EditText edtEmailSignUp;
     private EditText edtUserNameSignUp;
     private EditText edtPhoneSignUp;
-    private EditText edtPasswordSignUp;
+    private EditText edtPasswordSignUp, edtRePasswordSignUp;
     private TextView btnSignUp, edtBirthDaySignUp;
     private Calendar calendar;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +55,7 @@ public class DangKyActivity extends AppCompatActivity {
         edtBirthDaySignUp = findViewById(R.id.edt_birthDay_signUp);
         edtPasswordSignUp = (EditText) findViewById(R.id.edt_password_signUp);
         btnSignUp = (TextView) findViewById(R.id.btn_signUp);
+        edtRePasswordSignUp = findViewById(R.id.edt_repassword_signUp);
         calendar = Calendar.getInstance();
 
         edtBirthDaySignUp.setOnClickListener(v -> {
@@ -59,6 +64,7 @@ public class DangKyActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             showDateDialog();
         });
+        String phonePattern = "^0[0-9]{9}$"; // Một biểu thức chính quy cho số điện thoại có 10 kí tự và bắt đầu bằng số 0
 
         btnSignUp.setOnClickListener(v -> {
             String email = edtEmailSignUp.getText().toString();
@@ -66,7 +72,31 @@ public class DangKyActivity extends AppCompatActivity {
             String phone = edtPhoneSignUp.getText().toString();
             String birthDay = edtBirthDaySignUp.getText().toString();
             String passWord = edtPasswordSignUp.getText().toString();
-            signUp(email, userName, phone, birthDay, passWord);
+            if (email.equals("")) {
+                Toast.makeText(this, "Vui Lòng Nhập Email !", Toast.LENGTH_SHORT).show();
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Toast.makeText(this, "Email Không Hợp Lệ !", Toast.LENGTH_SHORT).show();
+            } else if (userName.equals("")) {
+                Toast.makeText(this, "Vui Lòng Nhập Họ Tên !", Toast.LENGTH_SHORT).show();
+            } else if (phone.equals("")) {
+                Toast.makeText(this, "Vui Lòng Nhập Số Điện Thoại !", Toast.LENGTH_SHORT).show();
+            } else if (phone.matches(phonePattern)) {
+                Toast.makeText(this, "Vui Lòng Nhập Đúng Số Điện Thoại !", Toast.LENGTH_SHORT).show();
+                edtPhoneSignUp.setText("");
+            } else if (birthDay.equals("")) {
+                Toast.makeText(this, "Vui Lòng Nhập Ngày Sinh !", Toast.LENGTH_SHORT).show();
+            } else if (passWord.equals("")) {
+                Toast.makeText(this, "Vui Lòng Nhập PassWord !", Toast.LENGTH_SHORT).show();
+            } else if (!passWord.equals(edtRePasswordSignUp.getText().toString())) {
+                Toast.makeText(this, "Mật Khẩu Nhập Lại Không Khớp !", Toast.LENGTH_SHORT).show();
+                edtRePasswordSignUp.setText("");
+            } else if (passWord.length() < 6) {
+                Toast.makeText(this, "Vui Lòng Nhập PassWord lớn hơn 6 kí tự !", Toast.LENGTH_SHORT).show();
+                edtPasswordSignUp.setText("");
+            }else {
+                signUp(email, userName, phone, birthDay, passWord);
+            }
+
         });
         btnBack.setOnClickListener(v -> {
             finish();
@@ -107,13 +137,14 @@ public class DangKyActivity extends AppCompatActivity {
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.isSuccessful()) {
                     RegisterResponse registerResponse = response.body();
-                    Intent intent = new Intent(DangKyActivity.this,DangNhapActivity.class);
-                    intent.putExtra("email_signup",registerResponse.getEmail());
-                    intent.putExtra("pass_signup",registerResponse.getPassWord());
+                    Intent intent = new Intent(DangKyActivity.this, DangNhapActivity.class);
+                    intent.putExtra("email_signup", registerResponse.getEmail());
+                    intent.putExtra("pass_signup", registerResponse.getPassWord());
                     startActivity(intent);
                     finish();
                 }
             }
+
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
                 Toast.makeText(DangKyActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
