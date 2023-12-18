@@ -34,6 +34,10 @@
                     android:scheme="demozpdk" />
             </intent-filter>
         </activity>
+        <activity android:name=".ThanhToanFavouriteActivity"
+            android:exported="false"/>
+        <activity android:name=".ThanhToanSearchActivity"
+            android:exported="false"/>
         <activity
             android:name=".HomeActivity.InfomationFragment.ChinhSuaThongTinActivity.ChinhSuaThongTinActivity"
             android:exported="false" />

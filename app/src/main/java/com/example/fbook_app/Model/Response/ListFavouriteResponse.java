@@ -3,6 +3,7 @@ package com.example.fbook_app.Model.Response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ListFavouriteResponse {
@@ -18,7 +19,7 @@ public class ListFavouriteResponse {
         this.result = result;
     }
 
-    public static class Result{
+    public static class Result implements Serializable {
         @SerializedName("IDFavorite")
         @Expose
         private Integer iDFavorite;

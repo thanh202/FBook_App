@@ -23,8 +23,7 @@ public class RegisterRequest {
     @Expose
     private String phone;
 
-    public RegisterRequest(String iDUser, String userName, String passWord, String email, String birthday, String phone) {
-        this.iDUser = iDUser;
+    public RegisterRequest( String userName, String passWord, String email, String birthday, String phone) {
         this.userName = userName;
         this.passWord = passWord;
         this.email = email;

@@ -15,12 +15,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fbook_app.Adapter.SearchBookAdapter;
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
+import com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook.ChiTietBookFragment;
+import com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook.ChiTietSearchBookFragment;
 import com.example.fbook_app.Model.Request.AddFavouriteRequest;
 import com.example.fbook_app.Model.Response.AddFavouriteResponse;
 import com.example.fbook_app.Model.Response.SearchResponse;
@@ -77,6 +80,13 @@ public class SearchFragment extends Fragment {
             @Override
             public void onLikeClick(int idBook) {
                 addFavouriteBook(idBook);
+            }
+        });
+        adapter.setOnItemClickListener(new SearchBookAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(SearchResponse.Result book) {
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietSearchBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
             }
         });
     }
