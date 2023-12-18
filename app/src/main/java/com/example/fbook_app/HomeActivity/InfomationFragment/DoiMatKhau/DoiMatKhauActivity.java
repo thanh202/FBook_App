@@ -1,8 +1,10 @@
 package com.example.fbook_app.HomeActivity.InfomationFragment.DoiMatKhau;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,12 +52,21 @@ public class DoiMatKhauActivity extends AppCompatActivity {
             String currentPassword = edCurrentPassword.getText().toString();
             String newPassword = edCurrentPassword.getText().toString();
             String acceptPassword1 = acceptNewPassword.getText().toString();
-            if (!newPassword.equalsIgnoreCase(acceptPassword1)){
-                changePassword(currentPassword,newPassword);
-            }else {
-                tvWarning.setText("Vui lòng nhập đúng mật khẩu mới");
-            }
-
+            Handler handler = new Handler();
+            ProgressDialog dialog = new ProgressDialog(DoiMatKhauActivity.this);
+            dialog.setMessage("Vui Lòng Đợi ...");
+            dialog.show();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    dialog.dismiss();
+                    if (!newPassword.equalsIgnoreCase(acceptPassword1)){
+                        changePassword(currentPassword,newPassword);
+                    }else {
+                        tvWarning.setText("Vui lòng nhập đúng mật khẩu mới");
+                    }
+                }
+            },2000);
         });
     }
 

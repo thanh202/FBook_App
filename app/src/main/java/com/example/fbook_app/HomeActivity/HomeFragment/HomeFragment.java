@@ -98,7 +98,18 @@ public class HomeFragment extends Fragment implements FragmentReload {
         adapterNewBook.setOnLikeClickListener(new NewBookAdapter.OnLikeClickListener() {
             @Override
             public void onLikeClick(int idBook) {
-                addFavouriteBook(idBook);
+                Handler handler = new Handler();
+                ProgressDialog dialog = new ProgressDialog(getContext());
+                dialog.setMessage("Vui Lòng Đợi ...");
+                dialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        addFavouriteBook(idBook);
+                    }
+                },2000);
+
             }
         });
 
