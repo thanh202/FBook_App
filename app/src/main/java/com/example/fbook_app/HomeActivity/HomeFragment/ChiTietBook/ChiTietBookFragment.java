@@ -52,8 +52,6 @@ public class ChiTietBookFragment extends Fragment {
     private TextView btnBuyBookChiTiet;
     private ChapterBookAdapter chapterBookAdapter;
 
-    private NewBookAdapter adapter;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

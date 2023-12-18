@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.fbook_app.Adapter.NewBookAdapter;
@@ -25,13 +27,16 @@ import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
 import com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook.ChiTietBookFragment;
+import com.example.fbook_app.HomeActivity.SearchFragment.SearchFragment;
 import com.example.fbook_app.HomeActivity.ThanhToanActivity;
 import com.example.fbook_app.Interface.FragmentReload;
 import com.example.fbook_app.Model.Request.AddFavouriteRequest;
 import com.example.fbook_app.Model.Response.AddFavouriteResponse;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.Model.Response.CategoryResponse;
+import com.example.fbook_app.Model.Response.SearchResponse;
 import com.example.fbook_app.R;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import io.paperdb.Paper;
 import retrofit2.Call;
@@ -45,6 +50,7 @@ public class HomeFragment extends Fragment implements FragmentReload {
     private RecyclerView rclTheLoai;
     private RecyclerView rclTopBook;
     private RecyclerView rclNewBook;
+    private MaterialSearchBar search;
     private SwipeRefreshLayout refresh;
 
     private View mView;
@@ -62,13 +68,35 @@ public class HomeFragment extends Fragment implements FragmentReload {
         rclTheLoai = mView.findViewById(R.id.rcl_book);
         rclTopBook = mView.findViewById(R.id.rcl_topBook);
         rclNewBook = mView.findViewById(R.id.rcl_newBook);
+        search = mView.findViewById(R.id.search);
         adapterTopBook = new TopBookAdapter(getContext());
         adapter = new TheLoaiAdapter(getContext());
         adapterNewBook = new NewBookAdapter(getContext());
         getData();
-
+        adapter.setOnItemClickListener(new TheLoaiAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String nameCategory) {
+                search(nameCategory);
+            }
+        });
         Paper.init(getActivity());
+        search.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
+            @Override
+            public void onSearchStateChanged(boolean enabled) {
 
+            }
+
+            @Override
+            public void onSearchConfirmed(CharSequence text) {
+                search(text.toString());
+                hideKeyboard();
+            }
+
+            @Override
+            public void onButtonClicked(int buttonCode) {
+
+            }
+        });
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -107,6 +135,42 @@ public class HomeFragment extends Fragment implements FragmentReload {
         return mView;
     }
 
+    private void search(String text) {
+        SharedPreferences myToken = requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String token = myToken.getString("token", null);
+        if (token != null) {
+            ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+            //Get Book
+            Call<SearchResponse> call = apiService.getSearch(token, text);
+            call.enqueue(new Callback<SearchResponse>() {
+                @Override
+                public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+                    if (response.isSuccessful()) {
+                        SearchResponse searchResponse = response.body();
+
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        fragmentManager.beginTransaction().replace(android.R.id.content, SearchFragment.newInstance(searchResponse, text)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SearchResponse> call, Throwable t) {
+                    Toast.makeText(requireActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("zzzz", "onFailure: " + t.getMessage());
+                }
+            });
+        }
+    }
+
+    private void hideKeyboard() {
+        // Lấy đối tượng InputMethodManager từ hệ thống
+        InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        // Ẩn bàn phím
+        View view = requireActivity().getCurrentFocus();
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
 
     private void getData() {
         SharedPreferences myToken = requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);

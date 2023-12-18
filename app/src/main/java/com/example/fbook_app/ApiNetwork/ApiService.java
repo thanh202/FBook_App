@@ -15,6 +15,7 @@ import com.example.fbook_app.Model.Response.LibraryResponse;
 import com.example.fbook_app.Model.Response.ListFavouriteResponse;
 import com.example.fbook_app.Model.Response.LoginResponse;
 import com.example.fbook_app.Model.Response.RegisterResponse;
+import com.example.fbook_app.Model.Response.SearchResponse;
 import com.example.fbook_app.Model.Response.UpdateInformationResponse;
 import com.example.fbook_app.Model.Response.UpdatePasswordResponse;
 import com.example.fbook_app.Model.Response.UserResponse;
@@ -28,7 +29,6 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-
 public interface ApiService {
     @GET("book/get_list")
     Call<BookResponse> getListBook(@Header("Authorization") String token);
@@ -52,6 +52,8 @@ public interface ApiService {
     Call<ListFavouriteResponse> getListFavourite(@Header("Authorization") String token, @Path("IDUser") int idUser);
     @GET("user/get_list/{IDUser}")
     Call<UserResponse> getUser(@Header("Authorization") String token, @Path("IDUser") int idUser);
+    @GET("/book/searchap/{query}" )
+    Call<SearchResponse> getSearch(@Header("Authorization") String token,@Path("query") String query);
     @GET("bill/getbookpaid/{IDUser}")
     Call<LibraryResponse> getLibrary(@Header("Authorization") String token, @Path("IDUser") int idUser);
     @DELETE("Favorite/delete/{IDFavorite}/{IDUser}")

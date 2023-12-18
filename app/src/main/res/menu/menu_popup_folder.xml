@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/create_new_folder"
+        android:title="Kich thuoc chu" />
+    <item
+        android:id="@+id/upload_file"
+        android:title="Anh sang" />
+</menu>

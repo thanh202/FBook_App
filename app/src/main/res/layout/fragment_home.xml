@@ -35,6 +35,7 @@
                 app:cardCornerRadius="40dp">
 
                 <com.mancj.materialsearchbar.MaterialSearchBar
+                    android:id="@+id/search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:mt_hint="Tìm Kiếm ..."
