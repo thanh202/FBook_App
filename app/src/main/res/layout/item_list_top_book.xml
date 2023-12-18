@@ -6,12 +6,12 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
     android:background="@drawable/background_item_list_top_book"
-    app:cardCornerRadius="20dp">
+    app:cardCornerRadius="10dp">
 
     <ImageView
         android:id="@+id/imgView_item_imgTopBook"
-        android:layout_width="141dp"
-        android:layout_height="97dp"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
         android:scaleType="centerCrop"
         android:src="@drawable/img_top_book"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,12 +21,10 @@
 
     <TextView
         android:id="@+id/tv_item_nameTopBook"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:textAlignment="center"
-        android:paddingHorizontal="10dp"
-        android:layout_marginBottom="5dp"
         android:background="@color/Cam"
         android:fontFamily="@font/roboto_bold"
         android:text="Đấu phá thương khung 3"

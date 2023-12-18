@@ -69,7 +69,6 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder>{
             tv_Name.setText(bill.getBookName());
             tv_CreateAt.setText(bill.getCreate_at());
             tv_Status.setText(bill.getStatus());
-            String price = String.valueOf(bill.getPriceTotal());
             tv_Price.setText(format.format(bill.getPriceTotal()));
         }
     }

@@ -99,9 +99,8 @@ public class DangKyActivity extends AppCompatActivity {
     }
 
     private void signUp(String email, String userName, String phone, String birthDay, String passWord) {
-        String idUser = "132"; // id tang dan`
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        RegisterRequest request = new RegisterRequest(idUser, userName, passWord, email, birthDay, phone);
+        RegisterRequest request = new RegisterRequest( userName, passWord, email, birthDay, phone);
         Call<RegisterResponse> call = apiService.register(request);
         call.enqueue(new Callback<RegisterResponse>() {
             @Override

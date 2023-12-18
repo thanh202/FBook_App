@@ -78,22 +78,11 @@ public class HomeFragment extends Fragment implements FragmentReload {
 
         rclTheLoai.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         rclTheLoai.setAdapter(adapter);
-//        adapter.setOnItemClickListener(new BookAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(BookResponse.Result book) {
-//                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-//                fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-//            }
-//        });
+
 
         rclNewBook.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         rclNewBook.setAdapter(adapterNewBook);
-        adapterNewBook.setOnItemClickListener(new NewBookAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BookResponse.Result book) {
 
-            }
-        });
 
         adapterNewBook.setOnLikeClickListener(new NewBookAdapter.OnLikeClickListener() {
             @Override
@@ -139,16 +128,38 @@ public class HomeFragment extends Fragment implements FragmentReload {
                             adapterNewBook.setOnItemClickListener(new NewBookAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(BookResponse.Result book) {
-                                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                                    fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-                                }
+                                    Handler handler = new Handler();
+                                    ProgressDialog dialog = new ProgressDialog(getContext());
+                                    dialog.setMessage("Vui Lòng Đợi ...");
+                                    dialog.show();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            dialog.dismiss();
+                                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                            fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+
+                                        }
+                                    },2000);
+                                     }
                             });
                             adapterTopBook.setOnItemClickListener(new TopBookAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(BookResponse.Result book) {
-                                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                                    fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-                                }
+                                    Handler handler = new Handler();
+                                    ProgressDialog dialog = new ProgressDialog(getContext());
+                                    dialog.setMessage("Vui Lòng Đợi ...");
+                                    dialog.show();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            dialog.dismiss();
+                                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                            fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+
+                                        }
+                                    },2000);
+                                        }
                             });
                             adapterNewBook.setOnBuyClickListener(new NewBookAdapter.OnBuyClickListener() {
                                 @Override
@@ -221,7 +232,9 @@ public class HomeFragment extends Fragment implements FragmentReload {
                 @Override
                 public void onResponse(Call<AddFavouriteResponse> call, Response<AddFavouriteResponse> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(requireActivity(), "Thêm sách vào Favourite thành công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireActivity(), "Thêm sách vào yêu thích thành công !", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(requireActivity(), "Sách đã có sẵn trong yêu thích !", Toast.LENGTH_SHORT).show();
                     }
                 }
 
