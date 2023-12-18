@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,9 @@ import com.example.fbook_app.Model.Response.SearchResponse;
 import com.example.fbook_app.R;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,6 +57,8 @@ public class HomeFragment extends Fragment implements FragmentReload {
     private RecyclerView rclNewBook;
     private MaterialSearchBar search;
     private SwipeRefreshLayout refresh;
+    private List<String> suggestList = new ArrayList<>();
+
 
     private View mView;
 
@@ -80,6 +87,7 @@ public class HomeFragment extends Fragment implements FragmentReload {
             }
         });
         Paper.init(getActivity());
+
         search.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
@@ -147,10 +155,20 @@ public class HomeFragment extends Fragment implements FragmentReload {
                 public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
                     if (response.isSuccessful()) {
                         SearchResponse searchResponse = response.body();
+                        Handler handler = new Handler();
+                        ProgressDialog dialog = new ProgressDialog(getContext());
+                        dialog.setMessage("Vui Lòng Đợi ...");
+                        dialog.show();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                fragmentManager.beginTransaction().replace(android.R.id.content, SearchFragment.newInstance(searchResponse, text)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
 
-                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                        fragmentManager.beginTransaction().replace(android.R.id.content, SearchFragment.newInstance(searchResponse, text)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-                    }
+                            }
+                        },2000);
+                      }
                 }
 
                 @Override
