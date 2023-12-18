@@ -1,6 +1,7 @@
 package com.example.fbook_app.HomeActivity.FavoriteFragment;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,7 +66,18 @@ public class FavoriteFragment extends Fragment implements FragmentReload {
         adapter.setOnUnFavouriteClickListener(new FavoriteBookAdapter.OnUnFavouriteClickListener() {
             @Override
             public void onUnFavouriteClick(int idFavourite) {
-                unFavourite(idFavourite);
+                Handler handler = new Handler();
+                ProgressDialog dialog = new ProgressDialog(getContext());
+                dialog.setMessage("Vui Lòng Đợi ...");
+                dialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        unFavourite(idFavourite);
+                    }
+                },2000);
+
             }
         });
         refreshFavourite.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

@@ -1,9 +1,11 @@
 package com.example.fbook_app.HomeActivity.InfomationFragment.ChinhSuaThongTinActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -40,7 +42,18 @@ public class ChinhSuaThongTinActivity extends AppCompatActivity {
         btnLuuThongTin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateUser(edt_nameUser.getText().toString(), edt_birthday.getText().toString());
+                Handler handler = new Handler();
+                ProgressDialog dialog = new ProgressDialog(ChinhSuaThongTinActivity.this);
+                dialog.setMessage("Vui Lòng Đợi ...");
+                dialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        updateUser(edt_nameUser.getText().toString(), edt_birthday.getText().toString());
+                    }
+                },2000);
+
             }
         });
 

@@ -1,9 +1,11 @@
 package com.example.fbook_app.HomeActivity.SearchFragment;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,15 +81,38 @@ public class SearchFragment extends Fragment {
         adapter.setOnLikeClickListener(new SearchBookAdapter.OnLikeClickListener() {
             @Override
             public void onLikeClick(int idBook) {
-                addFavouriteBook(idBook);
+                Handler handler = new Handler();
+                ProgressDialog dialog = new ProgressDialog(getContext());
+                dialog.setMessage("Vui Lòng Đợi ...");
+                dialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        addFavouriteBook(idBook);
+                        Toast.makeText(getContext(), "Đã Thêm Sách Vào Yêu Thích !", Toast.LENGTH_SHORT).show();
+                    }
+                },2000);
+
             }
         });
         adapter.setOnItemClickListener(new SearchBookAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(SearchResponse.Result book) {
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietSearchBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-            }
+                Handler handler = new Handler();
+                ProgressDialog dialog = new ProgressDialog(getContext());
+                dialog.setMessage("Vui Lòng Đợi ...");
+                dialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietSearchBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+
+                    }
+                },2000);
+                     }
         });
     }
 

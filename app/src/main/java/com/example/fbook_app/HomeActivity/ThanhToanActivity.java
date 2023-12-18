@@ -26,8 +26,10 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +42,8 @@ import vn.zalopay.sdk.listeners.PayOrderListener;
 public class ThanhToanActivity extends AppCompatActivity {
     private TextView tvNameBook, tvPriceBook, tvDate, tvTime;
     private MaterialSpinner spinner;
+
+    private String check = "";
 
     private ImageView btnBack;
 
@@ -83,9 +87,11 @@ public class ThanhToanActivity extends AppCompatActivity {
         String formattedTime = time.format(c.getTime());
         String formattedDateTime = datetime.format(c.getTime());
 
+        Locale locale = new Locale("vi", "VN");
+        NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+
         tvNameBook.setText(Common.currentBook.getBookName());
-        String price = Common.currentBook.getPriceBook() + " vnđ";
-        tvPriceBook.setText(price);
+        tvPriceBook.setText(format.format(Common.currentBook.getPriceBook()));
         tvDate.setText(formattedDate);
         tvTime.setText(formattedTime);
 
@@ -94,7 +100,7 @@ public class ThanhToanActivity extends AppCompatActivity {
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String status = "Đã Thanh Toán";
+                String status = "";
                 int iDBook = Integer.parseInt(String.valueOf(Common.currentBook.getIDBook()));
                 int priceTotal = Integer.parseInt(String.valueOf(Common.currentBook.getPriceBook()));
                 String create_at = formattedDateTime;
@@ -106,9 +112,9 @@ public class ThanhToanActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         dialog.dismiss();
-                        if (spinner.getSelectedIndex() == 0){
+                        if (spinner.getSelectedIndex() == 0) {
                             thanhtoan(status, iDBook, priceTotal, create_at);
-                        } else  {
+                        } else {
                             thanhtoanZalo(status, iDBook, priceTotal, create_at);
                         }
                     }
@@ -118,25 +124,26 @@ public class ThanhToanActivity extends AppCompatActivity {
         });
 
     }
-    private void thanhtoanZalo(String status, int iDBook, int priceTotal, String createAt) {
-        CreateOrder orderApi = new CreateOrder();
-        try {
-            JSONObject data = orderApi.createOrder(String.valueOf(priceTotal));
-            String code = data.getString("return_code");
-            if (code.equals("1")) {
-                String token = data.getString("zp_trans_token");
-                ZaloPaySDK.getInstance().payOrder(ThanhToanActivity.this, token, "demozpdk://app", new PayOrderListener() {
-                    @Override
-                    public void onPaymentSucceeded(String s, String s1, String s2) {
-                        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-                        SharedPreferences myToken = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
-                        String token = myToken.getString("token", null);
-                        SharedPreferences myIdUser = getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
-                        int idUser = myIdUser.getInt("idUser", 0);
 
-                        BillRequest request = new BillRequest(status, iDBook, idUser, priceTotal, createAt);
-                        Call<BillResponse> call = apiService.addBill(token, request);
-                        if (token != null && idUser > 0) {
+    private void thanhtoanZalo(String status, int iDBook, int priceTotal, String createAt) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        SharedPreferences myToken = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String token = myToken.getString("token", null);
+        SharedPreferences myIdUser = getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
+        int idUser = myIdUser.getInt("idUser", 0);
+
+        if (token != null && idUser > 0) {
+            CreateOrder orderApi = new CreateOrder();
+            try {
+                JSONObject data = orderApi.createOrder(String.valueOf(priceTotal));
+                String code = data.getString("return_code");
+                if (code.equals("1")) {
+                    String token1 = data.getString("zp_trans_token");
+                    ZaloPaySDK.getInstance().payOrder(ThanhToanActivity.this, token1, "demozpdk://app", new PayOrderListener() {
+                        @Override
+                        public void onPaymentSucceeded(String s, String s1, String s2) {
+                            BillRequest request = new BillRequest("Đã Thanh Toán", iDBook, idUser, priceTotal, createAt);
+                            Call<BillResponse> call = apiService.addBill(token, request);
                             call.enqueue(new Callback<BillResponse>() {
                                 @Override
                                 public void onResponse(Call<BillResponse> call, Response<BillResponse> response) {
@@ -148,27 +155,27 @@ public class ThanhToanActivity extends AppCompatActivity {
 
                                 }
                             });
+                            Intent intent=new Intent(ThanhToanActivity.this,HomeActivity.class);
+                            finish();
+                            startActivity(intent);
+                            Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
                         }
-                        Intent intent =new Intent(ThanhToanActivity.this, HomeActivity.class);
-                        Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thành Công", Toast.LENGTH_SHORT).show();
-                        startActivity(intent);
-                        finish();
-                    }
 
-                    @Override
-                    public void onPaymentCanceled(String s, String s1) {
+                        @Override
+                        public void onPaymentCanceled(String s, String s1) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
+                        @Override
+                        public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
 
-                    }
-                });
+                        }
+                    });
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -186,10 +193,15 @@ public class ThanhToanActivity extends AppCompatActivity {
             call.enqueue(new Callback<BillResponse>() {
                 @Override
                 public void onResponse(Call<BillResponse> call, Response<BillResponse> response) {
+                    Intent intent=new Intent(ThanhToanActivity.this,HomeActivity.class);
+                    finish();
+                    startActivity(intent);
                     if (response.isSuccessful()) {
                         Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
-                        finish();
+                    } else {
+                        Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thất Bại !", Toast.LENGTH_SHORT).show();
                     }
+
                 }
 
                 @Override

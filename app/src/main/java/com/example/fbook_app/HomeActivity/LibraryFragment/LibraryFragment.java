@@ -1,6 +1,7 @@
 package com.example.fbook_app.HomeActivity.LibraryFragment;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,9 +77,20 @@ public class LibraryFragment extends Fragment implements FragmentReload {
         adapter.setOnReadClickListener(new LibraryAdapter.OnReadClickListener() {
             @Override
             public void onItemClick(LibraryResponse.Result book) {
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(android.R.id.content, DocSachFragment.newInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-            }
+                Handler handler = new Handler();
+                ProgressDialog dialog = new ProgressDialog(getContext());
+                dialog.setMessage("Vui Lòng Đợi ...");
+                dialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        fragmentManager.beginTransaction().replace(android.R.id.content, DocSachFragment.newInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+
+                    }
+                },2000);
+                 }
         });
         return mView;
     }

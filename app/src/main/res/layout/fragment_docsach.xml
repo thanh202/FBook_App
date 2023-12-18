@@ -86,6 +86,7 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <TextView
+            android:textColor="@color/black"
             android:id="@+id/tv_content"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

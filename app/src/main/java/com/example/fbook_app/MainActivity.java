@@ -39,10 +39,32 @@ public class MainActivity extends AppCompatActivity {
         btnToLogin = (TextView) findViewById(R.id.btn_to_login_home);
 
         btnToLogin.setOnClickListener(v -> {
-            startActivity(new Intent(this, DangNhapActivity.class));
+            Handler handler = new Handler();
+            ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+            dialog.setMessage("Vui Lòng Đợi ...");
+            dialog.show();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    dialog.dismiss();
+                    startActivity(new Intent(MainActivity.this, DangNhapActivity.class));
+                }
+            },2000);
+
         });
         btnToSignUp.setOnClickListener(v -> {
-            startActivity(new Intent(this, DangKyActivity.class));
+            Handler handler = new Handler();
+            ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+            dialog.setMessage("Vui Lòng Đợi ...");
+            dialog.show();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    dialog.dismiss();
+                    startActivity(new Intent(MainActivity.this, DangKyActivity.class));
+                }
+            },2000);
+
         });
 
 
