@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity.InfomationFragment.LichSuMuaSach.LichSuMuaSach">
+    <ImageView
+        android:id="@+id/btn_back_liachsumuahang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="11dp"
+        android:src="@drawable/icon_back_login" />
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lịch Sử Mua Sách"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:textColor="@color/Cam"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/btn_back_liachsumuahang"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcl_lichsumuahang"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/txt1"
+        android:layout_margin="10dp"/>
+</RelativeLayout>

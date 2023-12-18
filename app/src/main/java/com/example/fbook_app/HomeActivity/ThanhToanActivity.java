@@ -141,14 +141,6 @@ public class ThanhToanActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<BillResponse> call, Response<BillResponse> response) {
 
-                                    Intent intent =new Intent(ThanhToanActivity.this, HomeActivity.class);
-                                    startActivity(intent);
-                                    Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thành Công", Toast.LENGTH_SHORT).show();
-                                    finishAffinity();
-//                                    if (response.isSuccessful()) {
-//                                        Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
-//                                        finish();
-//                                    }
                                 }
 
                                 @Override
@@ -157,6 +149,10 @@ public class ThanhToanActivity extends AppCompatActivity {
                                 }
                             });
                         }
+                        Intent intent =new Intent(ThanhToanActivity.this, HomeActivity.class);
+                        Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thành Công", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                        finish();
                     }
 
                     @Override

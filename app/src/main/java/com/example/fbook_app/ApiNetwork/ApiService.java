@@ -42,6 +42,8 @@ public interface ApiService {
     Call<AddFavouriteResponse> addFavourite(@Header("Authorization") String token, @Body AddFavouriteRequest request);
     @POST("bill/add")
     Call<BillResponse> addBill(@Header("Authorization") String token, @Body BillRequest request);
+    @GET("bill/get_bill_iduser/{IDUser}")
+    Call<BillResponse> getBill(@Header("Authorization") String token, @Path("IDUser") int idUser);
     @PUT("user/updateprofile/{IDUser}")
     Call<UpdateInformationResponse> updateUser(@Header("Authorization") String token, @Path("IDUser") int idUser, @Body UpdateInformationRequest request);
     @PUT("user/change_password/{IDUser}")

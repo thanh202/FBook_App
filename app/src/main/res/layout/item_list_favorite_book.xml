@@ -85,17 +85,10 @@
                 android:id="@+id/btn_un_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/icon_un_like" />
 
-            <ImageView
-                android:id="@+id/btn_item_favorite_buy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/icon_cart1" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
