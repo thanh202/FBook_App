@@ -18,21 +18,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fbook_app.Adapter.ChapterBookAdapter;
-import com.example.fbook_app.Adapter.NewBookAdapter;
+import com.example.fbook_app.Adapter.ChapterFavouriteBookAdapter;
+import com.example.fbook_app.Adapter.ChapterSearchBookAdapter;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
 import com.example.fbook_app.HomeActivity.ThanhToanActivity;
 import com.example.fbook_app.Model.Response.BookResponse;
+import com.example.fbook_app.Model.Response.ListFavouriteResponse;
 import com.example.fbook_app.R;
+import com.example.fbook_app.ThanhToanFavouriteActivity;
 
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class ChiTietBookFragment extends Fragment {
+public class ChiTietFavouriteBookFragment extends Fragment {
     private View mView;
 
-    public static ChiTietBookFragment getInstance(BookResponse.Result book) {
-        ChiTietBookFragment chiTietBookFragment = new ChiTietBookFragment();
+    public static ChiTietFavouriteBookFragment getInstance(ListFavouriteResponse.Result book) {
+        ChiTietFavouriteBookFragment chiTietBookFragment = new ChiTietFavouriteBookFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("object_book", book);
         chiTietBookFragment.setArguments(bundle);
@@ -50,7 +53,7 @@ public class ChiTietBookFragment extends Fragment {
     private RecyclerView rclListChapter;
     private TextView tvPriceBookBookChiTiet;
     private TextView btnBuyBookChiTiet;
-    private ChapterBookAdapter chapterBookAdapter;
+    private ChapterFavouriteBookAdapter chapterBookAdapter;
 
     @Nullable
     @Override
@@ -80,7 +83,7 @@ public class ChiTietBookFragment extends Fragment {
         Locale locale = new Locale("vi", "VN");
         NumberFormat format = NumberFormat.getCurrencyInstance(locale);
 
-        BookResponse.Result mBook = (BookResponse.Result) getArguments().get("object_book");
+        ListFavouriteResponse.Result mBook = (ListFavouriteResponse.Result) getArguments().get("object_book");
         String imgBook = RetrofitClient.BASE_URL + mBook.getImageBook();
         Glide.with(requireActivity()).load(imgBook).into(imgViewBookChiTiet);
         tvNameBookBookChiTiet.setText(mBook.getBookName());
@@ -88,11 +91,11 @@ public class ChiTietBookFragment extends Fragment {
         tvDescriptionBookChiTiet.setText(mBook.getDiscription());
         tvPublishYearBookChiTiet.setText(mBook.getPublishYear());
         tvPriceBookBookChiTiet.setText(format.format(mBook.getPriceBook()));
-        tvTypeBookBookChiTiet.setText(mBook.getCatName());
+//        tvTypeBookBookChiTiet.setText(mBook.getCatName());
         String chapterBook = String.valueOf(mBook.getChapter());
         tvChapterBookChiTiet.setText(chapterBook);
 
-        chapterBookAdapter = new ChapterBookAdapter(requireActivity());
+        chapterBookAdapter = new ChapterFavouriteBookAdapter(requireActivity());
         chapterBookAdapter.setListChapterBook(mBook);
         rclListChapter.setAdapter(chapterBookAdapter);
         rclListChapter.setLayoutManager(new GridLayoutManager(getContext(), 8));
@@ -108,8 +111,8 @@ public class ChiTietBookFragment extends Fragment {
                     @Override
                     public void run() {
                         dialog.dismiss();
-                        Common.currentBook = mBook;
-                        Intent intent = new Intent(getContext(), ThanhToanActivity.class);
+                        Common.currentFavouriteBook = mBook;
+                        Intent intent = new Intent(getContext(), ThanhToanFavouriteActivity.class);
                         startActivity(intent);
                     }
                 },2000);

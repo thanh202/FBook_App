@@ -23,7 +23,7 @@ import java.util.Locale;
 
 public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapter.ViewHolder> {
     private final Context context;
-//    private OnItemClickListener onItemClickListener;
+    private OnItemClickListener onItemClickListener;
     private OnUnFavouriteClickListener onUnFavouriteClickListener;
     private List<ListFavouriteResponse.Result> bookList = new ArrayList<>();
     public FavoriteBookAdapter(Context mContext){
@@ -33,9 +33,9 @@ public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapte
         this.bookList = list;
         notifyDataSetChanged();
     }
-//    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
-//        this.onItemClickListener = itemClickListener;
-//    }
+    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+        this.onItemClickListener = itemClickListener;
+    }
     public void setOnUnFavouriteClickListener(OnUnFavouriteClickListener unFavouriteClickListener) {
         this.onUnFavouriteClickListener = unFavouriteClickListener;
     }
@@ -86,17 +86,17 @@ public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapte
                 String imgBook = RetrofitClient.BASE_URL+book.getImageBook();
             Glide.with(context).load(imgBook)
                     .into(imgViewItemImgBook);
-//            llSelectItem.setOnClickListener(v -> {
-//                onItemClickListener.onItemClick(book);
-//            });
+            llSelectItem.setOnClickListener(v -> {
+                onItemClickListener.onItemClick(book);
+            });
             btnUnFavourite.setOnClickListener(v -> {
                 onUnFavouriteClickListener.onUnFavouriteClick(book.getIDFavorite());
             });
         }
     }
-//    public interface OnItemClickListener {
-//        void onItemClick(ListFavouriteResponse.Result book);
-//    }
+    public interface OnItemClickListener {
+        void onItemClick(ListFavouriteResponse.Result book);
+    }
     public interface OnUnFavouriteClickListener {
         void onUnFavouriteClick(int idFavourite);
     }

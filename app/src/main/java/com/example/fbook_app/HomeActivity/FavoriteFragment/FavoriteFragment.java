@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 import com.example.fbook_app.Adapter.FavoriteBookAdapter;
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
+import com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook.ChiTietBookFragment;
+import com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook.ChiTietFavouriteBookFragment;
 import com.example.fbook_app.Interface.FragmentReload;
 import com.example.fbook_app.Model.Response.DeleteResponse;
 import com.example.fbook_app.Model.Response.ListFavouriteResponse;
@@ -83,69 +86,69 @@ public class FavoriteFragment extends Fragment implements FragmentReload {
                 reloadFragmentData();
             }
         });
-        rclListFavorite.setLayoutManager(new GridLayoutManager(getContext(),2));
+        rclListFavorite.setLayoutManager(new GridLayoutManager(getContext(), 2));
         rclListFavorite.setAdapter(adapter);
-//        adapter.setOnItemClickListener(new FavoriteBookAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(Book book) {
-//                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-//                fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-//            }
-//        });
-
         return mView;
     }
 
     private void unFavourite(int idFavourite) {
-        SharedPreferences myToken= requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        SharedPreferences myToken = requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
         String token = myToken.getString("token", null);
-        SharedPreferences myIdUser= requireActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
+        SharedPreferences myIdUser = requireActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
         int idUser = myIdUser.getInt("idUser", 0);
         refreshFavourite.setRefreshing(true);
-        if (token != null && idUser > 0){
+        if (token != null && idUser > 0) {
             ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-            Call<DeleteResponse> call = apiService.deleteFavourite(token,idFavourite,idUser);
+            Call<DeleteResponse> call = apiService.deleteFavourite(token, idFavourite, idUser);
             call.enqueue(new Callback<DeleteResponse>() {
                 @Override
                 public void onResponse(Call<DeleteResponse> call, Response<DeleteResponse> response) {
                     refreshFavourite.setRefreshing(false);
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         Toast.makeText(requireActivity(), "un Favourite thành công", Toast.LENGTH_SHORT).show();
-                           refreshData();
+                        refreshData();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<DeleteResponse> call, Throwable t) {
                     refreshFavourite.setRefreshing(false);
-                    Log.e("zzzzzz", "onFailure: " + t.getMessage() );
+                    Log.e("zzzzzz", "onFailure: " + t.getMessage());
                     Toast.makeText(requireActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
+
     @SuppressLint("NotifyDataSetChanged")
     private void refreshData() {
         getDataFavouriteBook();
     }
 
-    public void getDataFavouriteBook(){
-        SharedPreferences myToken= requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+    public void getDataFavouriteBook() {
+        SharedPreferences myToken = requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
         String token = myToken.getString("token", null);
-        SharedPreferences myIdUser= requireActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
+        SharedPreferences myIdUser = requireActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
         int idUser = myIdUser.getInt("idUser", 0);
         refreshFavourite.setRefreshing(true);
-        if (token != null && idUser > 0){
+        if (token != null && idUser > 0) {
             ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-            Call<ListFavouriteResponse> call = apiService.getListFavourite(token,idUser);
+            Call<ListFavouriteResponse> call = apiService.getListFavourite(token, idUser);
             call.enqueue(new Callback<ListFavouriteResponse>() {
                 @Override
                 public void onResponse(Call<ListFavouriteResponse> call, Response<ListFavouriteResponse> response) {
                     refreshFavourite.setRefreshing(false);
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         ListFavouriteResponse favouriteResponse = response.body();
-                        if (favouriteResponse != null){
+                        if (favouriteResponse != null) {
                             showRecycle(favouriteResponse);
+                            adapter.setOnItemClickListener(new FavoriteBookAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(ListFavouriteResponse.Result book) {
+                                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                    fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietFavouriteBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
+                                }
+                            });
                         }
                     }
                 }
@@ -158,6 +161,7 @@ public class FavoriteFragment extends Fragment implements FragmentReload {
             });
         }
     }
+
     public void showRecycle(ListFavouriteResponse listFavouriteResponse) {
         adapter.setListBook(listFavouriteResponse.getResult());
         if (listFavouriteResponse.getResult().size() <= 0) {
