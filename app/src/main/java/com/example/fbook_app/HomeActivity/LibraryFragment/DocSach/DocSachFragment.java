@@ -7,9 +7,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,7 +43,7 @@ public class DocSachFragment extends Fragment {
     private ImageView btnBack;
     private ImageView btnSetting;
     private NestedScrollView scrollView;
-    private TextView tvContent;
+    private TextView tvContent,tvTitle;
 
     @Nullable
     @Override
@@ -59,10 +61,12 @@ public class DocSachFragment extends Fragment {
         btnSetting = (ImageView) mView.findViewById(R.id.btn_setting);
         scrollView = (NestedScrollView) mView.findViewById(R.id.scrollView);
         tvContent = (TextView) mView.findViewById(R.id.tv_content);
+        tvTitle = mView.findViewById(R.id.tv_title_docsach);
         scrollView.smoothScrollTo(0, 0);
         String imgBook = RetrofitClient.BASE_URL + mBook.getImageBook();
         Glide.with(requireActivity()).load(imgBook).into(bookImageView);
         tvContent.setText(mBook.getContent());
+        tvTitle.setText(mBook.getBookName());
 
         btnBack.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager().popBackStack();
@@ -73,6 +77,7 @@ public class DocSachFragment extends Fragment {
     }
     private int brightnessValue = 50;
     private int textSizeValue = 16;
+    private boolean nightMode = false;
     private void showDialogSetting() {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.setting_dialog, null);
@@ -81,6 +86,7 @@ public class DocSachFragment extends Fragment {
         SeekBar brightnessSeekBar = dialogView.findViewById(R.id.brightnessSeekBar);
         SeekBar textSizeSeekBar = dialogView.findViewById(R.id.textSizeSeekBar);
         Button closeButton = dialogView.findViewById(R.id.closeButton);
+        Switch nightModeSwitch = dialogView.findViewById(R.id.nightModeSwitch);
 
         brightnessSeekBar.setProgress(brightnessValue);
         textSizeSeekBar.setProgress(textSizeValue);
@@ -130,7 +136,16 @@ public class DocSachFragment extends Fragment {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+        nightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                nightMode = isChecked;
+                nightModeSwitch.setChecked(isChecked);
+                // Cập nhật chế độ đọc ban đêm trực tiếp lên giao diện đọc sách
+                updateNightMode(tvContent, isChecked);
 
+            }
+        });
         // Xử lý sự kiện khi nút đóng được nhấn
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,5 +163,17 @@ public class DocSachFragment extends Fragment {
     private void updateTextSize(TextView bookContentTextView, int textSize) {
         // Áp dụng kích thước chữ vào giao diện đọc sách (ví dụ)
         bookContentTextView.setTextSize(textSize);
+    }
+    private void updateNightMode(TextView bookContentTextView, boolean nightMode) {
+        // Áp dụng chế độ đọc ban đêm vào giao diện đọc sách (ví dụ)
+        if (nightMode) {
+            // Thiết lập màu chữ và màu nền cho chế độ đọc ban đêm
+            bookContentTextView.setTextColor(getResources().getColor(android.R.color.white));
+            bookContentTextView.setBackgroundColor(getResources().getColor(android.R.color.black));
+        } else {
+            // Thiết lập màu chữ và màu nền cho chế độ bình thường
+            bookContentTextView.setTextColor(getResources().getColor(android.R.color.black));
+            bookContentTextView.setBackgroundColor(getResources().getColor(android.R.color.white));
+        }
     }
 }

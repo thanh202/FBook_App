@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
-    >
+    android:padding="16dp">
 
     <!-- Nội dung của dialog -->
     <TextView
@@ -13,42 +12,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Tùy chỉnh ánh sáng"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <SeekBar
         android:id="@+id/brightnessSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="50"
-        android:padding="16dp"
         android:layout_marginTop="8dp"
+        android:max="100"
+        android:padding="16dp"
+        android:progress="50"
         android:thumbTint="@color/colorAccent" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Tùy chỉnh kích thước chữ"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
     <SeekBar
         android:id="@+id/textSizeSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/brightnessSeekBar"
-        android:max="30"
-        android:progress="16"
-        android:padding="16dp"
         android:layout_marginTop="8dp"
+        android:max="30"
+        android:padding="16dp"
+        android:progress="16"
         android:thumbTint="@color/colorAccent" />
-        <Button
-            android:id="@+id/closeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đóng"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"/>
-
+    <Switch
+        android:id="@+id/nightModeSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Chế độ đọc ban đêm"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+    <Button
+        android:id="@+id/closeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="Đóng" />
 
 
 </LinearLayout>
