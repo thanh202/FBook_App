@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Model.Response.CategoryResponse;
+import com.example.fbook_app.Model.Response.SearchResponse;
 import com.example.fbook_app.R;
 
 import java.util.ArrayList;
@@ -21,12 +22,11 @@ import java.util.List;
 
 public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.ViewHolder> {
     private final Context context;
+    private OnItemClickListener onItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+        this.onItemClickListener = itemClickListener;
+    }
     private List<CategoryResponse.Result> categoryList = new ArrayList<>();
-
-
-
-
-
     public TheLoaiAdapter(Context mContext) {
         context = mContext;
     }
@@ -35,8 +35,6 @@ public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.ViewHold
         this.categoryList = list;
         notifyDataSetChanged();
     }
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -65,7 +63,7 @@ public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.ViewHold
             super(itemView);
             imgViewItemImgTheLoai = (ImageView) itemView.findViewById(R.id.imgView_item_imgTheLoai);
             tvItemNameTheLoai = (TextView) itemView.findViewById(R.id.tv_item_nameTheLoai);
-            //rlItemSelect = itemView.findViewById(R.id.rl_item_selectTheLoai);
+            rlItemSelect = itemView.findViewById(R.id.rl_item_selectTheLoai);
 
         }
 
@@ -75,8 +73,12 @@ public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.ViewHold
             String imgCat = RetrofitClient.BASE_URL+category.getImgCat();
             Glide.with(context).load(imgCat)
                     .into(imgViewItemImgTheLoai);
+            rlItemSelect.setOnClickListener(v -> {
+                onItemClickListener.onItemClick(category.getCatName());
+            });
         }
-
-
+    }
+    public interface OnItemClickListener {
+        void onItemClick(String nameCategory);
     }
 }

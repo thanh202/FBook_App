@@ -30,6 +30,8 @@
         android:background="@color/Cam"
         android:fontFamily="@font/roboto_bold"
         android:text="Đấu phá thương khung 3"
+        android:maxLength="20"
+        android:ellipsize="end"
         android:textColor="#FFFFFF"
         android:textSize="11sp" />
 </androidx.cardview.widget.CardView>

@@ -37,9 +37,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:gravity="center"
             android:textStyle="bold"
             android:text="Hành Động"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="18dp" />
 
