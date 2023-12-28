@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.util.Patterns;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ public class DangKyActivity extends AppCompatActivity {
     private EditText edtPasswordSignUp, edtRePasswordSignUp;
     private TextView btnSignUp, edtBirthDaySignUp;
     private Calendar calendar;
+    private ProgressBar pg_loading;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -56,6 +59,7 @@ public class DangKyActivity extends AppCompatActivity {
         edtBirthDaySignUp = findViewById(R.id.edt_birthDay_signUp);
         edtPasswordSignUp = (EditText) findViewById(R.id.edt_password_signUp);
         btnSignUp = (TextView) findViewById(R.id.btn_signUp);
+        pg_loading = findViewById(R.id.pg_load_register);
         edtRePasswordSignUp = findViewById(R.id.edt_repassword_signUp);
         calendar = Calendar.getInstance();
 
@@ -65,7 +69,7 @@ public class DangKyActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             showDateDialog();
         });
-        String phonePattern = "^0[0-9]{9}$"; // Một biểu thức chính quy cho số điện thoại có 10 kí tự và bắt đầu bằng số 0
+        String phonePattern = "^0[0-9]{8}$"; // Một biểu thức chính quy cho số điện thoại có 10 kí tự và bắt đầu bằng số 0
 
         btnSignUp.setOnClickListener(v -> {
             String email = edtEmailSignUp.getText().toString();
@@ -84,7 +88,7 @@ public class DangKyActivity extends AppCompatActivity {
             } else if (phone.matches(phonePattern)) {
                 Toast.makeText(this, "Vui Lòng Nhập Đúng Số Điện Thoại !", Toast.LENGTH_SHORT).show();
                 edtPhoneSignUp.setText("");
-            } else if (birthDay.equals("")) {
+            } else if (birthDay.equalsIgnoreCase("Sinh nhật")) {
                 Toast.makeText(this, "Vui Lòng Nhập Ngày Sinh !", Toast.LENGTH_SHORT).show();
             } else if (passWord.equals("")) {
                 Toast.makeText(this, "Vui Lòng Nhập PassWord !", Toast.LENGTH_SHORT).show();
@@ -97,7 +101,6 @@ public class DangKyActivity extends AppCompatActivity {
             }else {
                 signUp(email, userName, phone, birthDay, passWord);
             }
-
         });
         btnBack.setOnClickListener(v -> {
             finish();
@@ -128,8 +131,9 @@ public class DangKyActivity extends AppCompatActivity {
         // Show the DatePickerDialog
         datePickerDialog.show();
     }
-
     private void signUp(String email, String userName, String phone, String birthDay, String passWord) {
+        pg_loading.setVisibility(View.VISIBLE);
+        btnSignUp.setVisibility(View.GONE);
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
         RegisterRequest request = new RegisterRequest(userName, passWord, email, birthDay, phone);
         Call<RegisterResponse> call = apiService.register(request);
@@ -137,6 +141,8 @@ public class DangKyActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.isSuccessful()) {
+                    pg_loading.setVisibility(View.GONE);
+                    btnSignUp.setVisibility(View.VISIBLE);
                     RegisterResponse registerResponse = response.body();
                     Intent intent = new Intent(DangKyActivity.this, DangNhapActivity.class);
                     intent.putExtra("email_signup", registerResponse.getEmail());
@@ -145,9 +151,10 @@ public class DangKyActivity extends AppCompatActivity {
                     finish();
                 }
             }
-
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                pg_loading.setVisibility(View.GONE);
+                btnSignUp.setVisibility(View.VISIBLE);
                 Toast.makeText(DangKyActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

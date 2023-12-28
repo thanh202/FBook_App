@@ -10,6 +10,7 @@ import com.example.fbook_app.Model.Response.AddFavouriteResponse;
 import com.example.fbook_app.Model.Response.BillResponse;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.Model.Response.CategoryResponse;
+import com.example.fbook_app.Model.Response.ChapterResponse;
 import com.example.fbook_app.Model.Response.DeleteResponse;
 import com.example.fbook_app.Model.Response.LibraryResponse;
 import com.example.fbook_app.Model.Response.ListFavouriteResponse;
@@ -58,4 +59,6 @@ public interface ApiService {
     Call<LibraryResponse> getLibrary(@Header("Authorization") String token, @Path("IDUser") int idUser);
     @DELETE("Favorite/delete/{IDFavorite}/{IDUser}")
     Call<DeleteResponse> deleteFavourite(@Header("Authorization") String token, @Path("IDFavorite") int idFavourite, @Path("IDUser") int idUser);
+    @GET("chuong/get_chapters_idbook/{IDBook}")
+    Call<ChapterResponse> getChapter(@Header("Authorization") String token,@Path("IDBook") int idBook);
 }

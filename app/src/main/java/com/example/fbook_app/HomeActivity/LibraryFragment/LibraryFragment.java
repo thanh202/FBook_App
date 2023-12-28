@@ -87,7 +87,6 @@ public class LibraryFragment extends Fragment implements FragmentReload {
                         dialog.dismiss();
                         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                         fragmentManager.beginTransaction().replace(android.R.id.content, DocSachFragment.newInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-
                     }
                 },2000);
                  }
