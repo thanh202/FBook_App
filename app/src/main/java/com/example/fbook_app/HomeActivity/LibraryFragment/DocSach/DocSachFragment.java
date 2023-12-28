@@ -1,6 +1,8 @@
 package com.example.fbook_app.HomeActivity.LibraryFragment.DocSach;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Switch;
@@ -20,14 +23,24 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.fbook_app.Adapter.ChapterAdapter;
+import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.HomeActivity.LibraryFragment.LibraryFragment;
 import com.example.fbook_app.Model.Response.BookResponse;
+import com.example.fbook_app.Model.Response.ChapterResponse;
 import com.example.fbook_app.Model.Response.LibraryResponse;
 import com.example.fbook_app.R;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.sidesheet.SideSheetDialog;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DocSachFragment extends Fragment {
     public static DocSachFragment newInstance(LibraryResponse.Result book) {
@@ -41,9 +54,10 @@ public class DocSachFragment extends Fragment {
     private AppBarLayout appBarLayout;
     private ImageView bookImageView;
     private ImageView btnBack;
-    private ImageView btnSetting;
+    private ImageView btnSetting, btnMenu;
     private NestedScrollView scrollView;
     private TextView tvContent,tvTitle;
+    private LibraryResponse.Result mBook;
 
     @Nullable
     @Override
@@ -54,10 +68,11 @@ public class DocSachFragment extends Fragment {
     }
 
     private void setData(View mView) {
-        LibraryResponse.Result mBook = (LibraryResponse.Result) getArguments().get("content_book");
+        mBook = (LibraryResponse.Result) getArguments().get("content_book");
         appBarLayout = (AppBarLayout) mView.findViewById(R.id.appBarLayout);
         bookImageView = (ImageView) mView.findViewById(R.id.bookImageView);
         btnBack = (ImageView) mView.findViewById(R.id.btn_back);
+        btnMenu = mView.findViewById(R.id.btn_menu_chapter);
         btnSetting = (ImageView) mView.findViewById(R.id.btn_setting);
         scrollView = (NestedScrollView) mView.findViewById(R.id.scrollView);
         tvContent = (TextView) mView.findViewById(R.id.tv_content);
@@ -74,7 +89,63 @@ public class DocSachFragment extends Fragment {
         btnSetting.setOnClickListener(v -> {
             showDialogSetting();
         });
+        btnMenu.setOnClickListener(v -> {
+            getChapter(mBook.getIDBook());
+            showSideSheetDialog();
+        });
     }
+    private ImageView imgBook;
+    private TextView tvNameBook;
+    private TextView tvAuthor;
+    private RecyclerView rclChapter;
+    private ChapterAdapter adapter;
+    private void showSideSheetDialog() {
+        SideSheetDialog sideSheetDialog = new SideSheetDialog(requireActivity());
+        sideSheetDialog.setContentView(R.layout.fragment_chapter);
+        imgBook = (ImageView) sideSheetDialog.findViewById(R.id.img_book);
+        tvNameBook = (TextView) sideSheetDialog.findViewById(R.id.tv_name_book);
+        tvAuthor = (TextView) sideSheetDialog.findViewById(R.id.tv_author);
+        rclChapter = sideSheetDialog.findViewById(R.id.rcl_chapter);
+        String imgBookChapter = RetrofitClient.BASE_URL + mBook.getImageBook();
+        Glide.with(requireActivity()).load(imgBookChapter).into(imgBook);
+        tvNameBook.setText(mBook.getBookName());
+        tvAuthor.setText(mBook.getAuthor());
+        adapter = new ChapterAdapter(requireActivity());
+        rclChapter.setAdapter(adapter);
+        rclChapter.setLayoutManager(new LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false));
+        adapter.setOnItemClickListener(new ChapterAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String content) {
+                tvContent.setText(content);
+                sideSheetDialog.hide();
+            }
+        });
+        sideSheetDialog.show();
+    }
+
+    private void getChapter(Integer idBook) {
+        SharedPreferences myToken= requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String token = myToken.getString("token", null);
+        if (token != null && idBook > 0) {
+            ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+            Call<ChapterResponse> call = apiService.getChapter(token,idBook);
+            call.enqueue(new Callback<ChapterResponse>() {
+                @Override
+                public void onResponse(Call<ChapterResponse> call, Response<ChapterResponse> response) {
+                    if (response.isSuccessful()){
+                        ChapterResponse chapterResponse = response.body();
+                        adapter.setListChapter(chapterResponse.getResult());
+                    }
+                }
+                @Override
+                public void onFailure(Call<ChapterResponse> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
+
     private int brightnessValue = 50;
     private int textSizeValue = 16;
     private boolean nightMode = false;
