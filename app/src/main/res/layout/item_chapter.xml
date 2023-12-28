@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/ll_item_chapter">
+
+    <TextView
+        android:id="@+id/tv_title_chapter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="Prologue"
+        android:textColor="#757474"
+        android:textSize="20dp"
+        android:maxLines="2"
+        android:textAlignment="textStart"/>
+
+</LinearLayout>
