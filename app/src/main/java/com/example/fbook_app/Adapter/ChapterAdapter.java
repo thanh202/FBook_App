@@ -1,6 +1,7 @@
 package com.example.fbook_app.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHold
 
     public void setListChapter(List<ChapterResponse.Result> list) {
         this.chapterList = list;
+        Log.e("zzzzz", "setListChapter: " + list.size());
         notifyDataSetChanged();
     }
 

@@ -23,6 +23,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -89,6 +90,7 @@ public class DocSachFragment extends Fragment {
             showDialogSetting();
         });
         btnMenu.setOnClickListener(v -> {
+            getChapter(mBook.getIDBook());
             showSideSheetDialog();
         });
     }
@@ -100,7 +102,6 @@ public class DocSachFragment extends Fragment {
     private void showSideSheetDialog() {
         SideSheetDialog sideSheetDialog = new SideSheetDialog(requireActivity());
         sideSheetDialog.setContentView(R.layout.fragment_chapter);
-        getChapter(mBook.getIDBook());
         imgBook = (ImageView) sideSheetDialog.findViewById(R.id.img_book);
         tvNameBook = (TextView) sideSheetDialog.findViewById(R.id.tv_name_book);
         tvAuthor = (TextView) sideSheetDialog.findViewById(R.id.tv_author);
@@ -108,12 +109,15 @@ public class DocSachFragment extends Fragment {
         String imgBookChapter = RetrofitClient.BASE_URL + mBook.getImageBook();
         Glide.with(requireActivity()).load(imgBookChapter).into(imgBook);
         tvNameBook.setText(mBook.getBookName());
+        tvAuthor.setText(mBook.getAuthor());
         adapter = new ChapterAdapter(requireActivity());
         rclChapter.setAdapter(adapter);
+        rclChapter.setLayoutManager(new LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false));
         adapter.setOnItemClickListener(new ChapterAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(String content) {
                 tvContent.setText(content);
+                sideSheetDialog.hide();
             }
         });
         sideSheetDialog.show();
@@ -133,7 +137,6 @@ public class DocSachFragment extends Fragment {
                         adapter.setListChapter(chapterResponse.getResult());
                     }
                 }
-
                 @Override
                 public void onFailure(Call<ChapterResponse> call, Throwable t) {
 
