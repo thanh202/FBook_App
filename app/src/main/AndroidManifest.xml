@@ -16,6 +16,15 @@
         android:theme="@style/Theme.FBook_App"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <service
+            android:name=".Service.MyFirebaseMessagingService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".HomeActivity.InfomationFragment.LichSuMuaSach.LichSuMuaSach"
             android:exported="false" />
@@ -34,10 +43,12 @@
                     android:scheme="demozpdk" />
             </intent-filter>
         </activity>
-        <activity android:name=".ThanhToanFavouriteActivity"
-            android:exported="false"/>
-        <activity android:name=".ThanhToanSearchActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".ThanhToanFavouriteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ThanhToanSearchActivity"
+            android:exported="false" />
         <activity
             android:name=".HomeActivity.InfomationFragment.ChinhSuaThongTinActivity.ChinhSuaThongTinActivity"
             android:exported="false" />

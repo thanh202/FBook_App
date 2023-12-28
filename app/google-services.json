@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "328864963528",
+    "project_id": "fbook-c6a9c",
+    "storage_bucket": "fbook-c6a9c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328864963528:android:c66185c3b92d3c8ee0befd",
+        "android_client_info": {
+          "package_name": "com.example.fbook_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328864963528-tbglap98v3ujg36o2bum7iu196uv5k5h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fbook_app",
+            "certificate_hash": "cb028c080f82ce5b2829841a3ed6aa6a72d2df18"
+          }
+        },
+        {
+          "client_id": "328864963528-fbgu0kt4iq1ud7ep4akoce5qp8csaqag.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFfLiJgoB_NzFCexNbvUwSRjMPJD_b6Ns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328864963528-fbgu0kt4iq1ud7ep4akoce5qp8csaqag.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
