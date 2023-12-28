@@ -193,15 +193,15 @@ public class ThanhToanActivity extends AppCompatActivity {
             call.enqueue(new Callback<BillResponse>() {
                 @Override
                 public void onResponse(Call<BillResponse> call, Response<BillResponse> response) {
-                    Intent intent=new Intent(ThanhToanActivity.this,HomeActivity.class);
-                    finish();
-                    startActivity(intent);
+
                     if (response.isSuccessful()) {
                         Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thất Bại !", Toast.LENGTH_SHORT).show();
                     }
-
+                    Intent intent=new Intent(ThanhToanActivity.this,HomeActivity.class);
+                    finish();
+                    startActivity(intent);
                 }
 
                 @Override
