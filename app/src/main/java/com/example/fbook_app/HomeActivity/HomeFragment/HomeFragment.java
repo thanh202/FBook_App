@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,6 +30,7 @@ import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
 import com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook.ChiTietBookFragment;
+import com.example.fbook_app.HomeActivity.Notification.Notification;
 import com.example.fbook_app.HomeActivity.SearchFragment.SearchFragment;
 import com.example.fbook_app.HomeActivity.ThanhToanActivity;
 import com.example.fbook_app.Interface.FragmentReload;
@@ -57,6 +59,7 @@ public class HomeFragment extends Fragment implements FragmentReload {
     private RecyclerView rclNewBook;
     private MaterialSearchBar search;
     private SwipeRefreshLayout refresh;
+    private CardView btnThongBao;
     private List<String> suggestList = new ArrayList<>();
 
 
@@ -76,8 +79,16 @@ public class HomeFragment extends Fragment implements FragmentReload {
         rclTopBook = mView.findViewById(R.id.rcl_topBook);
         rclNewBook = mView.findViewById(R.id.rcl_newBook);
         search = mView.findViewById(R.id.search);
+        btnThongBao=mView.findViewById(R.id.btn_thongbao);
         adapterTopBook = new TopBookAdapter(getContext());
         adapter = new TheLoaiAdapter(getContext());
+        btnThongBao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), Notification.class);
+                startActivity(intent);
+            }
+        });
         adapterNewBook = new NewBookAdapter(getContext());
         getData();
         adapter.setOnItemClickListener(new TheLoaiAdapter.OnItemClickListener() {
