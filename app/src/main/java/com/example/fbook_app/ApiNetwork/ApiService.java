@@ -3,6 +3,7 @@ package com.example.fbook_app.ApiNetwork;
 import com.example.fbook_app.Model.Request.AddFavouriteRequest;
 import com.example.fbook_app.Model.Request.BillRequest;
 import com.example.fbook_app.Model.Request.LoginRequest;
+import com.example.fbook_app.Model.Request.NotificationRequest;
 import com.example.fbook_app.Model.Request.RegisterRequest;
 import com.example.fbook_app.Model.Request.UpdateInformationRequest;
 import com.example.fbook_app.Model.Request.UpdatePasswordRequest;
@@ -15,6 +16,7 @@ import com.example.fbook_app.Model.Response.DeleteResponse;
 import com.example.fbook_app.Model.Response.LibraryResponse;
 import com.example.fbook_app.Model.Response.ListFavouriteResponse;
 import com.example.fbook_app.Model.Response.LoginResponse;
+import com.example.fbook_app.Model.Response.NotificationResponse;
 import com.example.fbook_app.Model.Response.RegisterResponse;
 import com.example.fbook_app.Model.Response.SearchResponse;
 import com.example.fbook_app.Model.Response.UpdateInformationResponse;
@@ -43,8 +45,12 @@ public interface ApiService {
     Call<AddFavouriteResponse> addFavourite(@Header("Authorization") String token, @Body AddFavouriteRequest request);
     @POST("bill/add")
     Call<BillResponse> addBill(@Header("Authorization") String token, @Body BillRequest request);
+    @POST("Noti/add")
+    Call<NotificationResponse> addNotification(@Header("Authorization") String token, @Body NotificationRequest request);
     @GET("bill/get_bill_iduser/{IDUser}")
     Call<BillResponse> getBill(@Header("Authorization") String token, @Path("IDUser") int idUser);
+    @GET("Noti/get_iduser/{IDUser}")
+    Call<NotificationResponse> getNotification(@Header("Authorization") String token, @Path("IDUser") int idUser);
     @PUT("user/updateprofile/{IDUser}")
     Call<UpdateInformationResponse> updateUser(@Header("Authorization") String token, @Path("IDUser") int idUser, @Body UpdateInformationRequest request);
     @PUT("user/change_password/{IDUser}")

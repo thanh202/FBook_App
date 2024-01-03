@@ -1,9 +1,13 @@
 package com.example.fbook_app;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -14,20 +18,26 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationCompat;
 
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
 import com.example.fbook_app.HomeActivity.HomeActivity;
+import com.example.fbook_app.HomeActivity.ThanhToanActivity;
 import com.example.fbook_app.HomeActivity.zalopay.CreateOrder;
 import com.example.fbook_app.Model.Request.BillRequest;
+import com.example.fbook_app.Model.Request.NotificationRequest;
 import com.example.fbook_app.Model.Response.BillResponse;
+import com.example.fbook_app.Model.Response.NotificationResponse;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +50,8 @@ import vn.zalopay.sdk.listeners.PayOrderListener;
 public class ThanhToanSearchActivity extends AppCompatActivity {
     private TextView tvNameBook, tvPriceBook, tvDate, tvTime;
     private MaterialSpinner spinner;
+
+    private String check = "";
 
     private ImageView btnBack;
 
@@ -83,9 +95,11 @@ public class ThanhToanSearchActivity extends AppCompatActivity {
         String formattedTime = time.format(c.getTime());
         String formattedDateTime = datetime.format(c.getTime());
 
-        tvNameBook.setText(Common.currentSearchBook.getBookName());
-        String price = Common.currentSearchBook.getPriceBook() + " vnđ";
-        tvPriceBook.setText(price);
+        Locale locale = new Locale("vi", "VN");
+        NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+
+        tvNameBook.setText(Common.currentBook.getBookName());
+        tvPriceBook.setText(format.format(Common.currentBook.getPriceBook()));
         tvDate.setText(formattedDate);
         tvTime.setText(formattedTime);
 
@@ -106,9 +120,9 @@ public class ThanhToanSearchActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         dialog.dismiss();
-                        if (spinner.getSelectedIndex() == 0){
+                        if (spinner.getSelectedIndex() == 0) {
                             thanhtoan(status, iDBook, priceTotal, create_at);
-                        } else  {
+                        } else {
                             thanhtoanZalo(status, iDBook, priceTotal, create_at);
                         }
                     }
@@ -118,25 +132,26 @@ public class ThanhToanSearchActivity extends AppCompatActivity {
         });
 
     }
-    private void thanhtoanZalo(String status, int iDBook, int priceTotal, String createAt) {
-        CreateOrder orderApi = new CreateOrder();
-        try {
-            JSONObject data = orderApi.createOrder(String.valueOf(priceTotal));
-            String code = data.getString("return_code");
-            if (code.equals("1")) {
-                String token = data.getString("zp_trans_token");
-                ZaloPaySDK.getInstance().payOrder(ThanhToanSearchActivity.this, token, "demozpdk://app", new PayOrderListener() {
-                    @Override
-                    public void onPaymentSucceeded(String s, String s1, String s2) {
-                        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-                        SharedPreferences myToken = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
-                        String token = myToken.getString("token", null);
-                        SharedPreferences myIdUser = getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
-                        int idUser = myIdUser.getInt("idUser", 0);
 
-                        BillRequest request = new BillRequest(status, iDBook, idUser, priceTotal, createAt);
-                        Call<BillResponse> call = apiService.addBill(token, request);
-                        if (token != null && idUser > 0) {
+    private void thanhtoanZalo(String status, int iDBook, int priceTotal, String createAt) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        SharedPreferences myToken = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String token = myToken.getString("token", null);
+        SharedPreferences myIdUser = getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
+        int idUser = myIdUser.getInt("idUser", 0);
+
+        if (token != null && idUser > 0) {
+            CreateOrder orderApi = new CreateOrder();
+            try {
+                JSONObject data = orderApi.createOrder(String.valueOf(priceTotal));
+                String code = data.getString("return_code");
+                if (code.equals("1")) {
+                    String token1 = data.getString("zp_trans_token");
+                    ZaloPaySDK.getInstance().payOrder(ThanhToanSearchActivity.this, token1, "demozpdk://app", new PayOrderListener() {
+                        @Override
+                        public void onPaymentSucceeded(String s, String s1, String s2) {
+                            BillRequest request = new BillRequest(status, iDBook, idUser, priceTotal, createAt);
+                            Call<BillResponse> call = apiService.addBill(token, request);
                             call.enqueue(new Callback<BillResponse>() {
                                 @Override
                                 public void onResponse(Call<BillResponse> call, Response<BillResponse> response) {
@@ -148,27 +163,36 @@ public class ThanhToanSearchActivity extends AppCompatActivity {
 
                                 }
                             });
+                            sendNotificationSuccess();
+                            finish();
+                            Intent intent = new Intent(ThanhToanSearchActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            Toast.makeText(ThanhToanSearchActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
                         }
-                        Intent intent =new Intent(ThanhToanSearchActivity.this, HomeActivity.class);
-                        Toast.makeText(ThanhToanSearchActivity.this, "Thanh Toán Thành Công", Toast.LENGTH_SHORT).show();
-                        startActivity(intent);
-                        finish();
-                    }
 
-                    @Override
-                    public void onPaymentCanceled(String s, String s1) {
+                        @Override
+                        public void onPaymentCanceled(String s, String s1) {
+                            sendNotificationFail();
+                            finish();
+                            Intent intent = new Intent(ThanhToanSearchActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            Toast.makeText(ThanhToanSearchActivity.this, "Thanh Toán Thất Bại !", Toast.LENGTH_SHORT).show();
+                        }
 
-                    }
+                        @Override
+                        public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
+                            sendNotificationFail();
+                            finish();
+                            Intent intent = new Intent(ThanhToanSearchActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            Toast.makeText(ThanhToanSearchActivity.this, "Thanh Toán Thất Bại !", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
-                    @Override
-                    public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
-
-                    }
-                });
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -186,9 +210,19 @@ public class ThanhToanSearchActivity extends AppCompatActivity {
             call.enqueue(new Callback<BillResponse>() {
                 @Override
                 public void onResponse(Call<BillResponse> call, Response<BillResponse> response) {
+
                     if (response.isSuccessful()) {
-                        Toast.makeText(ThanhToanSearchActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
+                        sendNotificationSuccess();
                         finish();
+                        Toast.makeText(ThanhToanSearchActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(ThanhToanSearchActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                    } else {
+                        sendNotificationFail();
+                        finish();
+                        Toast.makeText(ThanhToanSearchActivity.this, "Thanh Toán Thất Bại !", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(ThanhToanSearchActivity.this, HomeActivity.class);
+                        startActivity(intent);
                     }
                 }
 
@@ -199,6 +233,68 @@ public class ThanhToanSearchActivity extends AppCompatActivity {
             });
         }
 
+    }
+
+    private void sendNotificationFail() {
+        String title = "Thanh Toán Thất Bại !";
+        String body = "Đã sảy ra lỗi khi thanh toán, vui lòng kiểm tra hoặc thanh toán lại !";
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        Notification notification = new NotificationCompat.Builder(this, MyApplication.ID)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setSmallIcon(R.drawable.logo_fbook)
+                .setLargeIcon(bitmap)
+                .build();
+        NotificationManager manager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager!=null){
+            manager.notify(1,notification);
+        }
+        addNotifi(title, body);
+    }
+
+    private void sendNotificationSuccess() {
+        String title = "Thanh Toán Thành Công !";
+        String body = "Cảm ơn bạn đã mua sách, chúc bạn có những giây phút đọc sách vui vẻ !";
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        Notification notification = new NotificationCompat.Builder(this, MyApplication.ID)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setSmallIcon(R.drawable.logo_fbook)
+                .setLargeIcon(bitmap)
+                .build();
+        NotificationManager manager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager!=null){
+            manager.notify(1,notification);
+        }
+        addNotifi(title, body);
+    }
+
+    private void addNotifi(String title, String body) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        SharedPreferences myToken = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String token = myToken.getString("token", null);
+        SharedPreferences myIdUser = getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
+        int idUser = myIdUser.getInt("idUser", 0);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        String formattedDateTime = datetime.format(c.getTime());
+
+        NotificationRequest request = new NotificationRequest(title, body, idUser, Common.currentBook.getIDBook(), formattedDateTime);
+        Call<NotificationResponse> call = apiService.addNotification(token, request);
+        if (token != null && idUser > 0) {
+            call.enqueue(new Callback<NotificationResponse>() {
+                @Override
+                public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> response) {
+                }
+
+                @Override
+                public void onFailure(Call<NotificationResponse> call, Throwable t) {
+
+                }
+            });
+        }
     }
 
     @Override

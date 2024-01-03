@@ -17,6 +17,9 @@
         android:theme="@style/Theme.FBook_App"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".HomeActivity.Notification.Notification"
+            android:exported="false" />
 
         <service
             android:name=".Service.MyFirebaseMessagingService"
