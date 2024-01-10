@@ -165,8 +165,6 @@ public class ThanhToanSearchActivity extends AppCompatActivity {
                             });
                             sendNotificationSuccess();
                             finish();
-                            Intent intent = new Intent(ThanhToanSearchActivity.this, HomeActivity.class);
-                            startActivity(intent);
                             Toast.makeText(ThanhToanSearchActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
                         }
 
@@ -174,8 +172,6 @@ public class ThanhToanSearchActivity extends AppCompatActivity {
                         public void onPaymentCanceled(String s, String s1) {
                             sendNotificationFail();
                             finish();
-                            Intent intent = new Intent(ThanhToanSearchActivity.this, HomeActivity.class);
-                            startActivity(intent);
                             Toast.makeText(ThanhToanSearchActivity.this, "Thanh Toán Thất Bại !", Toast.LENGTH_SHORT).show();
                         }
 
@@ -183,8 +179,6 @@ public class ThanhToanSearchActivity extends AppCompatActivity {
                         public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
                             sendNotificationFail();
                             finish();
-                            Intent intent = new Intent(ThanhToanSearchActivity.this, HomeActivity.class);
-                            startActivity(intent);
                             Toast.makeText(ThanhToanSearchActivity.this, "Thanh Toán Thất Bại !", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -215,14 +209,10 @@ public class ThanhToanSearchActivity extends AppCompatActivity {
                         sendNotificationSuccess();
                         finish();
                         Toast.makeText(ThanhToanSearchActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(ThanhToanSearchActivity.this, HomeActivity.class);
-                        startActivity(intent);
                     } else {
                         sendNotificationFail();
                         finish();
                         Toast.makeText(ThanhToanSearchActivity.this, "Thanh Toán Thất Bại !", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(ThanhToanSearchActivity.this, HomeActivity.class);
-                        startActivity(intent);
                     }
                 }
 

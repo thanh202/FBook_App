@@ -1,7 +1,9 @@
 package com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -9,24 +11,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.fbook_app.Adapter.ChapterBookAdapter;
-import com.example.fbook_app.Adapter.NewBookAdapter;
+import com.example.fbook_app.Adapter.DanhGiaAdapter;
+import com.example.fbook_app.Adapter.NotificationAdapter;
+import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
+import com.example.fbook_app.HomeActivity.Notification.Notification;
 import com.example.fbook_app.HomeActivity.ThanhToanActivity;
 import com.example.fbook_app.Model.Response.BookResponse;
+import com.example.fbook_app.Model.Response.DanhGiaResponse;
+import com.example.fbook_app.Model.Response.NotificationResponse;
 import com.example.fbook_app.R;
 
 import java.text.NumberFormat;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChiTietBookFragment extends Fragment {
     private View mView;
@@ -47,10 +59,12 @@ public class ChiTietBookFragment extends Fragment {
     private TextView tvPublishYearBookChiTiet;
     private TextView tvTypeBookBookChiTiet;
     private TextView tvChapterBookChiTiet;
-    private RecyclerView rclListChapter;
+    private RecyclerView rclListDanhGia;
     private TextView tvPriceBookBookChiTiet;
     private TextView btnBuyBookChiTiet;
-    private ChapterBookAdapter chapterBookAdapter;
+    private DanhGiaAdapter adapter;
+
+
 
     @Nullable
     @Override
@@ -72,10 +86,10 @@ public class ChiTietBookFragment extends Fragment {
         tvAuthorBookChiTiet = (TextView) mView.findViewById(R.id.tv_author_book_chi_tiet);
         tvPublishYearBookChiTiet = (TextView) mView.findViewById(R.id.tv_publishYear_book_chi_tiet);
         tvTypeBookBookChiTiet = (TextView) mView.findViewById(R.id.tv_typeBook_book_chi_tiet);
-        tvChapterBookChiTiet = (TextView) mView.findViewById(R.id.tv_chapter_book_chi_tiet);
-        rclListChapter = (RecyclerView) mView.findViewById(R.id.rcl_list_chapter);
+        rclListDanhGia = (RecyclerView) mView.findViewById(R.id.rcl_danhgia);
         tvPriceBookBookChiTiet = (TextView) mView.findViewById(R.id.tv_priceBook_book_chi_tiet);
         btnBuyBookChiTiet = (TextView) mView.findViewById(R.id.btn_buy_book_chi_tiet);
+        adapter=new DanhGiaAdapter(getContext());
 
         Locale locale = new Locale("vi", "VN");
         NumberFormat format = NumberFormat.getCurrencyInstance(locale);
@@ -90,12 +104,14 @@ public class ChiTietBookFragment extends Fragment {
         tvPriceBookBookChiTiet.setText(format.format(mBook.getPriceBook()));
         tvTypeBookBookChiTiet.setText(mBook.getCatName());
         String chapterBook = String.valueOf(mBook.getChapter());
-        tvChapterBookChiTiet.setText(chapterBook);
 
-        chapterBookAdapter = new ChapterBookAdapter(requireActivity());
-        chapterBookAdapter.setListChapterBook(mBook);
-        rclListChapter.setAdapter(chapterBookAdapter);
-        rclListChapter.setLayoutManager(new GridLayoutManager(getContext(), 8));
+
+        loadData(mBook.getIDBook());
+
+
+
+        rclListDanhGia.setAdapter(adapter);
+        rclListDanhGia.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
 
         btnBuyBookChiTiet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +131,31 @@ public class ChiTietBookFragment extends Fragment {
                 },2000);
                 }
         });
+    }
+
+    private void loadData(Integer idBook) {
+        SharedPreferences myToken = getActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String token = myToken.getString("token", null);
+
+        if (token != null && idBook > 0) {
+            ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+            Call<DanhGiaResponse> call = apiService.getDanhGia(token, idBook);
+            call.enqueue(new Callback<DanhGiaResponse>() {
+                @Override
+                public void onResponse(Call<DanhGiaResponse> call, Response<DanhGiaResponse> response) {
+                    if (response.isSuccessful()) {
+                        DanhGiaResponse danhGiaResponse = response.body();
+                        if (danhGiaResponse != null) {
+                            adapter.setDanhgiaList(danhGiaResponse.getResult());
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<DanhGiaResponse> call, Throwable t) {
+                }
+            });
+        }
     }
 
 }

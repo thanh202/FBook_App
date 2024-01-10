@@ -74,8 +74,7 @@ public class ChiTietSearchBookFragment extends Fragment {
         tvAuthorBookChiTiet = (TextView) mView.findViewById(R.id.tv_author_book_chi_tiet);
         tvPublishYearBookChiTiet = (TextView) mView.findViewById(R.id.tv_publishYear_book_chi_tiet);
         tvTypeBookBookChiTiet = (TextView) mView.findViewById(R.id.tv_typeBook_book_chi_tiet);
-        tvChapterBookChiTiet = (TextView) mView.findViewById(R.id.tv_chapter_book_chi_tiet);
-        rclListChapter = (RecyclerView) mView.findViewById(R.id.rcl_list_chapter);
+        rclListChapter = (RecyclerView) mView.findViewById(R.id.rcl_danhgia);
         tvPriceBookBookChiTiet = (TextView) mView.findViewById(R.id.tv_priceBook_book_chi_tiet);
         btnBuyBookChiTiet = (TextView) mView.findViewById(R.id.btn_buy_book_chi_tiet);
 

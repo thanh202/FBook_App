@@ -113,7 +113,6 @@
                     android:src="@drawable/img_icon_user" />
             </androidx.cardview.widget.CardView>
 
-
         </androidx.cardview.widget.CardView>
 
     </FrameLayout>
