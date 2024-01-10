@@ -1,6 +1,7 @@
 package com.example.fbook_app.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,8 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHold
     private OnItemClickListener onItemClickListener;
     private final Context context;
     private List<ChapterResponse.Result> chapterList = new ArrayList<>();
+    private int selectedPosition = RecyclerView.NO_POSITION;
+    private boolean isFirstItemSelected = true;
 
     public ChapterAdapter(Context mContext) {
         context = mContext;
@@ -58,10 +61,15 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHold
     public int getItemCount() {
         return chapterList.size();
     }
-
+    public void setSelectedPosition(int position) {
+        selectedPosition = position;
+        isFirstItemSelected = false;
+        notifyDataSetChanged(); // Cập nhật lại RecyclerView để thay đổi màu chữ của phần tử được chọn
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout llItemChapter;
         private TextView tvTitleChapter;
+
         public ViewHolder(View itemView) {
             super(itemView);
             llItemChapter = (LinearLayout) itemView.findViewById(R.id.ll_item_chapter);
@@ -71,13 +79,25 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHold
         public void onBind(int position) {
             ChapterResponse.Result chapterResponse = chapterList.get(position);
             tvTitleChapter.setText(chapterResponse.getTitle());
+            onItemClickListener.onGetPositionChapter(position);
             llItemChapter.setOnClickListener(v -> {
+                int position1 = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    // Lưu vị trí phần tử được chọn và thông báo thay đổi
+                    setSelectedPosition(position1);
+                }
                 onItemClickListener.onItemClick(chapterResponse.getContent());
             });
+            if (position == selectedPosition || (isFirstItemSelected && position == 0)) {
+                tvTitleChapter.setTextColor(Color.RED); // Hoặc màu bạn muốn đặt
+            } else {
+                tvTitleChapter.setTextColor(Color.BLACK); // Hoặc màu chữ mặc định
+            }
         }
     }
 
     public interface OnItemClickListener {
         void onItemClick(String content);
+        void onGetPositionChapter(int position);
     }
 }

@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="Cam">#F7941D</color>
     <color name="xam">#B6B6B6</color>
+    <color name="selectedColor">#FF4081</color>
 </resources>
