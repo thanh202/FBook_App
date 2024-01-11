@@ -2,7 +2,9 @@ package com.example.fbook_app;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -226,12 +228,20 @@ public class ThanhToanFavouriteActivity extends AppCompatActivity {
     }
 
     private void sendNotificationFail() {
+
+        Intent intent = new Intent(ThanhToanFavouriteActivity.this, com.example.fbook_app.HomeActivity.Notification.Notification.class);
+        TaskStackBuilder stackBuilder=TaskStackBuilder.create(ThanhToanFavouriteActivity.this);
+        stackBuilder.addNextIntentWithParentStack(intent);
+        PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
         String title = "Thanh Toán Thất Bại !";
         String body = "Đã sảy ra lỗi khi thanh toán, vui lòng kiểm tra hoặc thanh toán lại !";
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         Notification notification = new NotificationCompat.Builder(this, MyApplication.ID)
                 .setContentTitle(title)
                 .setContentText(body)
+                .setContentIntent(pendingIntent)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                 .setSmallIcon(R.drawable.logo_fbook)
                 .setLargeIcon(bitmap)
                 .build();
@@ -243,12 +253,19 @@ public class ThanhToanFavouriteActivity extends AppCompatActivity {
     }
 
     private void sendNotificationSuccess() {
+        Intent intent = new Intent(ThanhToanFavouriteActivity.this, com.example.fbook_app.HomeActivity.Notification.Notification.class);
+        TaskStackBuilder stackBuilder=TaskStackBuilder.create(ThanhToanFavouriteActivity.this);
+        stackBuilder.addNextIntentWithParentStack(intent);
+        PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
         String title = "Thanh Toán Thành Công !";
         String body = "Cảm ơn bạn đã mua sách, chúc bạn có những giây phút đọc sách vui vẻ !";
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         Notification notification = new NotificationCompat.Builder(this, MyApplication.ID)
                 .setContentTitle(title)
                 .setContentText(body)
+                .setContentIntent(pendingIntent)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                 .setSmallIcon(R.drawable.logo_fbook)
                 .setLargeIcon(bitmap)
                 .build();

@@ -10,6 +10,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="250dp"
+
         android:fitsSystemWindows="true"
         tools:ignore="MissingConstraints">
 
@@ -29,6 +30,8 @@
                 app:layout_collapseMode="parallax" />
 
             <androidx.appcompat.widget.Toolbar
+                android:backgroundTint="@color/white"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin">
@@ -47,6 +50,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/tv_title_docsach"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"

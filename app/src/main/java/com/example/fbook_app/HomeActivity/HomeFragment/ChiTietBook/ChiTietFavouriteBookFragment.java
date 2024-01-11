@@ -1,8 +1,11 @@
 package com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +25,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -80,6 +84,8 @@ public class ChiTietFavouriteBookFragment extends Fragment {
     private TextView btnBuyBookChiTiet;
     private EditText edtDanhGia;
     private DanhGiaAdapter adapter;
+    private CardView btnHuy, btnGui;
+
 
 
     private RatingBar ratingUp;
@@ -158,6 +164,9 @@ public class ChiTietFavouriteBookFragment extends Fragment {
         loadData(mBook.getIDBook());
 
     }
+
+
+    @SuppressLint("MissingInflatedId")
     private void showDialogDanhGia(Integer idBook) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
 
@@ -166,11 +175,23 @@ public class ChiTietFavouriteBookFragment extends Fragment {
 
         edtDanhGia = view.findViewById(R.id.comment_up);
         ratingUp = view.findViewById(R.id.rating_bar_up);
+        btnHuy = view.findViewById(R.id.btn_Huy);
+        btnGui=view.findViewById(R.id.btn_Gui);
         alertDialog.setView(view);
 
-        alertDialog.setPositiveButton("Gửi", new DialogInterface.OnClickListener() {
+
+
+        AlertDialog testDialog = alertDialog.create ();
+
+        btnHuy.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
+                testDialog.dismiss ();
+            }
+        });
+        btnGui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
                 SharedPreferences myToken = getActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
                 String token = myToken.getString("token", null);
@@ -195,32 +216,37 @@ public class ChiTietFavouriteBookFragment extends Fragment {
                     });
                 }
                 sendNotificationSuccess(idBook);
-            }
-        });
-        alertDialog.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+                testDialog.dismiss ();
 
             }
         });
-        alertDialog.show();
+        testDialog.show();
     }
     private void sendNotificationSuccess(Integer idBook) {
+
+        Intent intent = new Intent(getContext(), com.example.fbook_app.HomeActivity.Notification.Notification.class);
+        TaskStackBuilder stackBuilder=TaskStackBuilder.create(getContext());
+        stackBuilder.addNextIntentWithParentStack(intent);
+        PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
         String title = "Gửi Đánh Giá Thành Công";
         String body = "Cảm ơn bạn đã gửi đánh giá cho chúng tôi !. Ý kiến của bạn là động lực để chúng tôi cải thiện và phát triển.";
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         Notification notification = new NotificationCompat.Builder(getContext(), MyApplication.ID)
                 .setContentTitle(title)
                 .setContentText(body)
+                .setContentIntent(pendingIntent)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                 .setSmallIcon(R.drawable.logo_fbook)
                 .setLargeIcon(bitmap)
                 .build();
-        NotificationManager manager= (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        if (manager!=null){
-            manager.notify(1,notification);
+        NotificationManager manager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager != null) {
+            manager.notify(1, notification);
         }
-        addNofi(title, body,idBook);
+        addNofi(title, body, idBook);
     }
+
 
 
     private void addNofi(String title, String body, Integer idBook) {
