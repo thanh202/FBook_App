@@ -1,39 +1,49 @@
 package com.example.fbook_app.HomeActivity.HomeFragment.ChiTietBook;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fbook_app.Adapter.DanhGiaAdapter;
-import com.example.fbook_app.Adapter.NotificationAdapter;
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
-import com.example.fbook_app.HomeActivity.Notification.Notification;
 import com.example.fbook_app.HomeActivity.ThanhToanActivity;
+import com.example.fbook_app.Model.Request.DanhGiaRequest;
+import com.example.fbook_app.Model.Request.NotificationRequest;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.Model.Response.DanhGiaResponse;
 import com.example.fbook_app.Model.Response.NotificationResponse;
+import com.example.fbook_app.MyApplication;
 import com.example.fbook_app.R;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -57,13 +67,15 @@ public class ChiTietBookFragment extends Fragment {
     private TextView tvDescriptionBookChiTiet;
     private TextView tvAuthorBookChiTiet;
     private TextView tvPublishYearBookChiTiet;
-    private TextView tvTypeBookBookChiTiet;
+    private TextView tvTypeBookBookChiTiet, btnDanhGia;
     private TextView tvChapterBookChiTiet;
-    private RecyclerView rclListDanhGia;
+
     private TextView tvPriceBookBookChiTiet;
     private TextView btnBuyBookChiTiet;
     private DanhGiaAdapter adapter;
-
+    private EditText edtDanhGia;
+    private RecyclerView rclListDanhGia;
+    private RatingBar ratingUp;
 
 
     @Nullable
@@ -89,7 +101,8 @@ public class ChiTietBookFragment extends Fragment {
         rclListDanhGia = (RecyclerView) mView.findViewById(R.id.rcl_danhgia);
         tvPriceBookBookChiTiet = (TextView) mView.findViewById(R.id.tv_priceBook_book_chi_tiet);
         btnBuyBookChiTiet = (TextView) mView.findViewById(R.id.btn_buy_book_chi_tiet);
-        adapter=new DanhGiaAdapter(getContext());
+        btnDanhGia = mView.findViewById(R.id.btn_guidanhgia);
+        adapter = new DanhGiaAdapter(getContext());
 
         Locale locale = new Locale("vi", "VN");
         NumberFormat format = NumberFormat.getCurrencyInstance(locale);
@@ -108,16 +121,22 @@ public class ChiTietBookFragment extends Fragment {
 
         loadData(mBook.getIDBook());
 
+        btnDanhGia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogDanhGia(mBook.getIDBook());
+            }
+        });
 
 
         rclListDanhGia.setAdapter(adapter);
-        rclListDanhGia.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
+        rclListDanhGia.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         btnBuyBookChiTiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Handler handler =new Handler();
-                ProgressDialog dialog=new ProgressDialog(getContext());
+                Handler handler = new Handler();
+                ProgressDialog dialog = new ProgressDialog(getContext());
                 dialog.setMessage("Vui Lòng Đợi ...");
                 dialog.show();
                 handler.postDelayed(new Runnable() {
@@ -128,9 +147,104 @@ public class ChiTietBookFragment extends Fragment {
                         Intent intent = new Intent(getContext(), ThanhToanActivity.class);
                         startActivity(intent);
                     }
-                },2000);
-                }
+                }, 2000);
+            }
         });
+    }
+
+    private void showDialogDanhGia(Integer idBook) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+
+        LayoutInflater layoutInflater = this.getLayoutInflater();
+        View view = layoutInflater.inflate(R.layout.danhgia_layout, null);
+
+        edtDanhGia = view.findViewById(R.id.comment_up);
+        ratingUp = view.findViewById(R.id.rating_bar_up);
+        alertDialog.setView(view);
+
+        alertDialog.setPositiveButton("Gửi", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+                SharedPreferences myToken = getActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+                String token = myToken.getString("token", null);
+                SharedPreferences myIdUser = getActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
+                int idUser = myIdUser.getInt("idUser", 0);
+
+                DanhGiaRequest request = new DanhGiaRequest(idBook, idUser, ratingUp.getRating(), edtDanhGia.getText().toString());
+                Call<DanhGiaResponse> call = apiService.addDanhGia(token, request);
+
+                if (token != null && idUser > 0) {
+                    call.enqueue(new Callback<DanhGiaResponse>() {
+                        @Override
+                        public void onResponse(Call<DanhGiaResponse> call, Response<DanhGiaResponse> response) {
+                            if (response.isSuccessful()) {
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<DanhGiaResponse> call, Throwable t) {
+
+                        }
+                    });
+                }
+                sendNotificationSuccess(idBook);
+            }
+        });
+        alertDialog.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alertDialog.show();
+    }
+    private void sendNotificationSuccess(Integer idBook) {
+        String title = "Gửi Đánh Giá Thành Công";
+        String body = "Cảm ơn bạn đã gửi đánh giá cho chúng tôi !. Ý kiến của bạn là động lực để chúng tôi cải thiện và phát triển.";
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        Notification notification = new NotificationCompat.Builder(getContext(), MyApplication.ID)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setSmallIcon(R.drawable.logo_fbook)
+                .setLargeIcon(bitmap)
+                .build();
+        NotificationManager manager= (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager!=null){
+            manager.notify(1,notification);
+        }
+        addNofi(title, body,idBook);
+    }
+
+
+    private void addNofi(String title, String body, Integer idBook) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        SharedPreferences myToken = getActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String token = myToken.getString("token", null);
+        SharedPreferences myIdUser = getActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
+        int idUser = myIdUser.getInt("idUser", 0);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        String formattedDateTime = datetime.format(c.getTime());
+
+
+        NotificationRequest request = new NotificationRequest(title, body, idUser, idBook, formattedDateTime);
+        Call<NotificationResponse> call = apiService.addNotification(token, request);
+        if (token != null && idUser > 0) {
+            call.enqueue(new Callback<NotificationResponse>() {
+                @Override
+                public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> response) {
+                }
+
+                @Override
+                public void onFailure(Call<NotificationResponse> call, Throwable t) {
+
+                }
+            });
+        }
+        setData(mView);
     }
 
     private void loadData(Integer idBook) {

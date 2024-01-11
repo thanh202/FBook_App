@@ -54,6 +54,17 @@
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 
+            <RatingBar
+                style="@style/MyRatingBar"
+                android:id="@+id/rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:progressTint="@color/Cam"
+                android:rating="3"
+                android:max="5"
+                android:numStars="5"
+                android:isIndicator="true"/>
+
             <TextView
                 android:textColor="@color/black"
                 android:textSize="13dp"

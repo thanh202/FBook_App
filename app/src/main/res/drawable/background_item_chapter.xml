@@ -1,20 +1,12 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 <!-- State pressed (chọn) -->
-<item android:state_checked="true" >
-    <shape android:shape="rectangle">
-        <solid android:color="@color/Cam" /> <!-- Màu khi chọn -->
-        <corners
-            android:radius="60dp"
-            />
-    </shape>
-</item>
 <!-- State không chọn -->
 <item >
     <shape android:shape="rectangle">
-        <solid android:color="@color/xam" /> <!-- Màu khi không chọn -->
+        <solid android:color="#E8E8E8" /> <!-- Màu khi không chọn -->
         <corners
-            android:radius="60dp"
+            android:radius="10dp"
             />
     </shape>
 </item>

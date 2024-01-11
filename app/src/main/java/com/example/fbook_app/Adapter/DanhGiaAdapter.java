@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,18 +49,21 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvNameUser;
         private TextView tvComment;
+        private RatingBar ratingBar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvNameUser = itemView.findViewById(R.id.nameUser_danhgia);
             tvComment = itemView.findViewById(R.id.noidung_danhgia);
+            ratingBar=itemView.findViewById(R.id.rating_bar);
         }
 
         public void onBind(int position) {
             DanhGiaResponse.Result danhgia = danhgiaList.get(position);
             tvComment.setText(danhgia.getComment());
             tvNameUser.setText(danhgia.getUserName());
+            ratingBar.setRating(danhgia.getRate());
         }
     }
 }

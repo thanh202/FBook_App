@@ -71,6 +71,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth:22.3.0'
     implementation('com.google.firebase:firebase-messaging:23.4.0')
+    //Rating
+    implementation('com.stepstone.apprating:app-rating:2.0.0')
+
 
 
 
