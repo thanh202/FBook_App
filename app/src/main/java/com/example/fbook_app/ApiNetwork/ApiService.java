@@ -2,6 +2,7 @@ package com.example.fbook_app.ApiNetwork;
 
 import com.example.fbook_app.Model.Request.AddFavouriteRequest;
 import com.example.fbook_app.Model.Request.BillRequest;
+import com.example.fbook_app.Model.Request.DanhGiaRequest;
 import com.example.fbook_app.Model.Request.LoginRequest;
 import com.example.fbook_app.Model.Request.NotificationRequest;
 import com.example.fbook_app.Model.Request.RegisterRequest;
@@ -12,6 +13,7 @@ import com.example.fbook_app.Model.Response.BillResponse;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.Model.Response.CategoryResponse;
 import com.example.fbook_app.Model.Response.ChapterResponse;
+import com.example.fbook_app.Model.Response.DanhGiaResponse;
 import com.example.fbook_app.Model.Response.DeleteResponse;
 import com.example.fbook_app.Model.Response.LibraryResponse;
 import com.example.fbook_app.Model.Response.ListFavouriteResponse;
@@ -49,6 +51,10 @@ public interface ApiService {
     Call<NotificationResponse> addNotification(@Header("Authorization") String token, @Body NotificationRequest request);
     @GET("bill/get_bill_iduser/{IDUser}")
     Call<BillResponse> getBill(@Header("Authorization") String token, @Path("IDUser") int idUser);
+    @GET("FeedBack/get_idbook/{IDBook}")
+    Call<DanhGiaResponse> getDanhGia(@Header("Authorization") String token, @Path("IDBook") int idBook);
+    @POST("FeedBack/add")
+    Call<DanhGiaResponse> addDanhGia(@Header("Authorization") String token, @Body DanhGiaRequest request);
     @GET("Noti/get_iduser/{IDUser}")
     Call<NotificationResponse> getNotification(@Header("Authorization") String token, @Path("IDUser") int idUser);
     @PUT("user/updateprofile/{IDUser}")

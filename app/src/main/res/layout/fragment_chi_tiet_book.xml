@@ -43,15 +43,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
         <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="200dp"
             android:background="@drawable/background_chi_tiet_book"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp"
             app:layout_constraintTop_toBottomOf="@id/imgView_book_chi_tiet"
-            app:layout_constraintTop_toTopOf="@id/imgView_book_chi_tiet"
-            android:layout_marginTop="200dp">
+            app:layout_constraintTop_toTopOf="@id/imgView_book_chi_tiet">
+
             <TextView
                 android:id="@+id/tv_nameBook_book_chi_tiet"
                 android:layout_width="wrap_content"
@@ -75,10 +78,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_nameBook_book_chi_tiet"
                 android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:maxLines="8"
                 android:text="@string/description"
                 android:textColor="#000000"
-                android:maxLines="8"
-                android:ellipsize="end"
                 android:textSize="12sp" />
 
             <LinearLayout
@@ -152,65 +155,84 @@
                     android:textColor="#000000"
                     android:textSize="12sp" />
             </LinearLayout>
-
             <LinearLayout
-                android:id="@+id/chapter"
-                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/ll_type_book"
+                android:id="@+id/linear1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ll_type_book"
-                android:layout_alignParentEnd="true"
                 android:orientation="horizontal">
-
                 <TextView
+                    android:id="@+id/tv_danhgia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="( Tổng " />
-
+                    android:text="Đánh Giá :"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
                 <TextView
-                    android:id="@+id/tv_chapter_book_chi_tiet"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="170dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                     />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" tập)" />
+                    android:text="Xem Tất Cả >"
+                    android:textColor="@color/Cam"
+                    android:textSize="13dp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
+
+
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcl_list_chapter"
+                android:id="@+id/rcl_danhgia"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_below="@id/chapter"
-                android:paddingHorizontal="5dp"
+                android:layout_height="180dp"
+                android:layout_below="@id/linear1"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/background_rcl_chi_tiet_book" />
+                android:background="@drawable/background_item_chapter"
+                android:paddingHorizontal="5dp" />
+
+            <TextView
+                android:id="@+id/btn_guidanhgia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rcl_danhgia"
+                android:text="Gửi Đánh Giá"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"
+                android:textSize="15dp"
+                android:textColor="@color/Cam"
+                android:layout_marginTop="5dp"/>
+
             <TextView
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rcl_list_chapter"
-                android:text="Giá tiền:"
+                android:layout_below="@id/btn_guidanhgia"
                 android:layout_marginTop="10dp"
-                android:textSize="16sp"
                 android:fontFamily="@font/roboto_bold"
-                android:textColor="#000000"/>
+                android:text="Giá tiền:"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/tv_priceBook_book_chi_tiet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/price"
-                android:text="1.250.000 vnđ"
-                android:textSize="22sp"
                 android:fontFamily="@font/roboto_bold"
-                android:textColor="#000000"/>
+                android:text="1.250.000 vnđ"
+                android:textColor="#000000"
+                android:textSize="22sp" />
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="20dp"
-                android:layout_alignParentBottom="true">
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8dp"
+                android:layout_below="@+id/tv_priceBook_book_chi_tiet"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/btn_buy_book_chi_tiet"
                     android:layout_width="match_parent"
@@ -222,10 +244,11 @@
                     android:text="MUA NGAY"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
-                    />
+                    android:textSize="20sp" />
             </LinearLayout>
         </RelativeLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
