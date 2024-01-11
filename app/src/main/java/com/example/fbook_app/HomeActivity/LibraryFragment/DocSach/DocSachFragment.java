@@ -38,6 +38,8 @@ import com.example.fbook_app.R;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.sidesheet.SideSheetDialog;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,8 +58,14 @@ public class DocSachFragment extends Fragment {
     private ImageView btnBack;
     private ImageView btnSetting, btnMenu;
     private NestedScrollView scrollView;
-    private TextView tvContent,tvTitle;
+    private TextView tvContent, tvTitle;
     private LibraryResponse.Result mBook;
+    private ImageView imgBook;
+    private TextView tvNameBook;
+    private TextView tvAuthor;
+    private RecyclerView rclChapter;
+    private ChapterAdapter adapter;
+    private int currentChapter;
 
     @Nullable
     @Override
@@ -67,6 +75,17 @@ public class DocSachFragment extends Fragment {
         return mView;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        saveReadingState(currentChapter);
+    }
+    private void saveReadingState(int currentPage) {
+        SharedPreferences sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("CURRENT_PAGE", currentPage);
+        editor.apply();
+    }
     private void setData(View mView) {
         mBook = (LibraryResponse.Result) getArguments().get("content_book");
         appBarLayout = (AppBarLayout) mView.findViewById(R.id.appBarLayout);
@@ -80,9 +99,10 @@ public class DocSachFragment extends Fragment {
         scrollView.smoothScrollTo(0, 0);
         String imgBook = RetrofitClient.BASE_URL + mBook.getImageBook();
         Glide.with(requireActivity()).load(imgBook).into(bookImageView);
-        tvContent.setText(mBook.getContent());
         tvTitle.setText(mBook.getBookName());
-
+        getChapter(mBook.getIDBook());
+        adapter = new ChapterAdapter(requireActivity());
+        adapter.setSelectedPosition(0);
         btnBack.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager().popBackStack();
         });
@@ -90,15 +110,15 @@ public class DocSachFragment extends Fragment {
             showDialogSetting();
         });
         btnMenu.setOnClickListener(v -> {
-            getChapter(mBook.getIDBook());
             showSideSheetDialog();
         });
     }
-    private ImageView imgBook;
-    private TextView tvNameBook;
-    private TextView tvAuthor;
-    private RecyclerView rclChapter;
-    private ChapterAdapter adapter;
+    public void setContent(List<ChapterResponse.Result> list){
+        ChapterResponse.Result chapter = list.get(0);
+
+//        currentChapter = list.get()
+        tvContent.setText(chapter.getContent());
+    }
     private void showSideSheetDialog() {
         SideSheetDialog sideSheetDialog = new SideSheetDialog(requireActivity());
         sideSheetDialog.setContentView(R.layout.fragment_chapter);
@@ -110,33 +130,39 @@ public class DocSachFragment extends Fragment {
         Glide.with(requireActivity()).load(imgBookChapter).into(imgBook);
         tvNameBook.setText(mBook.getBookName());
         tvAuthor.setText(mBook.getAuthor());
-        adapter = new ChapterAdapter(requireActivity());
         rclChapter.setAdapter(adapter);
-        rclChapter.setLayoutManager(new LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false));
+        rclChapter.setLayoutManager(new LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, false));
         adapter.setOnItemClickListener(new ChapterAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(String content) {
                 tvContent.setText(content);
                 sideSheetDialog.hide();
             }
+
+            @Override
+            public void onGetPositionChapter(int position) {
+                currentChapter = position;
+            }
         });
         sideSheetDialog.show();
     }
 
     private void getChapter(Integer idBook) {
-        SharedPreferences myToken= requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        SharedPreferences myToken = requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
         String token = myToken.getString("token", null);
         if (token != null && idBook > 0) {
             ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-            Call<ChapterResponse> call = apiService.getChapter(token,idBook);
+            Call<ChapterResponse> call = apiService.getChapter(token, idBook);
             call.enqueue(new Callback<ChapterResponse>() {
                 @Override
                 public void onResponse(Call<ChapterResponse> call, Response<ChapterResponse> response) {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         ChapterResponse chapterResponse = response.body();
+                        setContent(chapterResponse.getResult());
                         adapter.setListChapter(chapterResponse.getResult());
                     }
                 }
+
                 @Override
                 public void onFailure(Call<ChapterResponse> call, Throwable t) {
 
@@ -149,6 +175,7 @@ public class DocSachFragment extends Fragment {
     private int brightnessValue = 50;
     private int textSizeValue = 16;
     private boolean nightMode = false;
+
     private void showDialogSetting() {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.setting_dialog, null);
@@ -225,6 +252,7 @@ public class DocSachFragment extends Fragment {
             }
         });
     }
+
     private void updateBrightness(TextView bookContentTextView, int brightness) {
         // Áp dụng ánh sáng vào giao diện đọc sách (ví dụ)
         float alpha = brightness / 100.0f;
@@ -235,6 +263,7 @@ public class DocSachFragment extends Fragment {
         // Áp dụng kích thước chữ vào giao diện đọc sách (ví dụ)
         bookContentTextView.setTextSize(textSize);
     }
+
     private void updateNightMode(TextView bookContentTextView, boolean nightMode) {
         // Áp dụng chế độ đọc ban đêm vào giao diện đọc sách (ví dụ)
         if (nightMode) {
