@@ -218,6 +218,7 @@ public class HomeFragment extends Fragment implements FragmentReload {
                         if (bookResponse != null) {
                             adapterNewBook.setListBook(bookResponse.getResult());
                             adapterTopBook.setListBook(bookResponse.getResult());
+
                             adapterNewBook.setOnItemClickListener(new NewBookAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(BookResponse.Result book) {
@@ -231,7 +232,6 @@ public class HomeFragment extends Fragment implements FragmentReload {
                                             dialog.dismiss();
                                             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                                             fragmentManager.beginTransaction().replace(android.R.id.content, ChiTietBookFragment.getInstance(book)).addToBackStack(fragmentManager.getClass().getSimpleName()).commit();
-
                                         }
                                     },2000);
                                      }
