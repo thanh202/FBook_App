@@ -23,6 +23,7 @@ import com.example.fbook_app.HomeActivity.HomeActivity;
 import com.example.fbook_app.Model.Request.LoginRequest;
 import com.example.fbook_app.Model.Response.LoginResponse;
 import com.example.fbook_app.R;
+import com.example.fbook_app.TestActivity;
 
 import io.paperdb.Paper;
 import retrofit2.Call;
@@ -140,7 +141,7 @@ public class DangNhapActivity extends AppCompatActivity {
                         myBirthDay.putString("birthday", loginResponse.getResult().getUser().getBirthday());
                         myBirthDay.apply();
 
-                        Intent intent = new Intent(DangNhapActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(DangNhapActivity.this, TestActivity.class);
                         startActivity(intent);
                         finishAffinity();
                     } else {

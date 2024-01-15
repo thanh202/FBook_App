@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,11 +80,13 @@ public class DocSachFragment extends Fragment {
     public void onPause() {
         super.onPause();
         saveReadingState(currentChapter);
+        Log.e("zzzz", "onPause: "+ currentChapter);
     }
     private void saveReadingState(int currentPage) {
         SharedPreferences sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("CURRENT_PAGE", currentPage);
+        editor.putInt("SCROLL_POSITION", scrollView.getScrollY());
         editor.apply();
     }
     private void setData(View mView) {
@@ -96,13 +99,11 @@ public class DocSachFragment extends Fragment {
         scrollView = (NestedScrollView) mView.findViewById(R.id.scrollView);
         tvContent = (TextView) mView.findViewById(R.id.tv_content);
         tvTitle = mView.findViewById(R.id.tv_title_docsach);
-        scrollView.smoothScrollTo(0, 0);
         String imgBook = RetrofitClient.BASE_URL + mBook.getImageBook();
         Glide.with(requireActivity()).load(imgBook).into(bookImageView);
         tvTitle.setText(mBook.getBookName());
         getChapter(mBook.getIDBook());
         adapter = new ChapterAdapter(requireActivity());
-        adapter.setSelectedPosition(0);
         btnBack.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager().popBackStack();
         });
@@ -115,9 +116,17 @@ public class DocSachFragment extends Fragment {
     }
     public void setContent(List<ChapterResponse.Result> list){
         ChapterResponse.Result chapter = list.get(0);
-
-//        currentChapter = list.get()
         tvContent.setText(chapter.getContent());
+    }
+    public void restoreScrollPosition(List<ChapterResponse.Result> list, int position, int scrollPosition){
+        ChapterResponse.Result chapter = list.get(position);
+        tvContent.setText(chapter.getContent());
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(0,scrollPosition);
+            }
+        });
     }
     private void showSideSheetDialog() {
         SideSheetDialog sideSheetDialog = new SideSheetDialog(requireActivity());
@@ -137,6 +146,7 @@ public class DocSachFragment extends Fragment {
             public void onItemClick(String content) {
                 tvContent.setText(content);
                 sideSheetDialog.hide();
+                scrollView.scrollTo(0,0);
             }
 
             @Override
@@ -157,8 +167,16 @@ public class DocSachFragment extends Fragment {
                 @Override
                 public void onResponse(Call<ChapterResponse> call, Response<ChapterResponse> response) {
                     if (response.isSuccessful()) {
+                        SharedPreferences sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+                        int savedPosition = sharedPreferences.getInt("SCROLL_POSITION", 0);
+                        int position = sharedPreferences.getInt("CURRENT_PAGE", 0);
                         ChapterResponse chapterResponse = response.body();
-                        setContent(chapterResponse.getResult());
+                        if (isFirstTimeReading()){
+                            setContent(chapterResponse.getResult());
+                            markFirstTimeReading();
+                        }else{
+                            restoreScrollPosition(chapterResponse.getResult(),position,savedPosition);
+                        }
                         adapter.setListChapter(chapterResponse.getResult());
                     }
                 }
@@ -170,7 +188,16 @@ public class DocSachFragment extends Fragment {
             });
         }
     }
-
+    private boolean isFirstTimeReading() {
+        SharedPreferences prefs = requireActivity().getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+        return prefs.getBoolean("firstTimeReading", true);
+    }
+    private void markFirstTimeReading() {
+        SharedPreferences prefs = requireActivity().getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("firstTimeReading", false);
+        editor.apply();
+    }
 
     private int brightnessValue = 50;
     private int textSizeValue = 16;
