@@ -19,6 +19,7 @@ import com.example.fbook_app.Model.Response.LibraryResponse;
 import com.example.fbook_app.Model.Response.ListFavouriteResponse;
 import com.example.fbook_app.Model.Response.LoginResponse;
 import com.example.fbook_app.Model.Response.NotificationResponse;
+import com.example.fbook_app.Model.Response.RatingTbResponse;
 import com.example.fbook_app.Model.Response.RegisterResponse;
 import com.example.fbook_app.Model.Response.SearchResponse;
 import com.example.fbook_app.Model.Response.UpdateInformationResponse;
@@ -53,6 +54,8 @@ public interface ApiService {
     Call<BillResponse> getBill(@Header("Authorization") String token, @Path("IDUser") int idUser);
     @GET("FeedBack/get_idbook/{IDBook}")
     Call<DanhGiaResponse> getDanhGia(@Header("Authorization") String token, @Path("IDBook") int idBook);
+    @GET("FeedBack/average_rating/{IDBook}")
+    Call<RatingTbResponse> getRatingTb(@Header("Authorization") String token, @Path("IDBook") int idBook);
     @POST("FeedBack/add")
     Call<DanhGiaResponse> addDanhGia(@Header("Authorization") String token, @Body DanhGiaRequest request);
     @GET("Noti/get_iduser/{IDUser}")

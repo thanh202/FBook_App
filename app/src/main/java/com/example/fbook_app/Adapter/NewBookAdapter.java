@@ -1,6 +1,7 @@
 package com.example.fbook_app.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Model.Response.BookResponse;
+import com.example.fbook_app.Model.Response.DanhGiaResponse;
+import com.example.fbook_app.Model.Response.RatingTbResponse;
 import com.example.fbook_app.R;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHolder> {
     private final Context context;
@@ -28,9 +36,16 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
     private OnBuyClickListener onBuyClickListener;
 
     private List<BookResponse.Result> bookList = new ArrayList<>();
+    private List<RatingTbResponse.Result> ratingList = new ArrayList<>();
+
 
     public NewBookAdapter(Context mContext) {
         context = mContext;
+    }
+
+    public void setRatingList(List<RatingTbResponse.Result> ratingList) {
+        this.ratingList = ratingList;
+        notifyDataSetChanged();
     }
 
     public void setListBook(List<BookResponse.Result> list) {
@@ -41,6 +56,7 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.onItemClickListener = itemClickListener;
     }
+
     public void setOnLikeClickListener(OnLikeClickListener likeClickListener) {
         this.onLikeClickListener = likeClickListener;
     }
@@ -70,7 +86,7 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
         private ImageView imgViewItemImgNewBook;
         private TextView tvItemNameNewBook;
         private TextView tvItemDescriptionNewBook;
-        private TextView tvItemPriceNewBook;
+        private TextView tvItemPriceNewBook, tvRatingTb;
         private RelativeLayout rlItemSelect;
         private ImageView btnItemLike;
         private ImageView btnItemBuy;
@@ -85,6 +101,7 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
             rlItemSelect = itemView.findViewById(R.id.rl_item_select);
             btnItemLike = (ImageView) itemView.findViewById(R.id.btn_item_like);
             btnItemBuy = (ImageView) itemView.findViewById(R.id.btn_item_buy);
+            tvRatingTb = itemView.findViewById(R.id.rating_tb_main);
         }
 
         public void onBind(int position) {
@@ -92,18 +109,20 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
             NumberFormat format = NumberFormat.getCurrencyInstance(locale);
 
             BookResponse.Result book = bookList.get(position);
+            RatingTbResponse.Result rating = ratingList.get(position);
+
+            tvRatingTb.setText((int) rating.getAverageRating());
+
             tvItemNameNewBook.setText(book.getBookName());
             tvItemDescriptionNewBook.setText(book.getDiscription());
             tvItemPriceNewBook.setText(format.format(book.getPriceBook()));
-            String imgBook = RetrofitClient.BASE_URL+book.getImageBook();
+            String imgBook = RetrofitClient.BASE_URL + book.getImageBook();
             Glide.with(context).load(imgBook)
                     .into(imgViewItemImgNewBook);
 
             rlItemSelect.setOnClickListener(v -> {
                 onItemClickListener.onItemClick(book);
             });
-
-
 
             btnItemLike.setOnClickListener(v -> {
                 onLikeClickListener.onLikeClick(book.getIDBook());
@@ -112,16 +131,23 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
             btnItemBuy.setOnClickListener(v -> {
                 onBuyClickListener.onBuyClick(book);
             });
+
+
+
         }
     }
+
+
 
     public interface OnItemClickListener {
         void onItemClick(BookResponse.Result book);
     }
-    public interface OnLikeClickListener{
+
+    public interface OnLikeClickListener {
         void onLikeClick(int idBook);
     }
-    public interface OnBuyClickListener{
+
+    public interface OnBuyClickListener {
         void onBuyClick(BookResponse.Result book);
     }
 

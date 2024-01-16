@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
@@ -42,6 +44,8 @@ public class InfomationFragment extends Fragment implements FragmentReload {
     private LinearLayout btnChinhSuaThongTin, btnDoiPassWord, btnDangXuat;
 
     private CardView btnLichSuMuaSach;
+
+    private ImageView avtUser;
 
     String userName, birthDay;
     private View view;
@@ -70,6 +74,7 @@ public class InfomationFragment extends Fragment implements FragmentReload {
         btnDangXuat = view.findViewById(R.id.btn_DangXuat);
         btnDoiPassWord = view.findViewById(R.id.btn_doiMatKhau);
         tvIdUser = view.findViewById(R.id.idUser);
+        avtUser=view.findViewById(R.id.avt_user);
         tvNameUser = view.findViewById(R.id.nameUser);
         btnLichSuMuaSach = view.findViewById(R.id.btn_lichsumuasach);
         getInformation();
