@@ -286,6 +286,9 @@ public class HomeFragment extends Fragment implements FragmentReload {
                 }
             });
 
+            //Get RatingTb
+
+
             //Get Cat
             Call<CategoryResponse> callCat = apiService.getListCat(token);
             callCat.enqueue(new Callback<CategoryResponse>() {
