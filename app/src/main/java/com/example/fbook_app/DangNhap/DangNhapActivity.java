@@ -24,7 +24,6 @@ import com.example.fbook_app.Model.Request.LoginRequest;
 import com.example.fbook_app.Model.Response.LoginResponse;
 import com.example.fbook_app.R;
 
-
 import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;

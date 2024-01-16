@@ -57,13 +57,14 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgViewItemImgBook;
         private TextView tvItemNameBook;
-        private TextView btnDocNgay;
+        private TextView btnDocNgay,btnDanhGia;
 
         public ViewHolder(View itemView) {
             super(itemView);
             imgViewItemImgBook = (ImageView) itemView.findViewById(R.id.imgView_item_imgBook);
             tvItemNameBook = (TextView) itemView.findViewById(R.id.tv_item_nameBook);
             btnDocNgay = (TextView) itemView.findViewById(R.id.btn_docNgay);
+            btnDanhGia = itemView.findViewById(R.id.btn_danhGia);
         }
 
         public void onBind(int position) {
@@ -75,10 +76,15 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
             btnDocNgay.setOnClickListener(v -> {
                 onItemClickListener.onItemClick(book);
             });
+            btnDanhGia.setOnClickListener(v -> {
+                onItemClickListener.onDanhGiaClick(book.getIDBook());
+            });
         }
     }
     public interface OnReadClickListener {
         void onItemClick(LibraryResponse.Result book);
+        void onDanhGiaClick(int idBook);
+
     }
 
 }

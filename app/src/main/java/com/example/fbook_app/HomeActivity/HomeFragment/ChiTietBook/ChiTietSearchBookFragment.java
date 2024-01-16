@@ -112,7 +112,6 @@ public class ChiTietSearchBookFragment extends Fragment {
         rclListDanhGia = (RecyclerView) mView.findViewById(R.id.rcl_danhgia);
         tvPriceBookBookChiTiet = (TextView) mView.findViewById(R.id.tv_priceBook_book_chi_tiet);
         btnBuyBookChiTiet = (TextView) mView.findViewById(R.id.btn_buy_book_chi_tiet);
-        btnDanhGia = mView.findViewById(R.id.btn_guidanhgia);
         adapter = new DanhGiaAdapter(getContext());
         Locale locale = new Locale("vi", "VN");
         NumberFormat format = NumberFormat.getCurrencyInstance(locale);
