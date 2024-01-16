@@ -6,19 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class RatingTbResponse {
-    @SerializedName("result")
-    @Expose
-    private List<RatingTbResponse.Result> result;
-
-    public List<RatingTbResponse.Result> getResult() {
-        return result;
-    }
-
-    public void setResult(List<RatingTbResponse.Result> result) {
-        this.result = result;
-    }
-    public static class Result {
-
         @SerializedName("success")
         @Expose
         private String Success;
@@ -42,4 +29,4 @@ public class RatingTbResponse {
             AverageRating = averageRating;
         }
     }
-}
+

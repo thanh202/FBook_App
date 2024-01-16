@@ -36,16 +36,10 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
     private OnBuyClickListener onBuyClickListener;
 
     private List<BookResponse.Result> bookList = new ArrayList<>();
-    private List<RatingTbResponse.Result> ratingList = new ArrayList<>();
 
 
     public NewBookAdapter(Context mContext) {
         context = mContext;
-    }
-
-    public void setRatingList(List<RatingTbResponse.Result> ratingList) {
-        this.ratingList = ratingList;
-        notifyDataSetChanged();
     }
 
     public void setListBook(List<BookResponse.Result> list) {
@@ -109,10 +103,28 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
             NumberFormat format = NumberFormat.getCurrencyInstance(locale);
 
             BookResponse.Result book = bookList.get(position);
-            RatingTbResponse.Result rating = ratingList.get(position);
+            SharedPreferences myToken = context.getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+            String token = myToken.getString("token", null);
+            if (token != null) {
+                ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+                Call<RatingTbResponse> call = apiService.getRatingTb(token, book.getIDBook());
+                call.enqueue(new Callback<RatingTbResponse>() {
+                    @Override
+                    public void onResponse(Call<RatingTbResponse> call, Response<RatingTbResponse> response) {
+                        if (response.isSuccessful()) {
+                            RatingTbResponse ratingTbResponse = response.body();
+                            if (ratingTbResponse.getSuccess() == "true") {
+                                tvRatingTb.setText(ratingTbResponse.getAverageRating() + "");
+                            }
+                        }
+                    }
 
-            tvRatingTb.setText((int) rating.getAverageRating());
+                    @Override
+                    public void onFailure(Call<RatingTbResponse> call, Throwable t) {
 
+                    }
+                });
+            }
             tvItemNameNewBook.setText(book.getBookName());
             tvItemDescriptionNewBook.setText(book.getDiscription());
             tvItemPriceNewBook.setText(format.format(book.getPriceBook()));
@@ -131,12 +143,8 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
             btnItemBuy.setOnClickListener(v -> {
                 onBuyClickListener.onBuyClick(book);
             });
-
-
-
         }
     }
-
 
 
     public interface OnItemClickListener {
