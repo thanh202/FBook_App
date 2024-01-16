@@ -42,6 +42,7 @@ import com.example.fbook_app.Model.Request.NotificationRequest;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.Model.Response.DanhGiaResponse;
 import com.example.fbook_app.Model.Response.NotificationResponse;
+import com.example.fbook_app.Model.Response.RatingTbResponse;
 import com.example.fbook_app.MyApplication;
 import com.example.fbook_app.R;
 
@@ -74,7 +75,7 @@ public class ChiTietBookFragment extends Fragment {
     private TextView tvTypeBookBookChiTiet, btnDanhGia;
     private TextView tvChapterBookChiTiet;
 
-    private TextView tvPriceBookBookChiTiet;
+    private TextView tvPriceBookBookChiTiet,tvRatingTb;
     private TextView btnBuyBookChiTiet;
     private DanhGiaAdapter adapter;
     private EditText edtDanhGia;
@@ -108,6 +109,7 @@ public class ChiTietBookFragment extends Fragment {
         tvPriceBookBookChiTiet = (TextView) mView.findViewById(R.id.tv_priceBook_book_chi_tiet);
         btnBuyBookChiTiet = (TextView) mView.findViewById(R.id.btn_buy_book_chi_tiet);
         btnDanhGia = mView.findViewById(R.id.btn_guidanhgia);
+        tvRatingTb=mView.findViewById(R.id.rating_tb);
         adapter = new DanhGiaAdapter(getContext());
 
         Locale locale = new Locale("vi", "VN");
@@ -294,5 +296,4 @@ public class ChiTietBookFragment extends Fragment {
             });
         }
     }
-
 }
