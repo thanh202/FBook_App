@@ -80,7 +80,7 @@ public class ChiTietFavouriteBookFragment extends Fragment {
     private TextView tvTypeBookBookChiTiet, btnDanhGia;
     private TextView tvChapterBookChiTiet;
     private RecyclerView rclListDanhGia;
-    private TextView tvPriceBookBookChiTiet;
+    private TextView tvPriceBookBookChiTiet,tvKhongCoDanhGia;
     private TextView btnBuyBookChiTiet;
     private EditText edtDanhGia;
     private DanhGiaAdapter adapter;
@@ -114,7 +114,6 @@ public class ChiTietFavouriteBookFragment extends Fragment {
         rclListDanhGia = (RecyclerView) mView.findViewById(R.id.rcl_danhgia);
         tvPriceBookBookChiTiet = (TextView) mView.findViewById(R.id.tv_priceBook_book_chi_tiet);
         btnBuyBookChiTiet = (TextView) mView.findViewById(R.id.btn_buy_book_chi_tiet);
-        btnDanhGia = mView.findViewById(R.id.btn_guidanhgia);
         adapter = new DanhGiaAdapter(getContext());
 
         Locale locale = new Locale("vi", "VN");
@@ -126,6 +125,7 @@ public class ChiTietFavouriteBookFragment extends Fragment {
         tvNameBookBookChiTiet.setText(mBook.getBookName());
         tvAuthorBookChiTiet.setText(mBook.getAuthor());
         tvDescriptionBookChiTiet.setText(mBook.getDiscription());
+        tvKhongCoDanhGia = mView.findViewById(R.id.tv_khongDanhGia);
         tvPublishYearBookChiTiet.setText(mBook.getPublishYear());
         tvPriceBookBookChiTiet.setText(format.format(mBook.getPriceBook()));
 //        tvTypeBookBookChiTiet.setText(mBook.getCatName());
@@ -292,6 +292,13 @@ public class ChiTietFavouriteBookFragment extends Fragment {
                         DanhGiaResponse danhGiaResponse = response.body();
                         if (danhGiaResponse != null) {
                             adapter.setDanhgiaList(danhGiaResponse.getResult());
+                            if (danhGiaResponse.getResult().size() == 0){
+                                rclListDanhGia.setVisibility(View.INVISIBLE);
+                                tvKhongCoDanhGia.setVisibility(View.VISIBLE);
+                            }else{
+                                rclListDanhGia.setVisibility(View.VISIBLE);
+                                tvKhongCoDanhGia.setVisibility(View.GONE);
+                            }
                         }
                     }
                 }

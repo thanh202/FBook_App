@@ -37,25 +37,37 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textStyle="bold"
+            android:layout_marginTop="5dp"
             android:textSize="13sp" />
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginVertical="5dp">
         <TextView
             android:id="@+id/btn_docNgay"
             android:background="@drawable/bg_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="2dp"
             android:textAlignment="center"
             android:text="Đọc ngay"
             android:textColor="@color/white"
             android:textSize="14sp" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/btn_danhGia"
+            android:background="@drawable/bg_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"/>
-
+            android:textAlignment="center"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="2dp"
+            android:text="Đánh giá "
+            android:textColor="@color/white"
+            android:layout_marginLeft="5dp"
+            android:textSize="14sp" />
+    </LinearLayout>
     </LinearLayout>
 </LinearLayout>

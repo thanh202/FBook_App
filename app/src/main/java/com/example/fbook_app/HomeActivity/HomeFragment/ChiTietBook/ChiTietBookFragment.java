@@ -71,17 +71,14 @@ public class ChiTietBookFragment extends Fragment {
     private TextView tvDescriptionBookChiTiet;
     private TextView tvAuthorBookChiTiet;
     private TextView tvPublishYearBookChiTiet;
-    private TextView tvTypeBookBookChiTiet, btnDanhGia;
-    private TextView tvChapterBookChiTiet;
+    private TextView tvTypeBookBookChiTiet;
 
-    private TextView tvPriceBookBookChiTiet;
+    private TextView tvPriceBookBookChiTiet,tvKhongCoDanhGia;
     private TextView btnBuyBookChiTiet;
     private DanhGiaAdapter adapter;
-    private EditText edtDanhGia;
-    private RecyclerView rclListDanhGia;
-    private RatingBar ratingUp;
 
-    private CardView btnHuy, btnGui;
+    private RecyclerView rclListDanhGia;
+
 
 
     @Nullable
@@ -106,8 +103,8 @@ public class ChiTietBookFragment extends Fragment {
         tvTypeBookBookChiTiet = (TextView) mView.findViewById(R.id.tv_typeBook_book_chi_tiet);
         rclListDanhGia = (RecyclerView) mView.findViewById(R.id.rcl_danhgia);
         tvPriceBookBookChiTiet = (TextView) mView.findViewById(R.id.tv_priceBook_book_chi_tiet);
+        tvKhongCoDanhGia = mView.findViewById(R.id.tv_khongDanhGia);
         btnBuyBookChiTiet = (TextView) mView.findViewById(R.id.btn_buy_book_chi_tiet);
-        btnDanhGia = mView.findViewById(R.id.btn_guidanhgia);
         adapter = new DanhGiaAdapter(getContext());
 
         Locale locale = new Locale("vi", "VN");
@@ -122,19 +119,9 @@ public class ChiTietBookFragment extends Fragment {
         tvPublishYearBookChiTiet.setText(mBook.getPublishYear());
         tvPriceBookBookChiTiet.setText(format.format(mBook.getPriceBook()));
         tvTypeBookBookChiTiet.setText(mBook.getCatName());
-        String chapterBook = String.valueOf(mBook.getChapter());
 
 
         loadData(mBook.getIDBook());
-
-        btnDanhGia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogDanhGia(mBook.getIDBook());
-            }
-        });
-
-
         rclListDanhGia.setAdapter(adapter);
         rclListDanhGia.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -158,117 +145,6 @@ public class ChiTietBookFragment extends Fragment {
         });
     }
 
-    @SuppressLint("MissingInflatedId")
-    private void showDialogDanhGia(Integer idBook) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-
-        LayoutInflater layoutInflater = this.getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.danhgia_layout, null);
-
-        edtDanhGia = view.findViewById(R.id.comment_up);
-        ratingUp = view.findViewById(R.id.rating_bar_up);
-        btnHuy = view.findViewById(R.id.btn_Huy);
-        btnGui = view.findViewById(R.id.btn_Gui);
-        alertDialog.setView(view);
-
-
-        AlertDialog testDialog = alertDialog.create();
-
-        btnHuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                testDialog.dismiss();
-            }
-        });
-        btnGui.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-                SharedPreferences myToken = getActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
-                String token = myToken.getString("token", null);
-                SharedPreferences myIdUser = getActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
-                int idUser = myIdUser.getInt("idUser", 0);
-
-                DanhGiaRequest request = new DanhGiaRequest(idBook, idUser, ratingUp.getRating(), edtDanhGia.getText().toString());
-                Call<DanhGiaResponse> call = apiService.addDanhGia(token, request);
-
-                if (token != null && idUser > 0) {
-                    call.enqueue(new Callback<DanhGiaResponse>() {
-                        @Override
-                        public void onResponse(Call<DanhGiaResponse> call, Response<DanhGiaResponse> response) {
-                            if (response.isSuccessful()) {
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<DanhGiaResponse> call, Throwable t) {
-
-                        }
-                    });
-                }
-                sendNotificationSuccess(idBook);
-                testDialog.dismiss();
-
-            }
-        });
-        testDialog.show();
-    }
-
-    private void sendNotificationSuccess(Integer idBook) {
-
-        Intent intent = new Intent(getContext(), com.example.fbook_app.HomeActivity.Notification.Notification.class);
-        TaskStackBuilder stackBuilder=TaskStackBuilder.create(getContext());
-        stackBuilder.addNextIntentWithParentStack(intent);
-        PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-
-        String title = "Gửi Đánh Giá Thành Công";
-        String body = "Cảm ơn bạn đã gửi đánh giá cho chúng tôi !. Ý kiến của bạn là động lực để chúng tôi cải thiện và phát triển.";
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        Notification notification = new NotificationCompat.Builder(getContext(), MyApplication.ID)
-                .setContentTitle(title)
-                .setContentText(body)
-                .setContentIntent(pendingIntent)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
-                .setSmallIcon(R.drawable.logo_fbook)
-                .setLargeIcon(bitmap)
-                .build();
-        NotificationManager manager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        if (manager != null) {
-            manager.notify(1, notification);
-        }
-        addNofi(title, body, idBook);
-    }
-
-
-    private void addNofi(String title, String body, Integer idBook) {
-        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        SharedPreferences myToken = getActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
-        String token = myToken.getString("token", null);
-        SharedPreferences myIdUser = getActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
-        int idUser = myIdUser.getInt("idUser", 0);
-
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-        String formattedDateTime = datetime.format(c.getTime());
-
-
-        NotificationRequest request = new NotificationRequest(title, body, idUser, idBook, formattedDateTime);
-        Call<NotificationResponse> call = apiService.addNotification(token, request);
-        if (token != null && idUser > 0) {
-            call.enqueue(new Callback<NotificationResponse>() {
-                @Override
-                public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> response) {
-                }
-
-                @Override
-                public void onFailure(Call<NotificationResponse> call, Throwable t) {
-
-                }
-            });
-        }
-        setData(mView);
-    }
 
     private void loadData(Integer idBook) {
         SharedPreferences myToken = getActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
@@ -284,6 +160,13 @@ public class ChiTietBookFragment extends Fragment {
                         DanhGiaResponse danhGiaResponse = response.body();
                         if (danhGiaResponse != null) {
                             adapter.setDanhgiaList(danhGiaResponse.getResult());
+                            if (danhGiaResponse.getResult().size() == 0){
+                                rclListDanhGia.setVisibility(View.INVISIBLE);
+                                tvKhongCoDanhGia.setVisibility(View.VISIBLE);
+                            }else{
+                                rclListDanhGia.setVisibility(View.VISIBLE);
+                                tvKhongCoDanhGia.setVisibility(View.GONE);
+                            }
                         }
                     }
                 }
