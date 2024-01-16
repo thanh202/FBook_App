@@ -110,9 +110,25 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
 
             BookResponse.Result book = bookList.get(position);
             RatingTbResponse.Result rating = ratingList.get(position);
+            SharedPreferences myToken = context.getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+            String token = myToken.getString("token", null);
+            if (token != null) {
+                ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+                Call<RatingTbResponse> call = apiService.getRatingTb(token,book.getIDBook());
+                call.enqueue(new Callback<RatingTbResponse>() {
+                    @Override
+                    public void onResponse(Call<RatingTbResponse> call, Response<RatingTbResponse> response) {
+                        if (response.isSuccessful()){
+                            tvRatingTb.setText(response.toString());
+                        }
+                    }
 
-            tvRatingTb.setText((int) rating.getAverageRating());
+                    @Override
+                    public void onFailure(Call<RatingTbResponse> call, Throwable t) {
 
+                    }
+                });
+            }
             tvItemNameNewBook.setText(book.getBookName());
             tvItemDescriptionNewBook.setText(book.getDiscription());
             tvItemPriceNewBook.setText(format.format(book.getPriceBook()));
@@ -131,9 +147,6 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
             btnItemBuy.setOnClickListener(v -> {
                 onBuyClickListener.onBuyClick(book);
             });
-
-
-
         }
     }
 
