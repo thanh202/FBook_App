@@ -37,6 +37,7 @@ import com.example.fbook_app.Adapter.DanhGiaAdapter;
 import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
+import com.example.fbook_app.HomeActivity.HomeActivity;
 import com.example.fbook_app.HomeActivity.ThanhToanActivity;
 import com.example.fbook_app.Model.Request.BillRequest;
 import com.example.fbook_app.Model.Request.DanhGiaRequest;
@@ -152,6 +153,8 @@ public class ChiTietBookFragment extends Fragment {
                         Common.currentBook = mBook;
                         if (mBook.getPriceBook()==0){
                             thanhtoan("Đã Thanh Toán",mBook.getIDBook(), mBook.getPriceBook(),formattedDateTime);
+                            Intent intent = new Intent(getContext(), HomeActivity.class);
+                            startActivity(intent);
                         }else{
                             Intent intent = new Intent(getContext(), ThanhToanActivity.class);
                             startActivity(intent);

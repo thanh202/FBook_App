@@ -125,6 +125,7 @@ public class ThanhToanSearchActivity extends AppCompatActivity {
 
                             thanhtoanZalo(status, iDBook, priceTotal, create_at);
 
+
                     }
                 }, 2000);
 
@@ -164,6 +165,8 @@ public class ThanhToanSearchActivity extends AppCompatActivity {
                                 }
                             });
                             sendNotificationSuccess();
+                            Intent intent = new Intent(ThanhToanSearchActivity.this, HomeActivity.class);
+                            startActivity(intent);
                             finish();
                             Toast.makeText(ThanhToanSearchActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
                         }
