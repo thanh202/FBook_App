@@ -80,7 +80,6 @@ public class DocSachFragment extends Fragment {
     public void onPause() {
         super.onPause();
         saveReadingState(currentChapter);
-        Log.e("zzzz", "onPause: "+ currentChapter);
     }
     private void saveReadingState(int currentPage) {
         SharedPreferences sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
