@@ -123,7 +123,11 @@ public class ChiTietSearchBookFragment extends Fragment {
         tvAuthorBookChiTiet.setText(mBook.getAuthor());
         tvDescriptionBookChiTiet.setText(mBook.getDiscription());
         tvPublishYearBookChiTiet.setText(mBook.getPublishYear());
-        tvPriceBookBookChiTiet.setText(format.format(mBook.getPriceBook()));
+        if (mBook.getPriceBook()==0){
+            tvPriceBookBookChiTiet.setText("Miễn Phí");
+        }else {
+            tvPriceBookBookChiTiet.setText(format.format(mBook.getPriceBook()));
+        }
         tvTypeBookBookChiTiet.setText(mBook.getCatName());
         String chapterBook = String.valueOf(mBook.getChapter());
 

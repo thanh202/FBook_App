@@ -127,7 +127,12 @@ public class NewBookAdapter extends RecyclerView.Adapter<NewBookAdapter.ViewHold
             }
             tvItemNameNewBook.setText(book.getBookName());
             tvItemDescriptionNewBook.setText(book.getDiscription());
-            tvItemPriceNewBook.setText(format.format(book.getPriceBook()));
+            if (book.getPriceBook()==0){
+                tvItemPriceNewBook.setText("Miễn Phí");
+            }else {
+                tvItemPriceNewBook.setText(format.format(book.getPriceBook()));
+
+            }
             String imgBook = RetrofitClient.BASE_URL + book.getImageBook();
             Glide.with(context).load(imgBook)
                     .into(imgViewItemImgNewBook);

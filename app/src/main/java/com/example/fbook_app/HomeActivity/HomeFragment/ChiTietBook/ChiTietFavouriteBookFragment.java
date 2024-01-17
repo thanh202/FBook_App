@@ -127,7 +127,11 @@ public class ChiTietFavouriteBookFragment extends Fragment {
         tvDescriptionBookChiTiet.setText(mBook.getDiscription());
         tvKhongCoDanhGia = mView.findViewById(R.id.tv_khongDanhGia);
         tvPublishYearBookChiTiet.setText(mBook.getPublishYear());
-        tvPriceBookBookChiTiet.setText(format.format(mBook.getPriceBook()));
+        if (mBook.getPriceBook()==0){
+            tvPriceBookBookChiTiet.setText("Miễn Phí");
+        }else {
+            tvPriceBookBookChiTiet.setText(format.format(mBook.getPriceBook()));
+        }
 //        tvTypeBookBookChiTiet.setText(mBook.getCatName());
         String chapterBook = String.valueOf(mBook.getChapter());
 
