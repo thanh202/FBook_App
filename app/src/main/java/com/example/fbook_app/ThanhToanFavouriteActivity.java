@@ -105,7 +105,7 @@ public class ThanhToanFavouriteActivity extends AppCompatActivity {
         tvDate.setText(formattedDate);
         tvTime.setText(formattedTime);
 
-        spinner.setItems("Thanh Toán Ngay", "ZaloPay");
+        spinner.setItems("ZaloPay");
 
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,11 +122,9 @@ public class ThanhToanFavouriteActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         dialog.dismiss();
-                        if (spinner.getSelectedIndex() == 0) {
-                            thanhtoan(status, iDBook, priceTotal, create_at);
-                        } else {
+
                             thanhtoanZalo(status, iDBook, priceTotal, create_at);
-                        }
+
                     }
                 }, 2000);
 

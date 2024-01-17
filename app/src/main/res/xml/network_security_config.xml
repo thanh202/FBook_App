@@ -2,6 +2,6 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         // điền địa chỉ ipconfig
-        <domain includeSubdomains="true">192.168.12.107</domain>
+        <domain includeSubdomains="true">192.168.0.109</domain>
     </domain-config>
 </network-security-config>

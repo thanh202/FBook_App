@@ -87,13 +87,6 @@
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="12sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="/5"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"/>
                     <ImageView
                         android:layout_width="12sp"
                         android:layout_height="12sp"
