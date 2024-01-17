@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,8 +38,10 @@ import com.example.fbook_app.ApiNetwork.ApiService;
 import com.example.fbook_app.ApiNetwork.RetrofitClient;
 import com.example.fbook_app.Common.Common;
 import com.example.fbook_app.HomeActivity.ThanhToanActivity;
+import com.example.fbook_app.Model.Request.BillRequest;
 import com.example.fbook_app.Model.Request.DanhGiaRequest;
 import com.example.fbook_app.Model.Request.NotificationRequest;
+import com.example.fbook_app.Model.Response.BillResponse;
 import com.example.fbook_app.Model.Response.BookResponse;
 import com.example.fbook_app.Model.Response.DanhGiaResponse;
 import com.example.fbook_app.Model.Response.NotificationResponse;
@@ -121,6 +124,7 @@ public class ChiTietBookFragment extends Fragment {
 
         if (mBook.getPriceBook()==0){
             tvPriceBookBookChiTiet.setText("Miễn Phí");
+            btnBuyBookChiTiet.setText("Nhận ngay");
         }else {
             tvPriceBookBookChiTiet.setText(format.format(mBook.getPriceBook()));
         }
@@ -138,19 +142,53 @@ public class ChiTietBookFragment extends Fragment {
                 ProgressDialog dialog = new ProgressDialog(getContext());
                 dialog.setMessage("Vui Lòng Đợi ...");
                 dialog.show();
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String formattedDateTime = datetime.format(c.getTime());
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         dialog.dismiss();
                         Common.currentBook = mBook;
-                        Intent intent = new Intent(getContext(), ThanhToanActivity.class);
-                        startActivity(intent);
+                        if (mBook.getPriceBook()==0){
+                            thanhtoan("Đã Thanh Toán",mBook.getIDBook(), mBook.getPriceBook(),formattedDateTime);
+                        }else{
+                            Intent intent = new Intent(getContext(), ThanhToanActivity.class);
+                            startActivity(intent);
+                        }
                     }
                 }, 2000);
             }
         });
     }
+    private void thanhtoan(String status, int iDBook, int priceTotal, String create_at) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        SharedPreferences myToken = requireActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String token = myToken.getString("token", null);
+        SharedPreferences myIdUser = requireActivity().getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
+        int idUser = myIdUser.getInt("idUser", 0);
 
+        BillRequest request = new BillRequest(status, iDBook, idUser, priceTotal, create_at);
+        Call<BillResponse> call = apiService.addBill(token, request);
+        if (token != null && idUser > 0) {
+            call.enqueue(new Callback<BillResponse>() {
+                @Override
+                public void onResponse(Call<BillResponse> call, Response<BillResponse> response) {
+                    if (response.isSuccessful()) {
+                            Toast.makeText(requireActivity(), "Thêm vào thư viện thành công !", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(requireContext(), "Thanh Toán Thất Bại !", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BillResponse> call, Throwable t) {
+
+                }
+            });
+        }
+
+    }
 
     private void loadData(Integer idBook) {
         SharedPreferences myToken = getActivity().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
