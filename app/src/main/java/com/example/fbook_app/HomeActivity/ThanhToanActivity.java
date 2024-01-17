@@ -190,39 +190,7 @@ public class ThanhToanActivity extends AppCompatActivity {
     }
 
 
-    private void thanhtoan(String status, int iDBook, int priceTotal, String create_at) {
-        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        SharedPreferences myToken = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
-        String token = myToken.getString("token", null);
-        SharedPreferences myIdUser = getSharedPreferences("MyIdUser", Context.MODE_PRIVATE);
-        int idUser = myIdUser.getInt("idUser", 0);
 
-        BillRequest request = new BillRequest(status, iDBook, idUser, priceTotal, create_at);
-        Call<BillResponse> call = apiService.addBill(token, request);
-        if (token != null && idUser > 0) {
-            call.enqueue(new Callback<BillResponse>() {
-                @Override
-                public void onResponse(Call<BillResponse> call, Response<BillResponse> response) {
-
-                    if (response.isSuccessful()) {
-                        sendNotificationSuccess();
-                        finish();
-                        Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
-                    } else {
-                        sendNotificationFail();
-                        finish();
-                        Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thất Bại !", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<BillResponse> call, Throwable t) {
-
-                }
-            });
-        }
-
-    }
 
     private void sendNotificationFail() {
 
