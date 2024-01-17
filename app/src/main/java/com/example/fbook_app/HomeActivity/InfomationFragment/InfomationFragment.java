@@ -187,6 +187,10 @@ public class InfomationFragment extends Fragment implements FragmentReload {
                         dialog.dismiss();
                         Intent intent = new Intent(getContext(), MainActivity.class);
                         Paper.book().destroy();
+                        SharedPreferences sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.remove("CURRENT_PAGE");
+                        editor.remove("SCROLL_POSITION");
                         startActivity(intent);
                     }
                 }, 2000);
