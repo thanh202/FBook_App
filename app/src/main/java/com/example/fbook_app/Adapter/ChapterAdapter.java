@@ -79,9 +79,9 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHold
         public void onBind(int position) {
             ChapterResponse.Result chapterResponse = chapterList.get(position);
             tvTitleChapter.setText(chapterResponse.getTitle());
-            onItemClickListener.onGetPositionChapter(position);
             llItemChapter.setOnClickListener(v -> {
                 int position1 = getAdapterPosition();
+                onItemClickListener.onGetPositionChapter(position);
                 if (position != RecyclerView.NO_POSITION) {
                     // Lưu vị trí phần tử được chọn và thông báo thay đổi
                     setSelectedPosition(position1);
