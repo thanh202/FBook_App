@@ -80,11 +80,13 @@ public class DocSachFragment extends Fragment {
     public void onPause() {
         super.onPause();
         saveReadingState(currentChapter);
+        Log.e("zzzz", "onPause: "+ currentChapter );
     }
     private void saveReadingState(int currentPage) {
         SharedPreferences sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("CURRENT_PAGE", currentPage);
+        Log.e("zzzz", "save State: "+ currentPage );
         editor.putInt("SCROLL_POSITION", scrollView.getScrollY());
         editor.apply();
     }
@@ -120,6 +122,8 @@ public class DocSachFragment extends Fragment {
     public void restoreScrollPosition(List<ChapterResponse.Result> list, int position, int scrollPosition){
         ChapterResponse.Result chapter = list.get(position);
         tvContent.setText(chapter.getContent());
+        adapter.setSelectedPosition(position);
+        currentChapter = position;
         scrollView.post(new Runnable() {
             @Override
             public void run() {
@@ -147,7 +151,6 @@ public class DocSachFragment extends Fragment {
                 sideSheetDialog.hide();
                 scrollView.scrollTo(0,0);
             }
-
             @Override
             public void onGetPositionChapter(int position) {
                 currentChapter = position;
@@ -175,6 +178,7 @@ public class DocSachFragment extends Fragment {
                             markFirstTimeReading();
                         }else{
                             restoreScrollPosition(chapterResponse.getResult(),position,savedPosition);
+                            Log.e("zzzzz", "onResponse: " + currentChapter + savedPosition );
                         }
                         adapter.setListChapter(chapterResponse.getResult());
                     }

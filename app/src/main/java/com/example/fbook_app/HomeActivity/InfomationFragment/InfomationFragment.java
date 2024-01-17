@@ -191,6 +191,7 @@ public class InfomationFragment extends Fragment implements FragmentReload {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.remove("CURRENT_PAGE");
                         editor.remove("SCROLL_POSITION");
+                        editor.apply();
                         startActivity(intent);
                     }
                 }, 2000);
