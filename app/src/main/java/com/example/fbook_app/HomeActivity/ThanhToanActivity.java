@@ -123,7 +123,7 @@ public class ThanhToanActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         dialog.dismiss();
-                            thanhtoanZalo(status, iDBook, priceTotal, create_at);
+                        thanhtoanZalo(status, iDBook, priceTotal, create_at);
                     }
                 }, 2000);
 
@@ -163,6 +163,8 @@ public class ThanhToanActivity extends AppCompatActivity {
                                 }
                             });
                             sendNotificationSuccess();
+                            Intent intent = new Intent(ThanhToanActivity.this, HomeActivity.class);
+                            startActivity(intent);
                             finish();
                             Toast.makeText(ThanhToanActivity.this, "Thanh Toán Thành Công !", Toast.LENGTH_SHORT).show();
                         }
@@ -190,14 +192,12 @@ public class ThanhToanActivity extends AppCompatActivity {
     }
 
 
-
-
     private void sendNotificationFail() {
 
         Intent intent = new Intent(ThanhToanActivity.this, com.example.fbook_app.HomeActivity.Notification.Notification.class);
-        TaskStackBuilder stackBuilder=TaskStackBuilder.create(ThanhToanActivity.this);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(ThanhToanActivity.this);
         stackBuilder.addNextIntentWithParentStack(intent);
-        PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         String title = "Thanh Toán Thất Bại !";
         String body = "Đã sảy ra lỗi khi thanh toán, vui lòng kiểm tra hoặc thanh toán lại !";
@@ -210,18 +210,18 @@ public class ThanhToanActivity extends AppCompatActivity {
                 .setSmallIcon(R.drawable.logo_fbook)
                 .setLargeIcon(bitmap)
                 .build();
-        NotificationManager manager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (manager!=null){
-            manager.notify(1,notification);
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager != null) {
+            manager.notify(1, notification);
         }
         addNotifi(title, body);
     }
 
     private void sendNotificationSuccess() {
         Intent intent = new Intent(ThanhToanActivity.this, com.example.fbook_app.HomeActivity.Notification.Notification.class);
-        TaskStackBuilder stackBuilder=TaskStackBuilder.create(ThanhToanActivity.this);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(ThanhToanActivity.this);
         stackBuilder.addNextIntentWithParentStack(intent);
-        PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         String title = "Thanh Toán Thành Công !";
         String body = "Cảm ơn bạn đã mua sách, chúc bạn có những giây phút đọc sách vui vẻ !";
@@ -234,9 +234,9 @@ public class ThanhToanActivity extends AppCompatActivity {
                 .setSmallIcon(R.drawable.logo_fbook)
                 .setLargeIcon(bitmap)
                 .build();
-        NotificationManager manager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (manager!=null){
-            manager.notify(1,notification);
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager != null) {
+            manager.notify(1, notification);
         }
         addNotifi(title, body);
     }
